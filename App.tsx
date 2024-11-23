@@ -8,110 +8,104 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
+  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import {FONTS} from './src/constants/themes';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <>
+      <View style={styles.container}>
+        <View style={styles.containerheading}>
+          <Text style={styles.headingText}>What do you want to track?</Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.content}>
+          <TouchableOpacity style={styles.contentbtn}>
+            <Image
+              style={styles.image}
+              source={require('./src/assets/images/homeimg1.png')} // Local image
+            />
+            <Text style={styles.contenttext}>Period Tracking</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.contentbtn}>
+            <Image
+              style={styles.image}
+              source={require('./src/assets/images/homeimg2.png')} // Local image
+            />
+            <Text style={styles.contenttext}>Pregnancy Tracking</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.Nextbtn}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: '#ffff',
+              fontFamily: FONTS.Medium,
+              fontSize: 16,
+            }}>
+            Next
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    backgroundColor: '#ffff',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    paddingHorizontal: 10,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  containerheading: {
+    marginHorizontal: 'auto',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  headingText: {
+    fontFamily: FONTS.SemiBold,
+    fontSize: 20,
   },
-  highlight: {
-    fontWeight: '700',
+  content: {
+    paddingLeft: 5,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+  },
+  contentbtn: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 2,
+  },
+  image: {
+    width: 120,
+    height: 120,
+    objectFit: 'contain',
+  },
+  contenttext: {
+    fontSize: 16,
+    fontFamily: FONTS.SemiBold,
+  },
+  Nextbtn: {
+    backgroundColor: '#E392A1',
+    color: '#ffff',
+    width: '80%',
+    textAlign: 'center',
+    marginHorizontal: 'auto',
+    paddingVertical: 10,
+    borderRadius: 8,
   },
 });
 
