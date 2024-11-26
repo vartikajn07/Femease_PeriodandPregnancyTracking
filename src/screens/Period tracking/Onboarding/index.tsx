@@ -5,6 +5,7 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 
 import {useNavigation} from '@react-navigation/native';
+import Step3 from './Step3';
 
 const Onboarding = () => {
   const navigation = useNavigation();
@@ -61,13 +62,15 @@ const Onboarding = () => {
     </View>,
 
     <Step1 onNext={goToNextStep} />,
-    <Step2 />,
+    <Step2 onNext={goToNextStep} />,
+    <Step3 onNext={goToNextStep} />,
   ];
 
   return (
     <View style={styles.container}>
       {steps[currentStep]}
-      {/* Next button */}
+
+      {/* Next button
       <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
         <Text
           style={{
@@ -78,7 +81,7 @@ const Onboarding = () => {
           }}>
           Next
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -110,11 +113,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    gap: 20,
+    gap: 10,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     objectFit: 'contain',
   },
   contenttext: {
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
   Nextbtn: {
     backgroundColor: '#E392A1',
     color: '#ffff',
-    width: '90%',
+    width: '95%',
     textAlign: 'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,

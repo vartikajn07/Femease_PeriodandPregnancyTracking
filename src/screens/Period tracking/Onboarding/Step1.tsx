@@ -15,28 +15,38 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerheading}>
-        <Text style={styles.headingText}>When did your last period start?</Text>
-      </View>
-      {/* Add your date picker or input here */}
-      <View style={styles.calendar}>
-        <Calendar
-          onDayPress={handleDateSelect}
-          markedDates={{
-            [selectedDate]: {
-              selected: true,
-              selectedColor: '#E392A1',
-              selectedTextColor: 'white',
-            },
-          }}
-          monthFormat={'MMMM yyyy'}
-          theme={{
-            textDayFontFamily: FONTS.Regular,
-            textMonthFontFamily: FONTS.SemiBold,
-            todayTextColor: '#00adf5',
-            arrowColor: '#E392A1',
-          }}
-        />
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 70,
+        }}>
+        <View style={styles.containerheading}>
+          <Text style={styles.headingText}>
+            When did your last period start?
+          </Text>
+        </View>
+        {/* Add your date picker or input here */}
+        <View style={styles.calendar}>
+          <Calendar
+            onDayPress={handleDateSelect}
+            markedDates={{
+              [selectedDate]: {
+                selected: true,
+                selectedColor: '#E392A1',
+                selectedTextColor: 'white',
+              },
+            }}
+            monthFormat={'MMMM yyyy'}
+            theme={{
+              textDayFontFamily: FONTS.Regular,
+              textMonthFontFamily: FONTS.SemiBold,
+              todayTextColor: '#00adf5',
+              arrowColor: '#E392A1',
+            }}
+          />
+        </View>
       </View>
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
         <Text
@@ -60,7 +70,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 20,
   },
   containerheading: {
     marginHorizontal: 'auto',
