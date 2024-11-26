@@ -34,7 +34,7 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
             markedDates={{
               [selectedDate]: {
                 selected: true,
-                selectedColor: '#E392A1',
+                selectedColor: '#FF6161',
                 selectedTextColor: 'white',
               },
             }}
@@ -42,7 +42,7 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
             theme={{
               textDayFontFamily: FONTS.Regular,
               textMonthFontFamily: FONTS.SemiBold,
-              todayTextColor: '#00adf5',
+              todayTextColor: '#E392A1',
               arrowColor: '#E392A1',
             }}
           />
