@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   SplashScreen: undefined;
   PeriodTrackingOnboarding: undefined;
-  PregnancyTrackingNavigator: undefined;
+  PregnancyOnboarding: undefined;
   PeriodTrackingHome: undefined;
 };

@@ -26,7 +26,9 @@ function SplashScreen(): React.JSX.Element {
             />
             <Text style={styles.contenttext}>Period Tracking</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.contentbtn}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PregnancyOnboarding')}
+            style={styles.contentbtn}>
             <Image
               style={styles.image}
               source={require('../../../src/assets/images/homeimg2.png')} // Local image

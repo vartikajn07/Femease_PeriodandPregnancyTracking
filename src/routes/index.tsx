@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import SplashScreen from '../screens/Splash screen/Splashscreen';
 import PeriodTrackingOnboarding from '../screens/Period tracking/Onboarding/index';
 import PeriodTrackingHome from '../screens/Period tracking/Home';
+import PregnancyOnboarding from '../screens/Pregnancy tracking/Onboarding';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,11 @@ const AppNavigator = () => (
       <Stack.Screen
         name="PeriodTrackingHome"
         component={PeriodTrackingHome}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PregnancyOnboarding"
+        component={PregnancyOnboarding}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
