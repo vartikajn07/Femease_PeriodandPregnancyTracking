@@ -34,17 +34,6 @@ function SplashScreen(): React.JSX.Element {
             <Text style={styles.contenttext}>Pregnancy Tracking</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.Nextbtn}>
-          <Text
-            style={{
-              textAlign: 'center',
-              color: '#ffff',
-              fontFamily: FONTS.Medium,
-              fontSize: 16,
-            }}>
-            Next
-          </Text>
-        </TouchableOpacity>
       </View>
     </>
   );
@@ -55,9 +44,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
+    gap: 100,
     alignItems: 'flex-start',
     paddingHorizontal: 10,
+    paddingVertical: 120,
   },
   containerheading: {
     marginHorizontal: 'auto',
@@ -70,7 +61,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     display: 'flex',
     flexDirection: 'column',
-    gap: 20,
+    gap: 30,
   },
   contentbtn: {
     display: 'flex',

@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   containerheading: {
     marginHorizontal: 'auto',

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONTS} from '../../../constants/themes';
-import {Calendar} from 'react-native-calendars';
+import Calendar from '../../../common/Calendar';
 
 interface StepProps {
   onNext: () => void;
@@ -9,8 +9,13 @@ interface StepProps {
 
 const Step1: React.FC<StepProps> = ({onNext}) => {
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const handleDateSelect = (date: any) => {
-    setSelectedDate(date.dateString);
+
+  const handleDateSelect = (date: string | string[]) => {
+    if (Array.isArray(date)) {
+      setSelectedDate(date[0]);
+    } else {
+      setSelectedDate(date);
+    }
   };
 
   return (
@@ -28,25 +33,14 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
           </Text>
         </View>
         {/* Add your date picker or input here */}
-        <View style={styles.calendar}>
-          <Calendar
-            onDayPress={handleDateSelect}
-            markedDates={{
-              [selectedDate]: {
-                selected: true,
-                selectedColor: '#FF6161',
-                selectedTextColor: 'white',
-              },
-            }}
-            monthFormat={'MMMM yyyy'}
-            theme={{
-              textDayFontFamily: FONTS.Regular,
-              textMonthFontFamily: FONTS.SemiBold,
-              todayTextColor: '#E392A1',
-              arrowColor: '#E392A1',
-            }}
-          />
-        </View>
+        <Calendar
+          selectedDate={selectedDate}
+          onDateSelect={handleDateSelect}
+          selectedDateColor="#FF6161"
+          selectedDateTextColor="#FFFFFF"
+          todayTextColor="#E392A1"
+          numOfRows={5}
+        />
       </View>
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
         <Text
@@ -71,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 5,
-    paddingVertical: 20,
+    paddingVertical: 40,
   },
   containerheading: {
     marginHorizontal: 'auto',
@@ -105,3 +99,23 @@ const styles = StyleSheet.create({
 });
 
 export default Step1;
+
+{
+  /* <Calendar
+  onDayPress={handleDateSelect}
+  markedDates={{
+    [selectedDate]: {
+      selected: true,
+      selectedColor: '#FF6161',
+      selectedTextColor: 'white',
+    },
+  }}
+  monthFormat={'MMMM yyyy'}
+  theme={{
+    textDayFontFamily: FONTS.Regular,
+    textMonthFontFamily: FONTS.SemiBold,
+    todayTextColor: '#E392A1',
+    arrowColor: '#E392A1',
+  }}
+/>; */
+}
