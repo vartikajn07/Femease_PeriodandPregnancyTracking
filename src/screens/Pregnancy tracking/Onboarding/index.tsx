@@ -4,6 +4,9 @@ import {FONTS} from '../../../constants/themes';
 
 import {useNavigation} from '@react-navigation/native';
 import {AppText} from '../../../common/AppText';
+import Step1 from '../../Pregnancy tracking/Onboarding/Step1';
+import Step2 from '../../Pregnancy tracking/Onboarding/Step2';
+import Step3 from './Step3';
 
 const PregnancyOnboarding = () => {
   const navigation = useNavigation();
@@ -14,8 +17,12 @@ const PregnancyOnboarding = () => {
       setCurrentStep(currentStep + 1);
     }
   };
+  const goBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
 
-  // Array of steps
   const steps = [
     <View style={styles.container}>
       <View style={styles.content}>
@@ -24,7 +31,6 @@ const PregnancyOnboarding = () => {
           source={require('../../../assets/images/pregnancyonboarding1.png')}
           resizeMode="contain"
         />
-
         <AppText style={styles.headingText}>
           Congratulations on this incredible journey towards motherhood! 🌟{' '}
         </AppText>
@@ -41,6 +47,9 @@ const PregnancyOnboarding = () => {
         </Text>
       </TouchableOpacity>
     </View>,
+    <Step1 onNext={goToNextStep} />,
+    <Step2 onNext={goToNextStep} />,
+    <Step3 />,
   ];
 
   return (
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingVertical: 40,
   },
   containerheading: {
     marginHorizontal: 'auto',
@@ -85,11 +94,13 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 40,
+    gap: 15,
+    width: 300,
   },
   image: {
-    width: 300,
-    height: 300,
+    marginLeft: 90,
+    width: 250,
+    height: 370,
   },
   contenttext: {
     fontSize: 16,

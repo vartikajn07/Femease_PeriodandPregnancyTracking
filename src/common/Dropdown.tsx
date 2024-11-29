@@ -54,11 +54,7 @@ const Dropdown = <T extends DropdownItemProps>({
         iconColor={COLORS.primary}
         data={data}
         placeholder={
-          data.length > 0
-            ? placeholder
-              ? placeholder
-              : 'Please select'
-            : 'Loading...'
+          data.length > 0 ? (placeholder ? placeholder : '') : 'Loading...'
         }
         value={value}
         onChange={item => {

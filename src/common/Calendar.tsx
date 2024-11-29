@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {FONTS} from '../constants/themes';
+import {COLORS, FONTS} from '../constants/themes';
 import {Icon, IconButton} from 'react-native-paper';
 
 interface CalendarProps {
@@ -98,8 +98,9 @@ const Calendar: React.FC<CalendarProps> = ({
       {/* Month Navigation */}
       <View style={styles.header}>
         <IconButton
-          icon="chevron-right"
+          icon="chevron-left"
           size={24}
+          iconColor={COLORS.primary}
           onPress={() => changeMonth(-1)}
           style={{padding: 0}}
         />
@@ -109,6 +110,7 @@ const Calendar: React.FC<CalendarProps> = ({
         </Text>
         <IconButton
           icon="chevron-right"
+          iconColor={COLORS.primary}
           size={24}
           onPress={() => changeMonth(1)}
           style={{padding: 0}}
@@ -195,6 +197,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+    paddingHorizontal: 10,
   },
   arrow: {
     fontSize: 24,

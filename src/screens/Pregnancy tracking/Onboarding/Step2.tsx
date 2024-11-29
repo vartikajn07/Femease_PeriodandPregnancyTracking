@@ -1,0 +1,102 @@
+import React, {useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FONTS, COLORS} from '../../../constants/themes';
+import {AppText} from '../../../common/AppText';
+
+interface StepProps {
+  onNext: () => void;
+}
+
+const Step2: React.FC<StepProps> = ({onNext}) => {
+  return (
+    <>
+      <View style={styles.container}>
+        <View style={styles.containerheading}>
+          <AppText style={styles.headingText}>
+            Your little one is expected to arrive on June 03, 2025
+          </AppText>
+        </View>
+        <View>
+          <Image
+            style={styles.image}
+            source={require('../../../assets/images/pregnancyonboarding2.gif')}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={onNext} style={styles.duedatebtn}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: '#E392A1',
+                fontFamily: FONTS.Medium,
+                fontSize: 16,
+              }}>
+              Change due date
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: '#ffff',
+                fontFamily: FONTS.Medium,
+                fontSize: 16,
+              }}>
+              Next
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#ffff',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingHorizontal: 5,
+    paddingVertical: 60,
+  },
+  containerheading: {
+    marginHorizontal: 'auto',
+    paddingHorizontal: 8,
+  },
+  headingText: {
+    fontFamily: FONTS.SemiBold,
+    fontSize: 20,
+    textAlign: 'left',
+  },
+  image: {
+    width: 350,
+    height: 400,
+  },
+  buttons: {
+    gap: 20,
+  },
+  duedatebtn: {
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    backgroundColor: '#ffff',
+    width: '90%',
+    textAlign: 'center',
+    marginHorizontal: 'auto',
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  Nextbtn: {
+    backgroundColor: '#E392A1',
+    color: '#ffff',
+    width: '90%',
+    textAlign: 'center',
+    marginHorizontal: 'auto',
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+});
+
+export default Step2;

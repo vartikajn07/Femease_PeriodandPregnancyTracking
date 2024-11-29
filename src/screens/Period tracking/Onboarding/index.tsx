@@ -63,7 +63,7 @@ const Onboarding = () => {
 
     <Step1 onNext={goToNextStep} />,
     <Step2 onNext={goToNextStep} />,
-    <Step3 onNext={goToNextStep} />,
+    <Step3 />,
   ];
 
   return (
