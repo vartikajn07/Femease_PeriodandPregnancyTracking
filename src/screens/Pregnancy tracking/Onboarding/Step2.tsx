@@ -5,9 +5,10 @@ import {AppText} from '../../../common/AppText';
 
 interface StepProps {
   onNext: () => void;
+  skipToStep4: () => void;
 }
 
-const Step2: React.FC<StepProps> = ({onNext}) => {
+const Step2: React.FC<StepProps> = ({onNext, skipToStep4}) => {
   return (
     <>
       <View style={styles.container}>
@@ -35,7 +36,7 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
               Change due date
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
+          <TouchableOpacity onPress={skipToStep4} style={styles.Nextbtn}>
             <Text
               style={{
                 textAlign: 'center',

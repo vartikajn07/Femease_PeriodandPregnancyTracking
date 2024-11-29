@@ -7,6 +7,8 @@ import {AppText} from '../../../common/AppText';
 import Step1 from '../../Pregnancy tracking/Onboarding/Step1';
 import Step2 from '../../Pregnancy tracking/Onboarding/Step2';
 import Step3 from './Step3';
+import Step4 from './Step4';
+import Step5 from './Step5';
 
 const PregnancyOnboarding = () => {
   const navigation = useNavigation();
@@ -17,10 +19,9 @@ const PregnancyOnboarding = () => {
       setCurrentStep(currentStep + 1);
     }
   };
-  const goBack = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
+  const skipToStep4 = () => {
+    // Directly skip to Step 4
+    setCurrentStep(4);
   };
 
   const steps = [
@@ -48,8 +49,10 @@ const PregnancyOnboarding = () => {
       </TouchableOpacity>
     </View>,
     <Step1 onNext={goToNextStep} />,
-    <Step2 onNext={goToNextStep} />,
-    <Step3 />,
+    <Step2 onNext={goToNextStep} skipToStep4={skipToStep4} />,
+    <Step3 onNext={goToNextStep} />,
+    <Step4 onNext={goToNextStep} />,
+    <Step5 />,
   ];
 
   return (
