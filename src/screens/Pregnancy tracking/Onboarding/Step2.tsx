@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONTS, COLORS} from '../../../constants/themes';
 import {AppText} from '../../../common/AppText';
+import FastImage from 'react-native-fast-image';
 
 interface StepProps {
   onNext: () => void;
@@ -18,7 +19,7 @@ const Step2: React.FC<StepProps> = ({onNext, skipToStep4}) => {
           </AppText>
         </View>
         <View>
-          <Image
+          <FastImage
             style={styles.image}
             source={require('../../../assets/images/pregnancyonboarding2.gif')}
             resizeMode="contain"
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 350,
-    height: 400,
+    height: 350,
   },
   buttons: {
     gap: 20,

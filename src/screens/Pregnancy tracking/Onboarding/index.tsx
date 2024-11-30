@@ -8,7 +8,7 @@ import Step1 from '../../Pregnancy tracking/Onboarding/Step1';
 import Step2 from '../../Pregnancy tracking/Onboarding/Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
-import Step5 from './Step5';
+import FastImage from 'react-native-fast-image';
 
 const PregnancyOnboarding = () => {
   const navigation = useNavigation();
@@ -27,11 +27,12 @@ const PregnancyOnboarding = () => {
   const steps = [
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image
+        <FastImage
           style={styles.image}
-          source={require('../../../assets/images/pregnancyonboarding1.png')}
           resizeMode="contain"
+          source={require('../../../assets/images/pregnancyonboarding3.gif')}
         />
+
         <AppText style={styles.headingText}>
           Congratulations on this incredible journey towards motherhood! 🌟{' '}
         </AppText>
@@ -51,8 +52,7 @@ const PregnancyOnboarding = () => {
     <Step1 onNext={goToNextStep} />,
     <Step2 onNext={goToNextStep} skipToStep4={skipToStep4} />,
     <Step3 onNext={goToNextStep} />,
-    <Step4 onNext={goToNextStep} />,
-    <Step5 />,
+    <Step4 />,
   ];
 
   return (
@@ -101,9 +101,9 @@ const styles = StyleSheet.create({
     width: 300,
   },
   image: {
-    marginLeft: 90,
-    width: 250,
-    height: 370,
+    width: 300,
+    height: 300,
+    borderRadius: 300,
   },
   contenttext: {
     fontSize: 16,
