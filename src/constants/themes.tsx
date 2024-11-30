@@ -35,6 +35,7 @@ export const COLORS = {
   black_fifty: '#3A3A3A50',
   border_payment: '#E6E6E6',
   light_gray_ECEBEB: '#ECEBEB',
+  // blacklightish: '#D6D6D6'
 };
 
 export const FONTS = {

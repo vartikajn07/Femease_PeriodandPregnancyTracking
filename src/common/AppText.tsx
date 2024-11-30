@@ -35,6 +35,7 @@ export const WHITE = 'WHITE';
 export const PRIMARY = 'PRIMARY';
 export const SECOND = 'SECOND';
 export const BLACK = 'BLACK';
+
 export const ORANGE_SECOND = 'ORANGE_SECOND';
 export const ORANGE_THIRD = 'ORANGE_THIRD';
 export const SUCCESS = 'SUCCESS';
@@ -197,7 +198,7 @@ const AppText = ({
         style['color'] = COLORS.success;
         break;
       case GREY:
-        style['color'] = COLORS.dark_gray;
+        style['color'] = COLORS.light_gray;
         break;
 
       default:
