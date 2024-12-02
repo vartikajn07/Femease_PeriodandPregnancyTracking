@@ -4,9 +4,19 @@ import {FONTS, COLORS} from '../../../constants/themes';
 import {Dropdown} from '../../../common/Dropdown';
 import FastImage from 'react-native-fast-image';
 import {dropdownIcon} from '../../../utils/ImageAssets';
-import {AppText, TWELVE, LIGHT} from '../../../common/AppText';
+import {
+  AppText,
+  TWELVE,
+  LIGHT,
+  TWENTY,
+  SEMI_BOLD,
+  MEDIUM,
+  SIXTEEN,
+  WHITE,
+} from '../../../common/AppText';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../../routes/RootNavigator';
+import Images from '../../../assets';
 
 const Step3 = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -29,10 +39,13 @@ const Step3 = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.containerheading}>
-          <Text style={styles.headingText}>
+        <View>
+          <AppText
+            type={TWENTY}
+            weight={SEMI_BOLD}
+            style={{textAlign: 'center'}}>
             How long is your typical cycle?
-          </Text>
+          </AppText>
         </View>
         <View style={styles.dropdowncontainer}>
           <Dropdown
@@ -47,30 +60,27 @@ const Step3 = () => {
             valueField="value"
             renderRightIcon={() => (
               <FastImage
-                source={dropdownIcon}
+                source={Images.DROPDOWN_ICON}
                 resizeMode="contain"
                 style={{height: 15, width: 15}}
               />
             )}
           />
-          <AppText style={styles.caption} type={TWELVE} weight={LIGHT}>
+          <AppText type={TWELVE} weight={LIGHT} style={{paddingHorizontal: 5}}>
             Your cycle starts on the first day of your period and ends the day
             before your next period. Estimating your cycle length helps enable
             period predictions.
           </AppText>
         </View>
       </View>
-      {/* Next button */}
       <TouchableOpacity onPress={handleNext} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>
   );
@@ -78,13 +88,15 @@ const Step3 = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    paddingHorizontal: 5,
+    paddingTop: 60,
   },
-  containerheading: {},
   headingText: {
     fontFamily: FONTS.SemiBold,
     fontSize: 20,
@@ -115,11 +127,9 @@ const styles = StyleSheet.create({
   dropcontainer: {
     marginTop: 20,
   },
-  caption: {
-    color: COLORS.dark_gray,
-    paddingHorizontal: 5,
-  },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '90%',

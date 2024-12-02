@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FONTS} from '../../../constants/themes';
-
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {AppText} from '../../../common/AppText';
+import {
+  AppText,
+  MEDIUM,
+  SEMI_BOLD,
+  SIXTEEN,
+  TWENTY,
+  WHITE,
+} from '../../../common/AppText';
 import Step1 from '../../Pregnancy tracking/Onboarding/Step1';
 import Step2 from '../../Pregnancy tracking/Onboarding/Step2';
 import Step3 from './Step3';
@@ -12,7 +17,6 @@ import FastImage from 'react-native-fast-image';
 import Images from '../../../assets';
 
 const PregnancyOnboarding = () => {
-  const navigation = useNavigation();
   const [currentStep, setCurrentStep] = useState(0);
 
   const goToNextStep = () => {
@@ -33,20 +37,18 @@ const PregnancyOnboarding = () => {
           resizeMode="contain"
           source={Images.PREGNANCY_ONBOARDING2}
         />
-        <AppText style={styles.headingText}>
+        <AppText type={TWENTY} weight={SEMI_BOLD} style={{textAlign: 'center'}}>
           Congratulations on this incredible journey towards motherhood! 🌟{' '}
         </AppText>
       </View>
       <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>,
     <Step1 onNext={goToNextStep} />,
@@ -55,49 +57,28 @@ const PregnancyOnboarding = () => {
     <Step4 />,
   ];
 
-  return (
-    <View style={styles.container}>
-      {steps[currentStep]}
-
-      {/* Next button
-      <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
-          Next
-        </Text>
-      </TouchableOpacity> */}
-    </View>
-  );
+  return <View style={styles.container}>{steps[currentStep]}</View>;
 };
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingVertical: 40,
+    paddingTop: 60,
   },
   containerheading: {
     marginHorizontal: 'auto',
     paddingHorizontal: 5,
   },
-  headingText: {
-    fontFamily: FONTS.SemiBold,
-    fontSize: 20,
-    textAlign: 'center',
-  },
   content: {
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 15,
+    gap: 30,
     width: 300,
   },
   image: {
@@ -105,11 +86,9 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 300,
   },
-  contenttext: {
-    fontSize: 16,
-    fontFamily: FONTS.SemiBold,
-  },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '95%',

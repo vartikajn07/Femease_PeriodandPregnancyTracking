@@ -1,23 +1,18 @@
 //change due date screen
 import React, {useState} from 'react';
-import {
-  Image,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Keyboard, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONTS, COLORS} from '../../../constants/themes';
 import {
   AppText,
   FIFTEEN,
+  GREY,
   MEDIUM,
+  PRIMARY,
   SEMI_BOLD,
   TEN,
   TWENTY,
 } from '../../../common/AppText';
-import DatePicker from 'react-native-date-picker';
+import Scrollpicker from '../../../common/Scrollpicker';
 
 interface StepProps {
   onNext: () => void;
@@ -25,44 +20,143 @@ interface StepProps {
 
 const Step3: React.FC<StepProps> = ({onNext}) => {
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
 
-  const handleDateInputChange = () => {
-    Keyboard.dismiss();
-    setOpen(true);
+  const renderItem = (data: string, index: number, isSelected: boolean) => {
+    const itemColor = isSelected ? PRIMARY : GREY;
+    return (
+      <View>
+        <AppText
+          type={TWENTY}
+          weight={SEMI_BOLD}
+          color={itemColor}
+          style={{textAlign: 'center'}}>
+          {data}
+        </AppText>
+      </View>
+    );
+  };
+
+  const onValueChange = (value: string | undefined, index: number) => {
+    if (value) {
+      const currentDate = new Date(date);
+      currentDate.setDate(parseInt(value));
+      setDate(currentDate);
+    }
   };
 
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={() => handleDateInputChange()}
-          style={[
-            styles.containerblock,
-            {
-              paddingHorizontal: 15,
-              paddingVertical: 8,
-              borderRadius: 8,
-            },
-          ]}>
-          <AppText weight={SEMI_BOLD} type={FIFTEEN}>
-            {'Due Date'}
+        <View style={styles.containerblock}>
+          <AppText type={TWENTY} weight={SEMI_BOLD}>
+            Due Date
           </AppText>
           <View
             style={{
-              height: 70,
-              justifyContent: 'center',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 20,
             }}>
-            <AppText type={TWENTY}>
-              {date?.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-              })}
-            </AppText>
+            {/* day scroller */}
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                maxHeight: 180,
+                maxWidth: 80,
+              }}>
+              <Scrollpicker
+                dataSource={Array.from({length: 31}, (_, i) => `${i + 1}`)}
+                selectedIndex={date.getDate() - 1}
+                onValueChange={value => onValueChange(value, 0)}
+                itemHeight={60}
+                highlightColor={COLORS.black}
+                renderItem={renderItem}
+                highlightBorderWidth={1}
+              />
+            </View>
+            {/* month scroller */}
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                maxHeight: 180,
+                maxWidth: 80,
+              }}>
+              <Scrollpicker
+                dataSource={[
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'May',
+                  'Jun',
+                  'Jul',
+                  'Aug',
+                  'Sep',
+                  'Oct',
+                  'Nov',
+                  'Dec',
+                ]}
+                selectedIndex={date.getMonth()}
+                onValueChange={value => {
+                  if (value) {
+                    const currentDate = new Date(date);
+                    currentDate.setMonth(
+                      [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec',
+                      ].indexOf(value),
+                    );
+                    setDate(currentDate);
+                  }
+                }}
+                itemHeight={60}
+                highlightColor={COLORS.black}
+                renderItem={renderItem}
+                highlightBorderWidth={1}
+              />
+            </View>
+            {/* year scroller */}
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                maxHeight: 180,
+                maxWidth: 80,
+              }}>
+              <Scrollpicker
+                dataSource={Array.from({length: 200}, (_, i) => `${1900 + i}`)}
+                selectedIndex={date.getFullYear() - 1900}
+                onValueChange={value => {
+                  if (value) {
+                    const currentDate = new Date(date);
+                    currentDate.setFullYear(parseInt(value));
+                    setDate(currentDate);
+                  }
+                }}
+                itemHeight={60}
+                highlightColor={COLORS.black}
+                renderItem={renderItem}
+                highlightBorderWidth={1}
+              />
+            </View>
           </View>
-        </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
           <Text
             style={{
@@ -74,21 +168,6 @@ const Step3: React.FC<StepProps> = ({onNext}) => {
             Next
           </Text>
         </TouchableOpacity>
-        <DatePicker
-          mode="date"
-          dividerColor={COLORS.primary}
-          buttonColor={COLORS.primary}
-          modal
-          open={open}
-          date={date}
-          onConfirm={date => {
-            setDate(date);
-            setOpen(false);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
       </View>
     </>
   );
@@ -96,19 +175,27 @@ const Step3: React.FC<StepProps> = ({onNext}) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
+    backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 5,
+    paddingTop: 60,
   },
   containerblock: {
-    width: 300,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: 40,
   },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
-    width: '90%',
+    width: '95%',
     textAlign: 'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,

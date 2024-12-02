@@ -1,7 +1,15 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONTS, COLORS} from '../../../constants/themes';
-import {AppText} from '../../../common/AppText';
+import {
+  AppText,
+  MEDIUM,
+  PRIMARY,
+  SEMI_BOLD,
+  SIXTEEN,
+  TWENTY,
+  WHITE,
+} from '../../../common/AppText';
 import FastImage from 'react-native-fast-image';
 import Images from '../../../assets';
 
@@ -14,40 +22,38 @@ const Step2: React.FC<StepProps> = ({onNext, skipToStep4}) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.containerheading}>
-          <AppText style={styles.headingText}>
-            Your little one is expected to arrive on June 03, 2025
-          </AppText>
-        </View>
-        <View>
-          <FastImage
-            style={styles.image}
-            source={Images.PREGNANCY_ONBOARDING1}
-            resizeMode="contain"
-          />
+        <View style={styles.contentcontainer}>
+          <View style={styles.containerheading}>
+            <AppText type={TWENTY} weight={SEMI_BOLD}>
+              Your little one is expected to arrive on June 03, 2025
+            </AppText>
+          </View>
+          <View>
+            <FastImage
+              style={styles.image}
+              source={Images.PREGNANCY_ONBOARDING1}
+              resizeMode="contain"
+            />
+          </View>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity onPress={onNext} style={styles.duedatebtn}>
-            <Text
-              style={{
-                textAlign: 'center',
-                color: '#E392A1',
-                fontFamily: FONTS.Medium,
-                fontSize: 16,
-              }}>
-              Change due date
-            </Text>
+            <AppText
+              weight={MEDIUM}
+              type={SIXTEEN}
+              color={PRIMARY}
+              style={{textAlign: 'center'}}>
+              Change Due Date
+            </AppText>
           </TouchableOpacity>
           <TouchableOpacity onPress={skipToStep4} style={styles.Nextbtn}>
-            <Text
-              style={{
-                textAlign: 'center',
-                color: '#ffff',
-                fontFamily: FONTS.Medium,
-                fontSize: 16,
-              }}>
+            <AppText
+              weight={MEDIUM}
+              type={SIXTEEN}
+              color={WHITE}
+              style={{textAlign: 'center'}}>
               Next
-            </Text>
+            </AppText>
           </TouchableOpacity>
         </View>
       </View>
@@ -57,13 +63,20 @@ const Step2: React.FC<StepProps> = ({onNext, skipToStep4}) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 5,
-    paddingVertical: 60,
+    paddingTop: 60,
+  },
+  contentcontainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 40,
   },
   containerheading: {
     marginHorizontal: 'auto',
@@ -79,13 +92,15 @@ const styles = StyleSheet.create({
     height: 350,
   },
   buttons: {
+    position: 'absolute',
+    bottom: 70,
     gap: 20,
   },
   duedatebtn: {
     borderWidth: 1,
     borderColor: COLORS.primary,
     backgroundColor: '#ffff',
-    width: '90%',
+    width: '95%',
     textAlign: 'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,
@@ -94,7 +109,7 @@ const styles = StyleSheet.create({
   Nextbtn: {
     backgroundColor: '#E392A1',
     color: '#ffff',
-    width: '90%',
+    width: '95%',
     textAlign: 'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,

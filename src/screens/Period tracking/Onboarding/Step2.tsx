@@ -3,8 +3,16 @@ import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import {FONTS, COLORS} from '../../../constants/themes';
 import {Dropdown} from '../../../common/Dropdown';
 import FastImage from 'react-native-fast-image';
-import {dropdownIcon} from '../../../utils/ImageAssets';
-import {AppText, TWELVE, LIGHT} from '../../../common/AppText';
+import {
+  AppText,
+  LIGHT,
+  MEDIUM,
+  SEMI_BOLD,
+  SIXTEEN,
+  TWELVE,
+  TWENTY,
+  WHITE,
+} from '../../../common/AppText';
 import Images from '../../../assets';
 
 interface StepProps {
@@ -14,35 +22,21 @@ interface StepProps {
 const Step2: React.FC<StepProps> = ({onNext}) => {
   const [value, setValue] = useState('');
 
-  const data = [
-    {label: '1 day', value: '1'},
-    {label: '2 days', value: '2'},
-    {label: '3 days', value: '3'},
-    {label: '4 days', value: '4'},
-    {label: '5 days', value: '5'},
-    {label: '6 days', value: '6'},
-    {label: '7 days', value: '7'},
-    {label: '8 days', value: '8'},
-    {label: '9 days', value: '9'},
-    {label: '10 days', value: '10'},
-    {label: '11 days', value: '11'},
-    {label: '12 days', value: '12'},
-    {label: '13 days', value: '13'},
-    {label: '14 days', value: '14'},
-    {label: '15 days', value: '15'},
-    {label: '16 days', value: '16'},
-    {label: '17 days', value: '17'},
-    {label: '18 days', value: '18'},
-    {label: '19 days', value: '19'},
-    {label: '20 days', value: '20'},
-  ];
+  const data = Array.from({length: 20}, (_, i) => ({
+    label: `${i + 1} day${i + 1 > 1 ? 's' : ''}`,
+    value: `${i + 1}`,
+  }));
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.containerheading}>
-          <Text style={styles.headingText}>
+        <View>
+          <AppText
+            type={TWENTY}
+            weight={SEMI_BOLD}
+            style={{textAlign: 'center'}}>
             How long does your period usually last?
-          </Text>
+          </AppText>
         </View>
         <View style={styles.dropdowncontainer}>
           <Dropdown
@@ -63,40 +57,34 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
               />
             )}
           />
-          <AppText style={styles.caption} type={TWELVE} weight={LIGHT}>
+          <AppText type={TWELVE} weight={LIGHT} style={{paddingHorizontal: 5}}>
             Period length is measured from the first to the last day of
             bleeding.
           </AppText>
         </View>
       </View>
-      {/* Next button */}
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  containerheading: {},
-  headingText: {
-    fontFamily: FONTS.SemiBold,
-    fontSize: 20,
-    textAlign: 'center',
+    paddingHorizontal: 5,
+    paddingTop: 60,
   },
   content: {
     gap: 70,
@@ -124,11 +112,9 @@ const styles = StyleSheet.create({
   dropcontainer: {
     marginTop: 20,
   },
-  caption: {
-    color: COLORS.dark_gray,
-    paddingHorizontal: 5,
-  },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '90%',

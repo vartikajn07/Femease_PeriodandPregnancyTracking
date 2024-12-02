@@ -1,7 +1,14 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FONTS} from '../../../constants/themes';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import Calendar from '../../../common/Calendar';
+import {
+  AppText,
+  MEDIUM,
+  SEMI_BOLD,
+  SIXTEEN,
+  TWENTY,
+  WHITE,
+} from '../../../common/AppText';
 
 interface StepProps {
   onNext: () => void;
@@ -28,11 +35,14 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
           gap: 70,
         }}>
         <View style={styles.containerheading}>
-          <Text style={styles.headingText}>
+          <AppText
+            type={TWENTY}
+            weight={SEMI_BOLD}
+            style={{textAlign: 'center'}}>
             When did your last period start?
-          </Text>
+          </AppText>
         </View>
-        {/* Add your date picker or input here */}
+        {/* global calendar component */}
         <Calendar
           selectedDate={selectedDate}
           onDateSelect={handleDateSelect}
@@ -43,15 +53,13 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
         />
       </View>
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>
   );
@@ -59,21 +67,17 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 40,
+    paddingHorizontal: 10,
+    paddingTop: 60,
   },
   containerheading: {
     marginHorizontal: 'auto',
-  },
-  headingText: {
-    fontFamily: FONTS.SemiBold,
-    fontSize: 20,
-    textAlign: 'center',
   },
   content: {
     paddingLeft: 8,
@@ -88,6 +92,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '90%',
@@ -99,23 +105,3 @@ const styles = StyleSheet.create({
 });
 
 export default Step1;
-
-{
-  /* <Calendar
-  onDayPress={handleDateSelect}
-  markedDates={{
-    [selectedDate]: {
-      selected: true,
-      selectedColor: '#FF6161',
-      selectedTextColor: 'white',
-    },
-  }}
-  monthFormat={'MMMM yyyy'}
-  theme={{
-    textDayFontFamily: FONTS.Regular,
-    textMonthFontFamily: FONTS.SemiBold,
-    todayTextColor: '#E392A1',
-    arrowColor: '#E392A1',
-  }}
-/>; */
-}

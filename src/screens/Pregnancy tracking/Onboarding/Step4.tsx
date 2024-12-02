@@ -1,25 +1,23 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FONTS, COLORS} from '../../../constants/themes';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {COLORS} from '../../../constants/themes';
 import {
   AppText,
   GREY,
   MEDIUM,
   PRIMARY,
   SEMI_BOLD,
-  TEN,
+  SIXTEEN,
   TWENTY,
+  WHITE,
 } from '../../../common/AppText';
 import Scrollpicker from '../../../common/Scrollpicker';
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 
-interface StepProps {
-  onNext: () => void;
-}
-
 const Step4 = () => {
-  const [weight, setWeight] = useState('10');
+  const [weight, setWeight] = useState('30');
+  const [height, setHeight] = useState('100');
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const handleNext = () => {
     navigation.navigate('PregnancyHome');
@@ -38,73 +36,73 @@ const Step4 = () => {
       </View>
     );
   };
+  //for weight
   const onValueChange = (value: string | undefined, index: number) => {
     if (value) {
       setWeight(value);
     }
   };
+  //for height
+  const onValueChangeforHeight = (value: string | undefined, index: number) => {
+    if (value) {
+      setHeight(value);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <AppText weight={SEMI_BOLD} type={TWENTY}>
-          Your weight?
-        </AppText>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 20,
-            marginTop: 20,
-          }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              maxHeight: 180,
-              maxWidth: 200,
-            }}>
-            <Scrollpicker
-              dataSource={Array.from({length: 200}, (_, i) => `${i + 1}`)}
-              selectedIndex={parseInt(weight) - 1}
-              onValueChange={onValueChange}
-              itemHeight={60}
-              highlightColor={COLORS.black}
-              renderItem={renderItem}
-              highlightBorderWidth={1}
-            />
-          </View>
-          <AppText weight={MEDIUM} type={TWENTY}>
-            kg
+      <View style={styles.contentcontainer}>
+        <View style={styles.content}>
+          <AppText weight={SEMI_BOLD} type={TWENTY}>
+            Your weight?
           </AppText>
+          <View style={styles.scrollerbox}>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                maxHeight: 180,
+                maxWidth: 80,
+              }}>
+              <Scrollpicker
+                dataSource={Array.from({length: 150}, (_, i) => `${i + 1}`)}
+                selectedIndex={parseInt(weight) - 1}
+                onValueChange={onValueChange}
+                itemHeight={60}
+                highlightColor={COLORS.black}
+                renderItem={renderItem}
+                highlightBorderWidth={1}
+              />
+            </View>
+            <AppText weight={MEDIUM} type={TWENTY}>
+              kg
+            </AppText>
+          </View>
         </View>
-      </View>
-      <View style={styles.content}>
-        <AppText weight={SEMI_BOLD} type={TWENTY}>
-          Your height?
-        </AppText>
-        <View
-          style={{
-            maxHeight: 180,
-          }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Scrollpicker
-              dataSource={Array.from({length: 200}, (_, i) => `${i + 1}`)}
-              selectedIndex={parseInt(weight) - 1}
-              onValueChange={onValueChange}
-              itemHeight={60}
-              highlightColor={COLORS.black}
-              renderItem={renderItem}
-              highlightBorderWidth={2}
-            />
+        <View style={styles.content}>
+          <AppText weight={SEMI_BOLD} type={TWENTY}>
+            Your height?
+          </AppText>
+          <View style={styles.scrollerbox}>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                maxHeight: 180,
+                maxWidth: 80,
+              }}>
+              <Scrollpicker
+                dataSource={Array.from({length: 200}, (_, i) => `${i + 1}`)}
+                selectedIndex={parseInt(height) - 1}
+                onValueChange={onValueChangeforHeight}
+                itemHeight={60}
+                highlightColor={COLORS.black}
+                renderItem={renderItem}
+                highlightBorderWidth={1}
+              />
+            </View>
             <AppText weight={MEDIUM} type={TWENTY}>
               cm
             </AppText>
@@ -112,15 +110,13 @@ const Step4 = () => {
         </View>
       </View>
       <TouchableOpacity onPress={handleNext} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>
   );
@@ -128,17 +124,37 @@ const Step4 = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
+    backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     paddingHorizontal: 5,
+    paddingTop: 60,
+  },
+  contentcontainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 60,
   },
   content: {
-    paddingHorizontal: 20,
-    gap: 20,
+    paddingHorizontal: 10,
+    width: 350,
+    gap: 10,
+  },
+  scrollerbox: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 25,
+    marginTop: 10,
   },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '90%',
@@ -147,27 +163,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 8,
   },
-  pickerItem: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
 });
 export default Step4;
-
-// <View style={{maxHeight: 180}}>
-// <ScrollPicker
-//   dataSource={Array.from({length: 50}, (_, i) => `${i + 1}`)}
-//   selectedIndex={parseInt(weight) - 1}
-//   renderItem={data => (
-//     <View style={{width: 100}}>
-//       <Text style={styles.pickerItem}>{data}</Text>
-//     </View>
-//   )}
-//   onValueChange={data => setWeight(data as string)}
-//   wrapperHeight={200}
-//   wrapperBackground="#FFFFFF"
-//   itemHeight={60}
-//   highlightColor="#E392A1"
-//   highlightBorderWidth={1}
-// />
-// </View>

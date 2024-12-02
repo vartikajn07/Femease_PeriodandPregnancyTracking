@@ -1,11 +1,19 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FONTS} from '../../../constants/themes';
+import {COLORS, FONTS} from '../../../constants/themes';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import FastImage from 'react-native-fast-image';
 import Images from '../../../assets';
+import {
+  AppText,
+  MEDIUM,
+  SEMI_BOLD,
+  SIXTEEN,
+  TWENTY,
+  WHITE,
+} from '../../../common/AppText';
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -21,7 +29,9 @@ const Onboarding = () => {
     <View style={styles.container}>
       <View style={styles.contentcontainer}>
         <View style={styles.containerheading}>
-          <Text style={styles.headingText}>Welcome to period tracking</Text>
+          <AppText type={TWENTY} weight={SEMI_BOLD}>
+            Welcome to period tracking
+          </AppText>
         </View>
         <View style={styles.content}>
           <TouchableOpacity style={styles.contentbtn}>
@@ -29,39 +39,41 @@ const Onboarding = () => {
               style={styles.image}
               source={Images.PERIOD_ONBOARDING1}
             />
-            <Text style={styles.contenttext}>
+            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
               Period and Fertility Predictions
-            </Text>
+            </AppText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.contentbtn}>
             <FastImage
               style={styles.image}
               source={Images.PERIOD_ONBOARDING2}
             />
-            <Text style={styles.contenttext}>Cycle Timeline</Text>
+            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+              Cycle Timeline
+            </AppText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.contentbtn}>
             <FastImage
               style={styles.image}
               source={Images.PERIOD_ONBOARDING3}
             />
-            <Text style={styles.contenttext}>Cycle Log</Text>
+            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+              Cycle Log
+            </AppText>
           </TouchableOpacity>
         </View>
       </View>
       <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>,
-
+    //next screens within one section
     <Step1 onNext={goToNextStep} />,
     <Step2 onNext={goToNextStep} />,
     <Step3 />,
@@ -88,10 +100,6 @@ const styles = StyleSheet.create({
   containerheading: {
     marginHorizontal: 'auto',
   },
-  headingText: {
-    fontFamily: FONTS.SemiBold,
-    fontSize: 20,
-  },
   content: {
     paddingLeft: 8,
     display: 'flex',
@@ -110,17 +118,12 @@ const styles = StyleSheet.create({
     height: 50,
     objectFit: 'contain',
   },
-  contenttext: {
-    fontSize: 16,
-    fontFamily: FONTS.SemiBold,
-  },
   Nextbtn: {
     position: 'absolute',
     bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '95%',
-    textAlign: 'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,
     borderRadius: 8,

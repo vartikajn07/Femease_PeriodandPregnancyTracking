@@ -1,7 +1,15 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FONTS} from '../../../constants/themes';
 import Calendar from '../../../common/Calendar';
+import {
+  AppText,
+  MEDIUM,
+  SEMI_BOLD,
+  SIXTEEN,
+  TWENTY,
+  WHITE,
+} from '../../../common/AppText';
 
 interface StepProps {
   onNext: () => void;
@@ -20,19 +28,13 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 70,
-        }}>
+      <View style={styles.contentcontainer}>
         <View style={styles.containerheading}>
-          <Text style={styles.headingText}>
+          <AppText type={TWENTY} weight={SEMI_BOLD}>
             What was the first date of your last period?
-          </Text>
+          </AppText>
         </View>
-        {/* Add your date picker or input here */}
+        {/* calendar component */}
         <Calendar
           selectedDate={selectedDate}
           onDateSelect={handleDateSelect}
@@ -43,15 +45,13 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
         />
       </View>
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
-        <Text
-          style={{
-            textAlign: 'center',
-            color: '#ffff',
-            fontFamily: FONTS.Medium,
-            fontSize: 16,
-          }}>
+        <AppText
+          weight={MEDIUM}
+          type={SIXTEEN}
+          color={WHITE}
+          style={{textAlign: 'center'}}>
           Next
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>
   );
@@ -59,13 +59,20 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     backgroundColor: '#ffff',
     height: '100%',
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 5,
-    paddingVertical: 40,
+    paddingHorizontal: 10,
+    paddingTop: 60,
+  },
+  contentcontainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 70,
   },
   containerheading: {
     marginHorizontal: 'auto',
@@ -89,9 +96,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   Nextbtn: {
+    position: 'absolute',
+    bottom: 70,
     backgroundColor: '#E392A1',
     color: '#ffff',
-    width: '90%',
+    width: '95%',
     textAlign: 'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,
