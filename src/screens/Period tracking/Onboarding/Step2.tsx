@@ -5,6 +5,7 @@ import {Dropdown} from '../../../common/Dropdown';
 import FastImage from 'react-native-fast-image';
 import {dropdownIcon} from '../../../utils/ImageAssets';
 import {AppText, TWELVE, LIGHT} from '../../../common/AppText';
+import Images from '../../../assets';
 
 interface StepProps {
   onNext: () => void;
@@ -56,7 +57,7 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
             valueField="value"
             renderRightIcon={() => (
               <FastImage
-                source={dropdownIcon}
+                source={Images.DROPDOWN_ICON}
                 resizeMode="contain"
                 style={{height: 15, width: 15}}
               />

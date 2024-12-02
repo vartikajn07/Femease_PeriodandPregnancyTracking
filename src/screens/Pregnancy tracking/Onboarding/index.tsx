@@ -9,6 +9,7 @@ import Step2 from '../../Pregnancy tracking/Onboarding/Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import FastImage from 'react-native-fast-image';
+import Images from '../../../assets';
 
 const PregnancyOnboarding = () => {
   const navigation = useNavigation();
@@ -30,9 +31,8 @@ const PregnancyOnboarding = () => {
         <FastImage
           style={styles.image}
           resizeMode="contain"
-          source={require('../../../assets/images/pregnancyonboarding3.gif')}
+          source={Images.PREGNANCY_ONBOARDING2}
         />
-
         <AppText style={styles.headingText}>
           Congratulations on this incredible journey towards motherhood! 🌟{' '}
         </AppText>

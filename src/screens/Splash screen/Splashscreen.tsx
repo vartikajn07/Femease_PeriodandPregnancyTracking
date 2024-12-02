@@ -5,6 +5,8 @@ import {FONTS} from '../../constants/themes';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../routes/RootNavigator';
 import {StackNavigationProp} from '@react-navigation/stack';
+import FastImage from 'react-native-fast-image';
+import Images from '../../assets';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
 
@@ -20,18 +22,19 @@ function SplashScreen(): React.JSX.Element {
           <TouchableOpacity
             onPress={() => navigation.navigate('PeriodTrackingOnboarding')}
             style={styles.contentbtn}>
-            <Image
+            <FastImage
               style={styles.image}
-              source={require('../../../src/assets/images/homeimg1.png')} // Local image
+              source={Images.SPLASH_SCREEN_PERIOD}
             />
             <Text style={styles.contenttext}>Period Tracking</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('PregnancyOnboarding')}
             style={styles.contentbtn}>
-            <Image
+            <FastImage
               style={styles.image}
-              source={require('../../../src/assets/images/homeimg2.png')} // Local image
+              source={Images.SPLASH_SCREEN_PREGNANCY}
+              resizeMode="contain"
             />
             <Text style={styles.contenttext}>Pregnancy Tracking</Text>
           </TouchableOpacity>

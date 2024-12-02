@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONTS, COLORS} from '../../../constants/themes';
 import {AppText} from '../../../common/AppText';
 import FastImage from 'react-native-fast-image';
+import Images from '../../../assets';
 
 interface StepProps {
   onNext: () => void;
@@ -21,7 +22,7 @@ const Step2: React.FC<StepProps> = ({onNext, skipToStep4}) => {
         <View>
           <FastImage
             style={styles.image}
-            source={require('../../../assets/images/pregnancyonboarding2.gif')}
+            source={Images.PREGNANCY_ONBOARDING1}
             resizeMode="contain"
           />
         </View>
