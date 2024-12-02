@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import {COLORS, FONTS} from '../constants/themes';
 import {Icon, IconButton} from 'react-native-paper';
+import {AppText, FIFTEEN, SEMI_BOLD, SIXTEEN, THIRTEEN} from './AppText';
 
 interface CalendarProps {
   selectedDate: string | string[];
@@ -97,31 +98,38 @@ const Calendar: React.FC<CalendarProps> = ({
     <View style={styles.container}>
       {/* Month Navigation */}
       <View style={styles.header}>
-        <IconButton
-          icon="chevron-left"
-          size={24}
-          iconColor={COLORS.primary}
-          onPress={() => changeMonth(-1)}
-          style={{padding: 0}}
-        />
-        <Text style={styles.month}>
-          {currentDate.toLocaleString('default', {month: 'long'})}{' '}
-          {currentDate.getFullYear()}
-        </Text>
-        <IconButton
-          icon="chevron-right"
-          iconColor={COLORS.primary}
-          size={24}
-          onPress={() => changeMonth(1)}
-          style={{padding: 0}}
-        />
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <IconButton
+            icon="chevron-left"
+            size={30}
+            iconColor={COLORS.primary}
+            onPress={() => changeMonth(-1)}
+            style={{padding: 0}}
+          />
+          <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+            {currentDate.toLocaleString('default', {month: 'long'})}{' '}
+            {currentDate.getFullYear()}
+          </AppText>
+          <IconButton
+            icon="chevron-right"
+            iconColor={COLORS.primary}
+            size={30}
+            onPress={() => changeMonth(1)}
+            style={{padding: 0}}
+          />
+        </View>
       </View>
       {/* Weekday Labels */}
       <View style={styles.weekDays}>
         {dayLabels.map(label => (
-          <Text key={label} style={styles.weekDay}>
+          <AppText key={label} type={THIRTEEN}>
             {label}
-          </Text>
+          </AppText>
         ))}
       </View>
       {/* Calendar Grid */}
@@ -196,15 +204,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 4,
     paddingHorizontal: 10,
-  },
-  arrow: {
-    fontSize: 24,
-  },
-  month: {
-    fontSize: 18,
-    fontFamily: FONTS.SemiBold,
   },
   weekDays: {
     flexDirection: 'row',
@@ -212,10 +213,6 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 8,
     marginHorizontal: 10,
-  },
-  weekDay: {
-    fontSize: 16,
-    fontFamily: FONTS.SemiBold,
   },
   day: {
     flex: 1,
@@ -229,7 +226,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4CAF50',
   },
   dayText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: FONTS.SemiBold,
   },
   currentMonthDay: {
