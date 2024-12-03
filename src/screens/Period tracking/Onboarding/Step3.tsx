@@ -17,6 +17,7 @@ import {
 import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../../routes/RootNavigator';
 import Images from '../../../assets';
+import {AppSafeAreaView} from '../../../common/AppSafeAreaView';
 
 const Step3 = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -37,52 +38,57 @@ const Step3 = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View>
+    <AppSafeAreaView>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View>
+            <AppText
+              type={TWENTY}
+              weight={SEMI_BOLD}
+              style={{textAlign: 'center'}}>
+              How long is your typical cycle?
+            </AppText>
+          </View>
+          <View style={styles.dropdowncontainer}>
+            <Dropdown
+              title=""
+              data={data}
+              value={value}
+              onChange={item => setValue(item.value)}
+              placeholder=""
+              container={styles.dropcontainer}
+              dropdown={styles.dropdown}
+              labelField="label"
+              valueField="value"
+              renderRightIcon={() => (
+                <FastImage
+                  source={Images.DROPDOWN_ICON}
+                  resizeMode="contain"
+                  style={{height: 15, width: 15}}
+                />
+              )}
+            />
+            <AppText
+              type={TWELVE}
+              weight={LIGHT}
+              style={{paddingHorizontal: 5}}>
+              Your cycle starts on the first day of your period and ends the day
+              before your next period. Estimating your cycle length helps enable
+              period predictions.
+            </AppText>
+          </View>
+        </View>
+        <TouchableOpacity onPress={handleNext} style={styles.Nextbtn}>
           <AppText
-            type={TWENTY}
-            weight={SEMI_BOLD}
+            weight={MEDIUM}
+            type={SIXTEEN}
+            color={WHITE}
             style={{textAlign: 'center'}}>
-            How long is your typical cycle?
+            Next
           </AppText>
-        </View>
-        <View style={styles.dropdowncontainer}>
-          <Dropdown
-            title=""
-            data={data}
-            value={value}
-            onChange={item => setValue(item.value)}
-            placeholder=""
-            container={styles.dropcontainer}
-            dropdown={styles.dropdown}
-            labelField="label"
-            valueField="value"
-            renderRightIcon={() => (
-              <FastImage
-                source={Images.DROPDOWN_ICON}
-                resizeMode="contain"
-                style={{height: 15, width: 15}}
-              />
-            )}
-          />
-          <AppText type={TWELVE} weight={LIGHT} style={{paddingHorizontal: 5}}>
-            Your cycle starts on the first day of your period and ends the day
-            before your next period. Estimating your cycle length helps enable
-            period predictions.
-          </AppText>
-        </View>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={handleNext} style={styles.Nextbtn}>
-        <AppText
-          weight={MEDIUM}
-          type={SIXTEEN}
-          color={WHITE}
-          style={{textAlign: 'center'}}>
-          Next
-        </AppText>
-      </TouchableOpacity>
-    </View>
+    </AppSafeAreaView>
   );
 };
 
