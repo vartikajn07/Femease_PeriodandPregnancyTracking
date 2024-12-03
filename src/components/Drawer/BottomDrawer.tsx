@@ -21,7 +21,6 @@ const BottomDrawer = ({children, isVisible, onClose}: BottomDrawerProps) => {
   const windowDimensions = useWindowDimensions();
   const contentRef = useRef<View>(null);
   const [contentHeight, setContentHeight] = useState(0);
-
   useEffect(() => {
     if (isVisible) {
       const maxHeight = windowDimensions.height * 0.6;
