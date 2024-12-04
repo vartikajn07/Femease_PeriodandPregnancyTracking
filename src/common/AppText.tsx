@@ -200,7 +200,6 @@ const AppText = ({
       case GREY:
         style['color'] = COLORS.light_gray;
         break;
-
       default:
         style['color'] = COLORS.black;
     }

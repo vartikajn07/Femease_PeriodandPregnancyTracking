@@ -11,7 +11,6 @@ export const COLORS = {
   lightest_gray: '#F3F3F3',
   light_gray: '#F1F1F1',
   white: '#ffffff',
-  orange: '#FF6161',
   red: '#FF6161',
   lightPink_active: '#F1CED5',
   lightPink_second: '#F9E9EC',
@@ -36,6 +35,7 @@ export const COLORS = {
   border_payment: '#E6E6E6',
   light_gray_ECEBEB: '#ECEBEB',
   // blacklightish: '#D6D6D6'
+  alabaster: '#FAFAFA',
 };
 
 export const FONTS = {

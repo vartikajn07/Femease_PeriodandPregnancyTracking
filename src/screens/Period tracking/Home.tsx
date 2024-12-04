@@ -17,7 +17,15 @@ import {BottomDrawer} from '../../components/Drawer';
 import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 import {COLORS} from '../../constants/themes';
 import {RadioButton} from 'react-native-paper';
-import Calendar from '../../common/Calendar';
+import {CalendarList} from 'react-native-calendars';
+
+type DayObject = {
+  dateString: string;
+  day: number;
+  month: number;
+  year: number;
+  timestamp: number;
+};
 
 const PeriodTrackingHome = () => {
   const [isDrawerOpen, setisDrawerOpen] = useState(false);
@@ -26,14 +34,6 @@ const PeriodTrackingHome = () => {
   );
   const [isChecked, setIsChecked] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>('');
-
-  const handleDateSelect = (date: string | string[]) => {
-    if (Array.isArray(date)) {
-      setSelectedDate(date[0]);
-    } else {
-      setSelectedDate(date);
-    }
-  };
   const handleRadioPress = () => {
     setIsChecked(!isChecked);
   };
@@ -46,8 +46,8 @@ const PeriodTrackingHome = () => {
     setisDrawerOpen(false);
   };
 
-  //bottom drawer -> add symptoms
-  const handlePressSymptoms = () => {
+  //bottom drawer -> add sexual activity
+  const handlePressActivity = () => {
     setDrawerContent(
       <View style={{minHeight: 600}}>
         <View style={styles.drawercontainer}>
@@ -85,24 +85,24 @@ const PeriodTrackingHome = () => {
             </View>
             <View style={styles.radiobtncontainer}>
               <TouchableOpacity
-                onPress={() => handleRadioPress}
+                onPress={handleRadioPress}
                 style={styles.renderSinglefirst}>
                 <AppText type={TWELVE} weight={NORMAL}>
                   Had Intercourse
                 </AppText>
                 <RadioButton
                   value=""
-                  status={isChecked === true ? 'checked' : 'unchecked'}
+                  status={isChecked ? 'checked' : 'unchecked'}
                   color={COLORS.primary}
                 />
               </TouchableOpacity>
               {/* test button */}
-              <View>
+              {/* <View>
                 <RadioButton
                   value=""
                   status={isChecked ? 'checked' : 'unchecked'}
                 />
-              </View>
+              </View> */}
               <TouchableOpacity
                 onPress={handleRadioPress}
                 style={styles.renderSingle}>
@@ -131,7 +131,7 @@ const PeriodTrackingHome = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.Nextbtn}>
+          <TouchableOpacity onPress={closeDrawer} style={styles.Nextbtn}>
             <AppText type={SIXTEEN} color={WHITE} style={{textAlign: 'center'}}>
               Done
             </AppText>
@@ -168,21 +168,41 @@ const PeriodTrackingHome = () => {
               </AppText>
             </Pressable>
           </View>
-          <View style={styles.middlecontainer}>
-            <Calendar
-              selectedDate={selectedDate}
-              onDateSelect={handleDateSelect}
-              selectedDateColor="#FF6161"
-              selectedDateTextColor="#FFFFFF"
-              todayTextColor="#E392A1"
-              numOfRows={5}
-            />
+          <View style={styles.middlecontainercalendar}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: 10,
+                maxHeight: 550,
+              }}>
+              <CalendarList
+                horizontal={false}
+                pagingEnabled={false}
+                pastScrollRange={12}
+                futureScrollRange={12}
+                // Highlight today's date
+                markedDates={{
+                  [selectedDate]: {
+                    selected: true,
+                    disableTouchEvent: true,
+                    selectedColor: COLORS.white,
+                  },
+                }}
+                onDayPress={(day: DayObject) => {
+                  setSelectedDate(day.dateString);
+                }}
+                // Initial date
+                current={new Date().toISOString().split('T')[0]}
+                // Style adjustments
+                theme={{
+                  selectedDayBackgroundColor: COLORS.red,
+                  todayTextColor: COLORS.primary,
+                }}
+              />
+            </View>
           </View>
-          <TouchableOpacity style={styles.Nextbtn}>
-            <AppText type={SIXTEEN} color={WHITE} style={{textAlign: 'center'}}>
-              Done
-            </AppText>
-          </TouchableOpacity>
         </View>
       </View>,
     );
@@ -201,8 +221,78 @@ const PeriodTrackingHome = () => {
           style={{
             flex: 1,
             flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
             alignSelf: 'stretch',
-            gap: 10,
+            backgroundColor: COLORS.alabaster,
+            paddingVertical: 10,
+            gap: 8,
+          }}>
+          <AppText type={SIXTEEN} weight={SEMI_BOLD} color={PRIMARY}>
+            Summary
+          </AppText>
+          <AppText type={FOURTEEN} weight={SEMI_BOLD}>
+            Last Menstrual Period
+          </AppText>
+
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'column',
+              gap: 2,
+              justifyContent: 'flex-start',
+              alignSelf: 'flex-start',
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: 4,
+                paddingVertical: 4,
+              }}>
+              <AppText type={FOURTEEN} weight={MEDIUM}>
+                Started 20 October
+              </AppText>
+              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                26 Days
+              </AppText>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: 4,
+                paddingVertical: 4,
+              }}>
+              <AppText type={FOURTEEN} weight={MEDIUM}>
+                Started 20 October
+              </AppText>
+              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                26 Days
+              </AppText>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: 4,
+                paddingVertical: 4,
+              }}>
+              <AppText type={FOURTEEN} weight={MEDIUM}>
+                Started 20 October
+              </AppText>
+              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                26 Days
+              </AppText>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            alignSelf: 'stretch',
+            gap: 20,
           }}>
           <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
             Cycle Log
@@ -214,14 +304,14 @@ const PeriodTrackingHome = () => {
               justifyContent: 'space-between',
             }}>
             {/* cycle log */}
-            <Pressable onPress={handlePressSymptoms}>
+            <Pressable>
               <AppText>Add symptoms</AppText>
             </Pressable>
             <Pressable>
               <AppText onPress={handlePressPeriods}>Add Periods</AppText>
             </Pressable>
-            <Pressable>
-              <AppText>Add symptoms</AppText>
+            <Pressable onPress={handlePressActivity}>
+              <AppText>Add sexual activity</AppText>
             </Pressable>
           </View>
         </View>
@@ -241,8 +331,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#ffff',
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'flex-start',
+    gap: 30,
     alignItems: 'center',
+    alignSelf: 'stretch',
   },
   //bottom drawer styles
   drawercontainer: {
@@ -260,6 +353,15 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     gap: 8,
     marginBottom: 280,
+  },
+  middlecontainercalendar: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    gap: 8,
+    // marginBottom: 280,
   },
   radiobtncontainer: {
     flex: 1,
