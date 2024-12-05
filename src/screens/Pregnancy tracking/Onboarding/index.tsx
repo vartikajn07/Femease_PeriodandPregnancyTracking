@@ -15,6 +15,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import FastImage from 'react-native-fast-image';
 import Images from '../../../assets';
+import {AppSafeAreaView} from '../../../common/AppSafeAreaView';
 
 const PregnancyOnboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -30,27 +31,32 @@ const PregnancyOnboarding = () => {
   };
 
   const steps = [
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <FastImage
-          style={styles.image}
-          resizeMode="contain"
-          source={Images.PREGNANCY_ONBOARDING2}
-        />
-        <AppText type={TWENTY} weight={SEMI_BOLD} style={{textAlign: 'center'}}>
-          Congratulations on this incredible journey towards motherhood! 🌟{' '}
-        </AppText>
+    <AppSafeAreaView>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <FastImage
+            style={styles.image}
+            resizeMode="contain"
+            source={Images.PREGNANCY_ONBOARDING2}
+          />
+          <AppText
+            type={TWENTY}
+            weight={SEMI_BOLD}
+            style={{textAlign: 'center'}}>
+            Congratulations on this incredible journey towards motherhood! 🌟{' '}
+          </AppText>
+        </View>
+        <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
+          <AppText
+            weight={MEDIUM}
+            type={SIXTEEN}
+            color={WHITE}
+            style={{textAlign: 'center'}}>
+            Next
+          </AppText>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
-        <AppText
-          weight={MEDIUM}
-          type={SIXTEEN}
-          color={WHITE}
-          style={{textAlign: 'center'}}>
-          Next
-        </AppText>
-      </TouchableOpacity>
-    </View>,
+    </AppSafeAreaView>,
     <Step1 onNext={goToNextStep} />,
     <Step2 onNext={goToNextStep} skipToStep4={skipToStep4} />,
     <Step3 onNext={goToNextStep} />,

@@ -14,6 +14,7 @@ import {
   TWENTY,
   WHITE,
 } from '../../../common/AppText';
+import {AppSafeAreaView} from '../../../common/AppSafeAreaView';
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -26,54 +27,56 @@ const Onboarding = () => {
 
   // Array of steps
   const steps = [
-    <View style={styles.container}>
-      <View style={styles.contentcontainer}>
-        <View style={styles.containerheading}>
-          <AppText type={TWENTY} weight={SEMI_BOLD}>
-            Welcome to period tracking
+    <AppSafeAreaView>
+      <View style={styles.container}>
+        <View style={styles.contentcontainer}>
+          <View style={styles.containerheading}>
+            <AppText type={TWENTY} weight={SEMI_BOLD}>
+              Welcome to period tracking
+            </AppText>
+          </View>
+          <View style={styles.content}>
+            <TouchableOpacity style={styles.contentbtn}>
+              <FastImage
+                style={styles.image}
+                source={Images.PERIOD_ONBOARDING1}
+              />
+              <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+                Period and Fertility Predictions
+              </AppText>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.contentbtn}>
+              <FastImage
+                style={styles.image}
+                source={Images.PERIOD_ONBOARDING2}
+              />
+              <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+                Cycle Timeline
+              </AppText>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.contentbtn}>
+              <FastImage
+                style={styles.image}
+                source={Images.PERIOD_ONBOARDING3}
+              />
+              <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+                Cycle Log
+              </AppText>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
+          <AppText
+            weight={MEDIUM}
+            type={SIXTEEN}
+            color={WHITE}
+            style={{textAlign: 'center'}}>
+            Next
           </AppText>
-        </View>
-        <View style={styles.content}>
-          <TouchableOpacity style={styles.contentbtn}>
-            <FastImage
-              style={styles.image}
-              source={Images.PERIOD_ONBOARDING1}
-            />
-            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
-              Period and Fertility Predictions
-            </AppText>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.contentbtn}>
-            <FastImage
-              style={styles.image}
-              source={Images.PERIOD_ONBOARDING2}
-            />
-            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
-              Cycle Timeline
-            </AppText>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.contentbtn}>
-            <FastImage
-              style={styles.image}
-              source={Images.PERIOD_ONBOARDING3}
-            />
-            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
-              Cycle Log
-            </AppText>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={goToNextStep} style={styles.Nextbtn}>
-        <AppText
-          weight={MEDIUM}
-          type={SIXTEEN}
-          color={WHITE}
-          style={{textAlign: 'center'}}>
-          Next
-        </AppText>
-      </TouchableOpacity>
-    </View>,
-    //next screens within one section
+    </AppSafeAreaView>,
+
     <Step1 onNext={goToNextStep} />,
     <Step2 onNext={goToNextStep} />,
     <Step3 />,

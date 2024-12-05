@@ -221,78 +221,10 @@ const PeriodTrackingHome = () => {
           style={{
             flex: 1,
             flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            alignSelf: 'stretch',
-            backgroundColor: COLORS.alabaster,
-            paddingVertical: 10,
-            gap: 8,
-          }}>
-          <AppText type={SIXTEEN} weight={SEMI_BOLD} color={PRIMARY}>
-            Summary
-          </AppText>
-          <AppText type={FOURTEEN} weight={SEMI_BOLD}>
-            Last Menstrual Period
-          </AppText>
-
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              gap: 2,
-              justifyContent: 'flex-start',
-              alignSelf: 'flex-start',
-            }}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                gap: 4,
-                paddingVertical: 4,
-              }}>
-              <AppText type={FOURTEEN} weight={MEDIUM}>
-                Started 20 October
-              </AppText>
-              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
-                26 Days
-              </AppText>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                gap: 4,
-                paddingVertical: 4,
-              }}>
-              <AppText type={FOURTEEN} weight={MEDIUM}>
-                Started 20 October
-              </AppText>
-              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
-                26 Days
-              </AppText>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                gap: 4,
-                paddingVertical: 4,
-              }}>
-              <AppText type={FOURTEEN} weight={MEDIUM}>
-                Started 20 October
-              </AppText>
-              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
-                26 Days
-              </AppText>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
             alignSelf: 'stretch',
             gap: 20,
+            backgroundColor: 'beige',
+            maxHeight: 100,
           }}>
           <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
             Cycle Log
@@ -313,6 +245,92 @@ const PeriodTrackingHome = () => {
             <Pressable onPress={handlePressActivity}>
               <AppText>Add sexual activity</AppText>
             </Pressable>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            alignSelf: 'stretch',
+            backgroundColor: COLORS.alabaster,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            maxHeight: 240,
+          }}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignSelf: 'stretch',
+              gap: 10,
+              maxHeight: 50,
+            }}>
+            <AppText type={SIXTEEN} weight={SEMI_BOLD} color={PRIMARY}>
+              Summary
+            </AppText>
+            <AppText type={FOURTEEN} weight={SEMI_BOLD}>
+              Last Menstrual Period
+            </AppText>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'column',
+              gap: 2,
+              justifyContent: 'flex-start',
+              alignSelf: 'stretch',
+              maxHeight: 150,
+              marginTop: 10,
+            }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: 4,
+                paddingVertical: 4,
+              }}>
+              <AppText type={FOURTEEN} weight={MEDIUM}>
+                Started 20 October
+              </AppText>
+              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                26 Days
+              </AppText>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: 4,
+                paddingVertical: 4,
+                borderTopWidth: 0.5,
+                borderTopColor: COLORS.black,
+              }}>
+              <AppText type={FOURTEEN} weight={MEDIUM}>
+                Typical Period Length
+              </AppText>
+              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                5 Days
+              </AppText>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                gap: 4,
+                paddingVertical: 4,
+                borderTopWidth: 0.5,
+                borderTopColor: COLORS.black,
+              }}>
+              <AppText type={FOURTEEN} weight={MEDIUM}>
+                Typical Cycle Length
+              </AppText>
+              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                28 Days
+              </AppText>
+            </View>
           </View>
         </View>
         <BottomDrawer isVisible={isDrawerOpen} onClose={closeDrawer}>

@@ -7,13 +7,14 @@ import {RootStackParamList} from '../../routes/RootNavigator';
 import {StackNavigationProp} from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
+import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
 
 function SplashScreen(): React.JSX.Element {
   const navigation = useNavigation<NavigationProp>();
   return (
-    <>
+    <AppSafeAreaView>
       <View style={styles.container}>
         <View style={styles.containerheading}>
           <Text style={styles.headingText}>What do you want to track?</Text>
@@ -40,7 +41,7 @@ function SplashScreen(): React.JSX.Element {
           </TouchableOpacity>
         </View>
       </View>
-    </>
+    </AppSafeAreaView>
   );
 }
 
