@@ -1,3 +1,6 @@
 module.exports = {
-  assets: ['./src/assets/fonts'], // Path to your fonts directory
+  assets: [
+    './src/assets/fonts',
+    'node_modules/@ant-design/icons-react-native/fonts',
+  ],
 };

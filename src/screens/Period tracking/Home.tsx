@@ -18,6 +18,8 @@ import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 import {COLORS} from '../../constants/themes';
 import {RadioButton} from 'react-native-paper';
 import {CalendarList} from 'react-native-calendars';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 type DayObject = {
   dateString: string;
@@ -49,7 +51,7 @@ const PeriodTrackingHome = () => {
   //bottom drawer -> add sexual activity
   const handlePressActivity = () => {
     setDrawerContent(
-      <View style={{minHeight: 600}}>
+      <View style={{minHeight: 700}}>
         <View style={styles.drawercontainer}>
           <View
             style={{
@@ -145,7 +147,7 @@ const PeriodTrackingHome = () => {
   //bottom drawer-> add periods
   const handlePressPeriods = () => {
     setDrawerContent(
-      <View style={{minHeight: 600}}>
+      <View style={{minHeight: 700}}>
         <View style={styles.drawercontainer}>
           <View
             style={{
@@ -223,7 +225,6 @@ const PeriodTrackingHome = () => {
             flexDirection: 'column',
             alignSelf: 'stretch',
             gap: 20,
-            backgroundColor: 'beige',
             maxHeight: 100,
           }}>
           <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
@@ -234,6 +235,7 @@ const PeriodTrackingHome = () => {
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-between',
+              paddingHorizontal: 10,
             }}>
             {/* cycle log */}
             <Pressable>
@@ -370,7 +372,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     gap: 8,
-    marginBottom: 280,
+    marginBottom: 360,
   },
   middlecontainercalendar: {
     flex: 1,
