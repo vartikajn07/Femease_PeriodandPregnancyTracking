@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {Pressable, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Switch,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   AppText,
   EIGHTEEN,
@@ -34,22 +40,23 @@ const PeriodTrackingHome = () => {
   const [drawerContent, setDrawerContent] = useState<React.ReactNode | null>(
     null,
   );
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false); //radio btn marked/unmarked
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const handleRadioPress = () => {
-    setIsChecked(!isChecked);
-  };
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'short',
   });
+
   const closeDrawer = () => {
     setisDrawerOpen(false);
   };
 
   //bottom drawer -> add sexual activity
   const handlePressActivity = () => {
+    const handleRadioPress = () => {
+      setIsChecked(!isChecked);
+    };
     setDrawerContent(
       <View style={{minHeight: 700}}>
         <View style={styles.drawercontainer}>
@@ -61,7 +68,7 @@ const PeriodTrackingHome = () => {
               alignSelf: 'stretch',
             }}>
             <Pressable onPress={closeDrawer}>
-              <AppText type={TWELVE} weight={MEDIUM} color={PRIMARY}>
+              <AppText type={TWELVE} weight={SEMI_BOLD} color={PRIMARY}>
                 Cancel
               </AppText>
             </Pressable>
@@ -69,7 +76,7 @@ const PeriodTrackingHome = () => {
               Sexual Activity
             </AppText>
             <Pressable>
-              <AppText type={TWELVE} weight={MEDIUM} color={PRIMARY}>
+              <AppText type={TWELVE} weight={SEMI_BOLD} color={PRIMARY}>
                 Add
               </AppText>
             </Pressable>
@@ -92,43 +99,10 @@ const PeriodTrackingHome = () => {
                 <AppText type={TWELVE} weight={NORMAL}>
                   Had Intercourse
                 </AppText>
-                <RadioButton
-                  value=""
-                  status={isChecked ? 'checked' : 'unchecked'}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
-              {/* test button */}
-              {/* <View>
-                <RadioButton
-                  value=""
-                  status={isChecked ? 'checked' : 'unchecked'}
-                />
-              </View> */}
-              <TouchableOpacity
-                onPress={handleRadioPress}
-                style={styles.renderSingle}>
-                <AppText type={TWELVE} weight={NORMAL}>
-                  Protection Used
-                </AppText>
                 <RadioButton.Android
-                  value=""
+                  value="HadIntercourse"
                   status={isChecked ? 'checked' : 'unchecked'}
                   color={COLORS.primary}
-                  onPress={handleRadioPress}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handleRadioPress}
-                style={styles.renderSingle}>
-                <AppText type={TWELVE} weight={NORMAL}>
-                  Protection Not Used
-                </AppText>
-                <RadioButton.Android
-                  value=""
-                  status={isChecked ? 'checked' : 'unchecked'}
-                  color={COLORS.primary}
-                  onPress={handleRadioPress}
                 />
               </TouchableOpacity>
             </View>
@@ -244,7 +218,7 @@ const PeriodTrackingHome = () => {
             <Pressable>
               <AppText onPress={handlePressPeriods}>Add Periods</AppText>
             </Pressable>
-            <Pressable onPress={handlePressActivity}>
+            <Pressable onPress={() => handlePressActivity()}>
               <AppText>Add sexual activity</AppText>
             </Pressable>
           </View>
@@ -415,7 +389,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     paddingVertical: 10,
-    marginBottom: 12,
+    marginBottom: 20,
     borderRadius: 8,
   },
 });
