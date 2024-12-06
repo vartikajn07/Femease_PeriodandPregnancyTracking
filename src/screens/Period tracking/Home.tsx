@@ -22,10 +22,11 @@ import {
 import {BottomDrawer} from '../../components/Drawer';
 import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 import {COLORS} from '../../constants/themes';
-import {RadioButton} from 'react-native-paper';
+import {IconButton, RadioButton} from 'react-native-paper';
 import {CalendarList} from 'react-native-calendars';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {Periodtracker} from '../../components/Period tracker widget';
 
 type DayObject = {
   dateString: string;
@@ -193,13 +194,15 @@ const PeriodTrackingHome = () => {
             Period Tracking Home
           </AppText>
         </View>
+
+        {/* cycle log */}
         <View
           style={{
             flex: 1,
             flexDirection: 'column',
             alignSelf: 'stretch',
             gap: 20,
-            maxHeight: 100,
+            maxHeight: 90,
           }}>
           <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
             Cycle Log
@@ -327,7 +330,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    gap: 30,
+    gap: 10,
     alignItems: 'center',
     alignSelf: 'stretch',
   },

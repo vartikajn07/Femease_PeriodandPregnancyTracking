@@ -2,12 +2,14 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {AppText} from '../../common/AppText';
 import {AppSafeAreaView} from '../../common/AppSafeAreaView';
+import {Periodtracker} from '../../components/Period tracker widget';
 
 const PregnancyHome = () => {
   return (
     <AppSafeAreaView>
       <View style={styles.container}>
         <AppText>Pregnancy Tracking Home</AppText>
+        <View></View>
       </View>
     </AppSafeAreaView>
   );
