@@ -9,7 +9,9 @@ const PregnancyHome = () => {
     <AppSafeAreaView>
       <View style={styles.container}>
         <AppText>Pregnancy Tracking Home</AppText>
-        <View></View>
+        <View>
+          <Periodtracker />
+        </View>
       </View>
     </AppSafeAreaView>
   );
@@ -23,6 +25,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    gap: 50,
     paddingHorizontal: 10,
     paddingTop: 60,
   },
