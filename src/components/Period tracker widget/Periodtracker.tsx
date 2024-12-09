@@ -45,7 +45,7 @@ const Periodtracker = () => {
             />
           </TouchableOpacity>
         </View>
-        <CalendarStrip
+        {/* <CalendarStrip
           style={styles.calendar}
           scrollable
           selectedDate={selectedDate}
@@ -56,7 +56,7 @@ const Periodtracker = () => {
           highlightDateNumberStyle={{color: COLORS.primary}}
           highlightDateNameStyle={{color: COLORS.primary}}
           upperCaseDays={false}
-        />
+        /> */}
       </View>
       {/* tracker widget */}
       <View

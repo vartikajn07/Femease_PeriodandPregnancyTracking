@@ -27,6 +27,7 @@ import {CalendarList} from 'react-native-calendars';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Periodtracker} from '../../components/Period tracker widget';
+import {Header} from '../../components/Header';
 
 type DayObject = {
   dateString: string;
@@ -189,6 +190,7 @@ const PeriodTrackingHome = () => {
   return (
     <AppSafeAreaView>
       <View style={styles.container}>
+        <Header title="Period Tracking" />
         <View style={{flex: 1, alignItems: 'flex-start'}}>
           <AppText type={SIXTEEN} weight={SEMI_BOLD}>
             Period Tracking Home
