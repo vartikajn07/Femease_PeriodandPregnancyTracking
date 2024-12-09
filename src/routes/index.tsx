@@ -1,17 +1,21 @@
+//App / Root Navigator
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-
 import SplashScreen from '../screens/Splash screen/Splashscreen';
 import PeriodTrackingOnboarding from '../screens/Period tracking/Onboarding/index';
 import PeriodTrackingHome from '../screens/Period tracking/Home';
 import PregnancyOnboarding from '../screens/Pregnancy tracking/Onboarding';
 import PregnancyHome from '../screens/Pregnancy tracking/Home';
+import NavigationService from './NavigationService';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => (
-  <NavigationContainer>
+  <NavigationContainer
+    ref={navigatorRef => {
+      NavigationService.setTopLevelNavigator(navigatorRef);
+    }}>
     <Stack.Navigator initialRouteName="SplashScreen">
       <Stack.Screen
         name="SplashScreen"
