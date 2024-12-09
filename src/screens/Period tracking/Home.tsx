@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  BackHandler,
   Pressable,
   StyleSheet,
-  Switch,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -24,10 +24,8 @@ import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 import {COLORS} from '../../constants/themes';
 import {IconButton, RadioButton} from 'react-native-paper';
 import {CalendarList} from 'react-native-calendars';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Icon from 'react-native-vector-icons/AntDesign';
-import {Periodtracker} from '../../components/Period tracker widget';
 import {Header} from '../../components/Header';
+import NavigationService from '../../routes/NavigationService';
 
 type DayObject = {
   dateString: string;
@@ -187,10 +185,26 @@ const PeriodTrackingHome = () => {
     setisDrawerOpen(true);
   };
 
+  useEffect(() => {
+    const onBackPress = () => {
+      NavigationService.navigate('SplashScreen');
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      onBackPress,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <AppSafeAreaView>
+      <Header
+        onBackPress={() => NavigationService.navigate('SplashScreen')}
+        title="Period Tracking"
+      />
       <View style={styles.container}>
-        <Header title="Period Tracking" />
         <View style={{flex: 1, alignItems: 'flex-start'}}>
           <AppText type={SIXTEEN} weight={SEMI_BOLD}>
             Period Tracking Home
@@ -326,7 +340,6 @@ export default PeriodTrackingHome;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 30,
     paddingHorizontal: 20,
     backgroundColor: '#ffff',
     flex: 1,
