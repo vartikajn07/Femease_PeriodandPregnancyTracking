@@ -37,6 +37,8 @@ export const COLORS = {
   // blacklightish: '#D6D6D6'
   alabaster: '#FAFAFA',
   alabaster_orange: '#F6EBE0',
+  pink: '#E5749D',
+  skyblue: '#2ACDFE',
 };
 
 export const FONTS = {

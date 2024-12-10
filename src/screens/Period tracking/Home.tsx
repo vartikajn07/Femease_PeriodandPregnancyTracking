@@ -26,6 +26,9 @@ import {RadioButton} from 'react-native-paper';
 import {CalendarList} from 'react-native-calendars';
 import {Header} from '../../components/Header';
 import NavigationService from '../../routes/NavigationService';
+import Tooltip from 'react-native-walkthrough-tooltip';
+import FastImage from 'react-native-fast-image';
+import Images from '../../assets';
 
 type DayObject = {
   dateString: string;
@@ -41,7 +44,7 @@ interface ActivityDrawerContentProps {
 
 const PeriodTrackingHome = () => {
   const [isChecked, setIsChecked] = useState(false);
-
+  const [visiblePopover, setVisiblePopover] = useState<number | null>(null); // State to track which popover is visible
   const [isDrawerOpen, setisDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState<React.ReactNode | null>(
     null,
@@ -52,6 +55,13 @@ const PeriodTrackingHome = () => {
     day: 'numeric',
     month: 'short',
   });
+
+  const popovers = [
+    {id: 1, title: 'Periods'},
+    {id: 2, title: 'Protected sex'},
+    {id: 3, title: 'Unprotected sex'},
+    {id: 4, title: 'Ovulation'},
+  ];
 
   //bottom drawer -> add sexual activity
   const handlePressActivity = () => {
@@ -69,7 +79,7 @@ const PeriodTrackingHome = () => {
     onCheckToggle,
   }) => {
     return (
-      <View style={{minHeight: 700}}>
+      <View style={{minHeight: 500}}>
         <View style={styles.drawercontainer}>
           <View
             style={{
@@ -229,6 +239,50 @@ const PeriodTrackingHome = () => {
             Period Tracking Home
           </AppText>
         </View>
+        {/* notations */}
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            gap: 50,
+            alignContent: 'center',
+            alignSelf: 'stretch',
+            maxHeight: 30,
+            marginBottom: 25,
+          }}>
+          {/* popover notations */}
+          {popovers.map(popover => (
+            <View key={popover.id}>
+              <FastImage
+                source={Images.HOMESCREEN_NOTATION_HEART}
+                resizeMode="contain"
+                style={{width: 24, height: 24}}>
+                <Tooltip
+                  isVisible={visiblePopover === popover.id}
+                  content={
+                    <View>
+                      <AppText weight="SEMI_BOLD" type="TEN" color={WHITE}>
+                        {popover.title}
+                      </AppText>
+                    </View>
+                  }
+                  placement="bottom"
+                  onClose={() => setVisiblePopover(null)}
+                  backgroundColor={COLORS.transparent}
+                  contentStyle={{
+                    backgroundColor: COLORS.pink,
+                    elevation: 2,
+                    shadowOpacity: 0.1,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => setVisiblePopover(popover.id)}
+                    style={styles.infoIconContainer}></TouchableOpacity>
+                </Tooltip>
+              </FastImage>
+            </View>
+          ))}
+        </View>
 
         {/* cycle log */}
         <View
@@ -360,6 +414,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     backgroundColor: '#ffff',
+    paddingBottom: 30,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -382,7 +437,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     gap: 8,
-    marginBottom: 450,
+    marginBottom: 400,
   },
   middlecontainercalendar: {
     flex: 1,
@@ -427,5 +482,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 20,
     borderRadius: 8,
+  },
+  infoIconContainer: {
+    // backgroundColor: "red",
+    height: 25,
+    width: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 1,
   },
 });
