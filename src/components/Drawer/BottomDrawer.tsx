@@ -5,6 +5,7 @@ import {
   Animated,
   TouchableWithoutFeedback,
   useWindowDimensions,
+  PanResponder,
 } from 'react-native';
 import {COLORS} from '../../constants/themes';
 
@@ -56,6 +57,27 @@ const BottomDrawer = ({children, isVisible, onClose}: BottomDrawerProps) => {
     inputRange: [0, 1],
     outputRange: [contentHeight + 15, 0],
   });
+
+  // PanResponder instance for dragging gesture
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (_, gestureState) => {
+        const newTranslateY = Math.max(0, gestureState.dy);
+        animatedTranslateYRef.setValue(newTranslateY);
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > contentHeight / 5) {
+          onClose();
+        } else {
+          Animated.spring(animatedTranslateYRef, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    }),
+  ).current;
 
   return (
     <>

@@ -22,7 +22,7 @@ import {
 import {BottomDrawer} from '../../components/Drawer';
 import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 import {COLORS} from '../../constants/themes';
-import {IconButton, RadioButton} from 'react-native-paper';
+import {RadioButton} from 'react-native-paper';
 import {CalendarList} from 'react-native-calendars';
 import {Header} from '../../components/Header';
 import NavigationService from '../../routes/NavigationService';
@@ -34,13 +34,18 @@ type DayObject = {
   year: number;
   timestamp: number;
 };
+interface ActivityDrawerContentProps {
+  isChecked: boolean;
+  onCheckToggle: (checked: boolean) => void;
+}
 
 const PeriodTrackingHome = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
   const [isDrawerOpen, setisDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState<React.ReactNode | null>(
     null,
   );
-  const [isChecked, setIsChecked] = useState(false); //radio btn marked/unmarked
   const [selectedDate, setSelectedDate] = useState<string>('');
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('en-US', {
@@ -48,16 +53,22 @@ const PeriodTrackingHome = () => {
     month: 'short',
   });
 
-  const closeDrawer = () => {
-    setisDrawerOpen(false);
-  };
-
   //bottom drawer -> add sexual activity
   const handlePressActivity = () => {
-    const handleRadioPress = () => {
-      setIsChecked(!isChecked);
-    };
     setDrawerContent(
+      <ActivityDrawerContent
+        isChecked={isChecked}
+        onCheckToggle={setIsChecked}
+      />,
+    );
+    setisDrawerOpen(true);
+  };
+
+  const ActivityDrawerContent: React.FC<ActivityDrawerContentProps> = ({
+    isChecked,
+    onCheckToggle,
+  }) => {
+    return (
       <View style={{minHeight: 700}}>
         <View style={styles.drawercontainer}>
           <View
@@ -66,6 +77,7 @@ const PeriodTrackingHome = () => {
               flexDirection: 'row',
               justifyContent: 'space-around',
               alignSelf: 'stretch',
+              maxHeight: 40,
             }}>
             <Pressable onPress={closeDrawer}>
               <AppText type={TWELVE} weight={SEMI_BOLD} color={PRIMARY}>
@@ -94,7 +106,9 @@ const PeriodTrackingHome = () => {
             </View>
             <View style={styles.radiobtncontainer}>
               <TouchableOpacity
-                onPress={handleRadioPress}
+                onPress={() => {
+                  onCheckToggle(!isChecked);
+                }}
                 style={styles.renderSinglefirst}>
                 <AppText type={TWELVE} weight={NORMAL}>
                   Had Intercourse
@@ -113,9 +127,11 @@ const PeriodTrackingHome = () => {
             </AppText>
           </TouchableOpacity>
         </View>
-      </View>,
+        <BottomDrawer isVisible={isDrawerOpen} onClose={closeDrawer}>
+          {drawerContent}
+        </BottomDrawer>
+      </View>
     );
-    setisDrawerOpen(true);
   };
 
   //bottom drawer-> add periods
@@ -197,6 +213,9 @@ const PeriodTrackingHome = () => {
 
     return () => backHandler.remove();
   }, []);
+  const closeDrawer = () => {
+    setisDrawerOpen(false);
+  };
 
   return (
     <AppSafeAreaView>
@@ -230,14 +249,13 @@ const PeriodTrackingHome = () => {
               justifyContent: 'space-between',
               paddingHorizontal: 10,
             }}>
-            {/* cycle log */}
             <Pressable>
               <AppText>Add symptoms</AppText>
             </Pressable>
             <Pressable>
               <AppText onPress={handlePressPeriods}>Add Periods</AppText>
             </Pressable>
-            <Pressable onPress={() => handlePressActivity()}>
+            <Pressable onPress={handlePressActivity}>
               <AppText>Add sexual activity</AppText>
             </Pressable>
           </View>
@@ -364,7 +382,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     gap: 8,
-    marginBottom: 360,
+    marginBottom: 450,
   },
   middlecontainercalendar: {
     flex: 1,
