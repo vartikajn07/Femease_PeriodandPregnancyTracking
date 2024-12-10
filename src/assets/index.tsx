@@ -7,5 +7,7 @@ const Images = {
   PERIOD_ONBOARDING3: require('./images/periodonboarding3.png'),
   PREGNANCY_ONBOARDING1: require('./images/pregnancyonboarding2.gif'),
   PREGNANCY_ONBOARDING2: require('./images/pregnancyonboarding3.gif'),
+  HOMESCREEN_NOTATION_HEART: require('./images/icons8-heart-94.png'),
+  HOMESCREEN_NOTATION_OVULATION: require('./images/fertilization.png'),
 };
 export default Images;
