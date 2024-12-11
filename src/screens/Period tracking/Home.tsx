@@ -44,7 +44,7 @@ interface ActivityDrawerContentProps {
 
 const PeriodTrackingHome = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [visiblePopover, setVisiblePopover] = useState<number | null>(null); // State to track which popover is visible
+  const [visiblePopover, setVisiblePopover] = useState<number | null>(null);
   const [isDrawerOpen, setisDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState<React.ReactNode | null>(
     null,
@@ -57,10 +57,46 @@ const PeriodTrackingHome = () => {
   });
 
   const popovers = [
-    {id: 1, title: 'Periods'},
-    {id: 2, title: 'Protected sex'},
-    {id: 3, title: 'Unprotected sex'},
-    {id: 4, title: 'Ovulation'},
+    {
+      id: 1,
+      title: 'Periods',
+      image: Images.HOMESCREEN_NOTATION_HEART,
+      style: {
+        width: 24,
+        height: 24,
+      },
+      tooltipstyle: {backgroundColor: COLORS.red},
+    },
+    {
+      id: 2,
+      title: 'Protected sex',
+      image: Images.HOMESCREEN_NOTATION_HEART,
+      style: {
+        width: 24,
+        height: 24,
+      },
+      tooltipstyle: {backgroundColor: COLORS.pink},
+    },
+    {
+      id: 3,
+      title: 'Unprotected sex',
+      image: Images.HOMESCREEN_NOTATION_HEART,
+      style: {
+        width: 24,
+        height: 24,
+      },
+      tooltipstyle: {backgroundColor: COLORS.pink},
+    },
+    {
+      id: 4,
+      title: 'Ovulation',
+      image: Images.HOMESCREEN_NOTATION_OVULATION,
+      style: {
+        width: 24,
+        height: 24,
+      },
+      tooltipstyle: {backgroundColor: COLORS.skyblue},
+    },
   ];
 
   //bottom drawer -> add sexual activity
@@ -255,9 +291,9 @@ const PeriodTrackingHome = () => {
           {popovers.map(popover => (
             <View key={popover.id}>
               <FastImage
-                source={Images.HOMESCREEN_NOTATION_HEART}
+                source={popover.image}
                 resizeMode="contain"
-                style={{width: 24, height: 24}}>
+                style={popover.style}>
                 <Tooltip
                   isVisible={visiblePopover === popover.id}
                   content={
@@ -268,15 +304,21 @@ const PeriodTrackingHome = () => {
                     </View>
                   }
                   placement="bottom"
-                  onClose={() => setVisiblePopover(null)}
+                  onClose={() => {
+                    setVisiblePopover(null);
+                  }}
                   backgroundColor={COLORS.transparent}
                   contentStyle={{
-                    backgroundColor: COLORS.pink,
+                    ...popover.tooltipstyle,
                     elevation: 2,
                     shadowOpacity: 0.1,
                   }}>
                   <TouchableOpacity
-                    onPress={() => setVisiblePopover(popover.id)}
+                    onPress={() => {
+                      setVisiblePopover(prev =>
+                        prev === popover.id ? null : popover.id,
+                      );
+                    }} // Toggle visibility
                     style={styles.infoIconContainer}></TouchableOpacity>
                 </Tooltip>
               </FastImage>
@@ -485,8 +527,8 @@ const styles = StyleSheet.create({
   },
   infoIconContainer: {
     // backgroundColor: "red",
-    height: 25,
-    width: 30,
+    height: 24,
+    width: 24,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 1,
