@@ -1,19 +1,19 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {AppText} from '../../common/AppText';
 import {AppSafeAreaView} from '../../common/AppSafeAreaView';
 import {Periodtracker} from '../../components/Period tracker widget';
+import {Header} from '../../components/Header';
 
 const PregnancyHome = () => {
   return (
-    <AppSafeAreaView>
-      <View style={styles.container}>
-        <AppText>Pregnancy Tracking Home</AppText>
-        <View>
+    <>
+      <AppSafeAreaView>
+        <Header title="Pregnancy Tracking" />
+        <>
           <Periodtracker />
-        </View>
-      </View>
-    </AppSafeAreaView>
+        </>
+      </AppSafeAreaView>
+    </>
   );
 };
 
@@ -26,9 +26,20 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     gap: 50,
-    paddingHorizontal: 10,
-    paddingTop: 60,
+    paddingHorizontal: 20,
   },
 });
 
 export default PregnancyHome;
+
+{
+  /* <AppSafeAreaView>
+<Header title="Pregnancy Tracking" />
+<View style={styles.container}>
+  <AppText>Pregnancy Tracking Home</AppText>
+  <View>
+   
+  </View>
+</View>
+</AppSafeAreaView> */
+}

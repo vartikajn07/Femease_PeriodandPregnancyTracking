@@ -29,6 +29,7 @@ import NavigationService from '../../routes/NavigationService';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
+import Popover from 'react-native-popover-view';
 
 type DayObject = {
   dateString: string;
@@ -318,7 +319,7 @@ const PeriodTrackingHome = () => {
                       setVisiblePopover(prev =>
                         prev === popover.id ? null : popover.id,
                       );
-                    }} // Toggle visibility
+                    }}
                     style={styles.infoIconContainer}></TouchableOpacity>
                 </Tooltip>
               </FastImage>
