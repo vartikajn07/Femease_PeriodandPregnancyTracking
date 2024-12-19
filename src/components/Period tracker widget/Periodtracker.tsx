@@ -8,42 +8,55 @@ import {
   NativeSyntheticEvent,
   Text,
 } from 'react-native';
-import { addDays, eachDayOfInterval, format, subDays } from 'date-fns';
-import { AppText, FOURTEEN, SEMI_BOLD, SIXTEEN } from '../../common/AppText';
+import { eachDayOfInterval, startOfMonth, endOfMonth, addMonths, format, subDays, addDays } from 'date-fns';
+import { AppText, ELEVEN, FOURTEEN, MEDIUM, NORMAL, SEMI_BOLD, SIXTEEN, TEN, TWELVE } from '../../common/AppText';
 import { COLORS } from '../../constants/themes';
 import { Icon, IconButton } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 8;
+
 interface DayItem {
   date: Date;
   formattedDay: string;
   formattedDate: string;
 }
+const today = new Date();
+
+const days: DayItem[] = eachDayOfInterval({
+  start: subDays(today, 150),
+  end: addDays(today, 150),
+}).map((date) => ({
+  date,
+  formattedDay: format(date, 'EEEEE'),
+  formattedDate: format(date, 'd'),
+}));
 
 const PeriodTracker: React.FC = () => {
   const today = new Date();
-  const [currentDate, setCurrentDate] = useState(new Date());
-  // (60 days range: 30 days before and after today)
-  const days: DayItem[] = eachDayOfInterval({
-    start: subDays(today, 30),
-    end: addDays(today, 30),
-  }).map(date => ({
-    date,
-    formattedDay: format(date, 'EEEEE'),
-    formattedDate: format(date, 'd'),
-
-  }));
-  const [currentIndex, setCurrentIndex] = useState(30);
+  const [currentDate, setCurrentDate] = useState(today);
+  const initialIndex = days.findIndex(day =>
+    format(day.date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd')
+  );
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const flatListRef = useRef<FlatList<DayItem>>(null);
 
-  React.useEffect(() => {
-    flatListRef.current?.scrollToIndex({
-      animated: false,
-      index: currentIndex,
-      viewPosition: 0.3,
+  // Handle month navigation
+  const changeMonth = (direction: number) => {
+    const newDate = addMonths(currentDate, direction);
+    setCurrentDate(newDate);
+    const firstDayIndex = days.findIndex(day =>
+      format(day.date, 'yyyy-MM') === format(newDate, 'yyyy-MM')
+    );
+    setCurrentIndex(firstDayIndex);
+    requestAnimationFrame(() => {
+      flatListRef.current?.scrollToIndex({
+        animated: false,
+        index: firstDayIndex,
+        viewPosition: 0.3
+      });
     });
-  }, []);
+  };
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -54,14 +67,12 @@ const PeriodTracker: React.FC = () => {
     // const index = Math.floor(offsetX / ITEM_WIDTH);
     // setCurrentIndex(index);
   };
-
   // layout item
   const getItemLayout = (_: any, index: number) => ({
     length: ITEM_WIDTH,
     offset: ITEM_WIDTH * index,
     index,
   });
-
   // Handle scrollToIndex failure
   const handleScrollToIndexFailed = (error: {
     index: number;
@@ -75,44 +86,49 @@ const PeriodTracker: React.FC = () => {
       });
     }
   };
-
-  //month navigation
-  const changeMonth = (direction: number) => {
-    const newDate = new Date(currentDate);
-    newDate.setMonth(newDate.getMonth() + direction);
-    setCurrentDate(newDate);
-  };
-
   return (
     <View style={styles.parentContainer}>
       {/* Marker for current day */}
       <View style={styles.marker}>
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flex: 1, alignItems: 'center', marginBottom: 3, }}>
           <IconButton
-            icon="chevron-left"
-            size={30}
-            iconColor={COLORS.primary}
+            icon="calendar"
+            size={18}
+            iconColor={COLORS.black}
             onPress={() => changeMonth(-1)}
             style={{ padding: 0 }}
           />
-          <AppText type={SIXTEEN} weight={SEMI_BOLD}>
-            {format(days[currentIndex].date, "MMMM")}
-          </AppText>
-          <IconButton
-            icon="chevron-right"
-            size={30}
-            iconColor={COLORS.primary}
-            onPress={() => changeMonth(1)}
-            style={{ padding: 0 }}
-          />
         </View>
-
-        <AppText type={SIXTEEN} weight={SEMI_BOLD}>
-          {format(days[currentIndex].date, 'EEEE, MMM d')}
-        </AppText>
+        <View style={{marginTop: 33, alignItems: 'center'}}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <IconButton
+              icon="chevron-left"
+              size={20}
+              iconColor={COLORS.black}
+              onPress={() => changeMonth(-1)}
+              style={{ padding: 0 }}
+            />
+            <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+              {format(days[currentIndex].date, "MMMM")}
+            </AppText>
+            <IconButton
+              icon="chevron-right"
+              size={20}
+              iconColor={COLORS.black}
+              onPress={() => changeMonth(1)}
+              style={{ padding: 0 }}
+            />
+          </View>
+          <View style={{ flex: 1, }}>
+            <AppText type={ELEVEN} weight={NORMAL}>
+              {format(days[currentIndex].date, 'EEEE, d')}
+            </AppText>
+          </View>
+        </View>
       </View>
       {/* FlatList scrolling for days */}
       <FlatList
+        // style={{marginTop: 80}}
         ref={flatListRef}
         horizontal
         data={days}
@@ -153,27 +169,21 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    maxHeight: 280,
-    gap: 20,
+    maxHeight: 250,
+    gap: 1,
   },
   marker: {
-    maxHeight: 100,
     flex: 1,
-    gap: 10,
+    gap: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    paddingVertical: 8,
-  },
-  markerText: {
-    fontSize: 16,
-    fontWeight: '600',
+    alignSelf: 'stretch',
   },
   flatListContent: {
     paddingHorizontal: (width - ITEM_WIDTH) / 2,
     backgroundColor: 'beige',
-    height: 100,
+    maxHeight: 80,
   },
   dayContainer: {
     width: ITEM_WIDTH,
@@ -182,8 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     gap: 10,
-    marginVertical: 15,
-    maxHeight: 80,
+    marginVertical: 6,  
   },
   currentDayContainer: {
     backgroundColor: COLORS.alabaster,
@@ -192,3 +201,26 @@ const styles = StyleSheet.create({
 });
 
 export default PeriodTracker;
+
+
+
+//  // ( 90 days before and after today)
+//  const days: DayItem[] = eachDayOfInterval({
+//   start: subDays(today, 90),
+//   end: addDays(today, 90),
+// }).map(date => ({
+//   date,
+//   formattedDay: format(date, 'EEEEE'),
+//   formattedDate: format(date, 'd'),
+
+// }));
+// const [currentIndex, setCurrentIndex] = useState(90);
+// const flatListRef = useRef<FlatList<DayItem>>(null);
+
+// React.useEffect(() => {
+//   flatListRef.current?.scrollToIndex({
+//     animated: false,
+//     index: currentIndex,
+//     viewPosition: 0.3,
+//   });
+// }, []);

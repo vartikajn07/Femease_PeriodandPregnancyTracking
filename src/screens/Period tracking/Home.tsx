@@ -30,6 +30,8 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
 import Popover from 'react-native-popover-view';
+import PeriodTracker from '../../components/Period tracker widget/Periodtracker';
+
 
 type DayObject = {
   dateString: string;
@@ -272,9 +274,10 @@ const PeriodTrackingHome = () => {
       />
       <View style={styles.container}>
         <View style={{flex: 1, alignItems: 'flex-start'}}>
-          <AppText type={SIXTEEN} weight={SEMI_BOLD}>
+          {/* <AppText type={SIXTEEN} weight={SEMI_BOLD}>
             Period Tracking Home
-          </AppText>
+          </AppText> */}
+          <PeriodTracker />
         </View>
         {/* notations */}
         <View
