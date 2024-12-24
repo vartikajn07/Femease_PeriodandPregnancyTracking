@@ -20,10 +20,10 @@ import {
 } from '../../common/AppText';
 import {COLORS} from '../../constants/themes';
 import {Icon, IconButton} from 'react-native-paper';
-import AntdesignIcon from 'react-native-vector-icons/AntDesign';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 
 const {width} = Dimensions.get('window');
-const ITEM_WIDTH = width / 8;
+const ITEM_WIDTH = width / 7;
 
 interface DayItem {
   date: Date;
@@ -60,7 +60,7 @@ const PeriodTracker: React.FC = () => {
     setCurrentIndex(firstDayIndex);
     requestAnimationFrame(() => {
       flatListRef.current?.scrollToIndex({
-        animated: false,
+        animated: true,
         index: firstDayIndex,
         viewPosition: 0.3,
       });
@@ -98,15 +98,6 @@ const PeriodTracker: React.FC = () => {
     <View style={styles.parentContainer}>
       {/* top content */}
       <View style={styles.marker}>
-        {/* <View style={{flex: 1, alignItems: 'center', marginBottom: 3}}>
-          <IconButton
-            icon="calendar"
-            size={18}
-            iconColor={COLORS.black}
-            onPress={() => changeMonth(-1)}
-            style={{padding: 0}}
-          />
-        </View> */}
         <View
           style={{
             alignItems: 'center',
@@ -125,7 +116,7 @@ const PeriodTracker: React.FC = () => {
               iconColor={COLORS.black}
               onPress={() => changeMonth(-1)}
             />
-            <AppText style={{bottom: 4}} type={SIXTEEN} weight={SEMI_BOLD}>
+            <AppText style={{bottom: 2}} type={SIXTEEN} weight={SEMI_BOLD}>
               {format(days[currentIndex].date, 'MMMM')}
             </AppText>
             <IconButton
@@ -141,18 +132,18 @@ const PeriodTracker: React.FC = () => {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'lavender',
             }}>
             <AppText type={ELEVEN} weight={NORMAL}>
               {format(days[currentIndex].date, 'EEEE, d')}
             </AppText>
-            <AntdesignIcon name="caretdown" />
+            {/* marker icon */}
+            <AntDesignIcon name="caretdown" />
           </View>
         </View>
       </View>
       {/* FlatList scrolling for days */}
       <FlatList
-        style={{height: 20}}
+        style={{height: 5}}
         ref={flatListRef}
         horizontal
         data={days}
@@ -185,6 +176,7 @@ const PeriodTracker: React.FC = () => {
         removeClippedSubviews={true}
         windowSize={10}
         initialNumToRender={7}
+        initialScrollIndex={initialIndex}
       />
     </View>
   );
@@ -193,11 +185,11 @@ const PeriodTracker: React.FC = () => {
 const styles = StyleSheet.create({
   parentContainer: {
     position: 'relative',
-    maxHeight: 150, //105 original
+    maxHeight: 110,
     width: width,
     flex: 1,
     flexDirection: 'column',
-    gap: 5,
+    gap: 1,
   },
   marker: {
     flex: 1,
@@ -217,7 +209,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
-    gap: 8,
+    gap: 6,
     marginVertical: 2,
   },
   currentDayContainer: {
