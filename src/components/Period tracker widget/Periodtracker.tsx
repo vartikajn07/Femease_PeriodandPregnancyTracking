@@ -1,4 +1,4 @@
-import React, {useRef, useState, memo} from 'react';
+import React, { useRef, useState, memo, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   NativeSyntheticEvent,
   Animated,
 } from 'react-native';
-import {eachDayOfInterval, addMonths, format, subDays, addDays} from 'date-fns';
+import { eachDayOfInterval, addMonths, format, subDays, addDays } from 'date-fns';
 import {
   AppText,
   ELEVEN,
@@ -18,11 +18,11 @@ import {
   SIXTEEN,
   TWELVE,
 } from '../../common/AppText';
-import {COLORS} from '../../constants/themes';
-import {Icon, IconButton} from 'react-native-paper';
+import { COLORS } from '../../constants/themes';
+import { Icon, IconButton } from 'react-native-paper';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 7;
 
 interface DayItem {
@@ -53,10 +53,12 @@ const PeriodTracker: React.FC = () => {
   // Handle month navigation
   const changeMonth = (direction: number) => {
     const newDate = addMonths(currentDate, direction);
+    console.log(newDate);
     setCurrentDate(newDate);
     const firstDayIndex = days.findIndex(
       day => format(day.date, 'yyyy-MM') === format(newDate, 'yyyy-MM'),
     );
+    console.log(firstDayIndex);
     setCurrentIndex(firstDayIndex);
     requestAnimationFrame(() => {
       flatListRef.current?.scrollToIndex({
@@ -66,6 +68,10 @@ const PeriodTracker: React.FC = () => {
       });
     });
   };
+  
+// useEffect(() => {
+//   changeMonth(1); 
+// }, []);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -116,7 +122,7 @@ const PeriodTracker: React.FC = () => {
               iconColor={COLORS.black}
               onPress={() => changeMonth(-1)}
             />
-            <AppText style={{bottom: 2}} type={SIXTEEN} weight={SEMI_BOLD}>
+            <AppText style={{ bottom: 2 }} type={SIXTEEN} weight={SEMI_BOLD}>
               {format(days[currentIndex].date, 'MMMM')}
             </AppText>
             <IconButton
@@ -124,7 +130,7 @@ const PeriodTracker: React.FC = () => {
               size={18}
               iconColor={COLORS.black}
               onPress={() => changeMonth(1)}
-              style={{padding: 0}}
+              style={{ padding: 0 }}
             />
           </View>
           <View
@@ -143,12 +149,12 @@ const PeriodTracker: React.FC = () => {
       </View>
       {/* FlatList scrolling for days */}
       <FlatList
-        style={{height: 5}}
+        style={{ height: 5 }}
         ref={flatListRef}
         horizontal
         data={days}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           const isCurrent = index === currentIndex;
           return (
             <View
@@ -215,7 +221,7 @@ const styles = StyleSheet.create({
   currentDayContainer: {
     backgroundColor: COLORS.alabaster,
     borderRadius: 8,
-    transform: [{scale: 1.2}],
+    transform: [{ scale: 1.2 }],
   },
 });
 
