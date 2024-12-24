@@ -219,10 +219,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PeriodTracker;
+export default memo(PeriodTracker);
 
 // the og range of calendar
-
 //  // ( 90 days before and after today)
 //  const days: DayItem[] = eachDayOfInterval({
 //   start: subDays(today, 90),
