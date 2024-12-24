@@ -32,7 +32,6 @@ import Images from '../../assets';
 import Popover from 'react-native-popover-view';
 import PeriodTracker from '../../components/Period tracker widget/Periodtracker';
 
-
 type DayObject = {
   dateString: string;
   day: number;
