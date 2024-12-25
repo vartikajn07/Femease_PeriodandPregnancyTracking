@@ -14,9 +14,9 @@ const Tracker = () => {
 
 const styles = StyleSheet.create({
     container: {
-    maxHeight: 300,
+    maxHeight: 280,
     flex: 1,
-    gap: 20,
+    gap: 10,
     alignItems: 'center',
     }
 })

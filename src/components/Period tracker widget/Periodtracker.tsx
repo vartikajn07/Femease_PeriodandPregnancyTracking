@@ -177,7 +177,7 @@ const PeriodTracker: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.flatListContent}
         snapToAlignment="center"
-        decelerationRate="fast"
+        decelerationRate={0.9}
         onScroll={handleScroll}
         // onMomentumScrollEnd={handleMomentumScrollEnd}
         // scrollEventThrottle={5}
@@ -186,6 +186,8 @@ const PeriodTracker: React.FC = () => {
         initialNumToRender={7}
         initialScrollIndex={initialIndex}
         removeClippedSubviews={true}
+        snapToInterval={150}
+         disableIntervalMomentum={true}
       />     
     </View>
   );

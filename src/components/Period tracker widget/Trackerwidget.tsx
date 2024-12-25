@@ -16,8 +16,8 @@ const Trackerwidget = () => {
 
 const styles = StyleSheet.create({
   outerCircle: {
-    width: 160, 
-    height: 160,
+    width: 150, 
+    height: 150,
     borderRadius: 80, 
     borderWidth: 5, 
     borderColor: COLORS.primary,
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
   },
   innerCircle: {
-    width: 100, 
-    height: 100,
+    width: 90, 
+    height: 90,
     borderRadius: 60, 
     backgroundColor: COLORS.primary,
     alignItems: 'center',

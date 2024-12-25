@@ -271,7 +271,7 @@ const PeriodTrackingHome = () => {
         title="Period Tracking"
       />
       <View style={styles.container}>
-        <View>
+        <View style={{marginBottom: 5}}>
           <Tracker />
         </View>
         {/* notations */}
@@ -283,8 +283,7 @@ const PeriodTrackingHome = () => {
             gap: 50,
             alignContent: 'center',
             alignSelf: 'stretch',
-            maxHeight: 30,
-            marginBottom: 25,
+            maxHeight: 30,   
           }}>
           {/* popover notations */}
           {popovers.map(popover => (
@@ -331,8 +330,8 @@ const PeriodTrackingHome = () => {
             flex: 1,
             flexDirection: 'column',
             alignSelf: 'stretch',
-            gap: 20,
-            maxHeight: 90,
+            gap: 10,
+            maxHeight: 60,
           }}>
           <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
             Cycle Log
@@ -365,7 +364,7 @@ const PeriodTrackingHome = () => {
             backgroundColor: COLORS.alabaster,
             paddingVertical: 10,
             paddingHorizontal: 20,
-            maxHeight: 240,
+            maxHeight: 230,
           }}>
           <View
             style={{
@@ -373,8 +372,9 @@ const PeriodTrackingHome = () => {
               flexDirection: 'column',
               justifyContent: 'flex-start',
               alignSelf: 'stretch',
-              gap: 10,
+              gap: 5,
               maxHeight: 50,
+            
             }}>
             <AppText type={SIXTEEN} weight={SEMI_BOLD} color={PRIMARY}>
               Summary
@@ -391,7 +391,8 @@ const PeriodTrackingHome = () => {
               justifyContent: 'flex-start',
               alignSelf: 'stretch',
               maxHeight: 150,
-              marginTop: 10,
+              marginTop: 3,
+         
             }}>
             <View
               style={{
@@ -459,7 +460,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    gap: 10,
+    gap: 5,
     alignItems: 'center',
     alignSelf: 'stretch',
   },
