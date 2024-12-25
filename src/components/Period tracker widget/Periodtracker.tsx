@@ -21,6 +21,7 @@ import {
 import { COLORS } from '../../constants/themes';
 import { Icon, IconButton } from 'react-native-paper';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import Trackerwidget from './Trackerwidget';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 7;
@@ -185,7 +186,7 @@ const PeriodTracker: React.FC = () => {
         initialNumToRender={7}
         initialScrollIndex={initialIndex}
         removeClippedSubviews={true}
-      />
+      />     
     </View>
   );
 };
