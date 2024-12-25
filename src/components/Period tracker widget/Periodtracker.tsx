@@ -8,7 +8,7 @@ import {
   NativeSyntheticEvent,
   Animated,
 } from 'react-native';
-import { eachDayOfInterval, addMonths, format, subDays, addDays } from 'date-fns';
+import { eachDayOfInterval, addMonths, format, subDays, addDays, startOfMonth } from 'date-fns';
 import {
   AppText,
   ELEVEN,
@@ -33,13 +33,14 @@ interface DayItem {
 const today = new Date();
 
 const days: DayItem[] = eachDayOfInterval({
-  start: subDays(today, 150),
-  end: addDays(today, 150),
+  start: subDays(today, 200),
+  end: addDays(today, 200),
 }).map(date => ({
   date,
   formattedDay: format(date, 'EEEEE'),
   formattedDate: format(date, 'd'),
 }));
+
 
 const PeriodTracker: React.FC = () => {
   const today = new Date();
@@ -53,36 +54,31 @@ const PeriodTracker: React.FC = () => {
   // Handle month navigation
   const changeMonth = (direction: number) => {
     const newDate = addMonths(currentDate, direction);
-    console.log(newDate);
-    setCurrentDate(newDate);
+    const firstDayOfTargetMonth = startOfMonth(newDate);
     const firstDayIndex = days.findIndex(
-      day => format(day.date, 'yyyy-MM') === format(newDate, 'yyyy-MM'),
+      day => format(day.date, 'yyyy-MM-dd') === format(firstDayOfTargetMonth, 'yyyy-MM-dd'),
     );
-    console.log(firstDayIndex);
-    setCurrentIndex(firstDayIndex);
-    requestAnimationFrame(() => {
-      flatListRef.current?.scrollToIndex({
-        animated: true,
-        index: firstDayIndex,
-        viewPosition: 0.3,
+    if (firstDayIndex !== -1) {
+      setCurrentDate(firstDayOfTargetMonth);
+      setCurrentIndex(firstDayIndex);
+      requestAnimationFrame(() => {
+        flatListRef.current?.scrollToIndex({
+          animated: true,
+          index: firstDayIndex,
+          viewPosition: 0.001, //for month navigation, lands on center and just below the marker
+        });
       });
-    });
+    }
   };
-  
-// useEffect(() => {
-//   changeMonth(1); 
-// }, []);
-
+  //handlescroll
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
-    requestAnimationFrame(() => {
-      const index = Math.round(offsetX / ITEM_WIDTH);
+    const index = Math.round(offsetX / ITEM_WIDTH);
+    if (index !== currentIndex) {
       setCurrentIndex(index);
-    });
-    // const index = Math.floor(offsetX / ITEM_WIDTH);
-    // setCurrentIndex(index);
+    }
   };
-  // layout item
+  // layout item for improving flatlist optimization
   const getItemLayout = (_: any, index: number) => ({
     length: ITEM_WIDTH,
     offset: ITEM_WIDTH * index,
@@ -94,12 +90,18 @@ const PeriodTracker: React.FC = () => {
     highestMeasuredFrameIndex: number;
   }) => {
     if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({
-        index: Math.max(0, Math.min(error.index, days.length - 1)),
-        animated: true,
+      const safeIndex = Math.max(0, Math.min(error.index, days.length - 1));
+      requestAnimationFrame(() => {
+        flatListRef.current?.scrollToIndex({
+          index: safeIndex,
+          animated: true,
+          viewPosition: 0.5,
+        })
       });
     }
   };
+
+  
   return (
     <View style={styles.parentContainer}>
       {/* top content */}
@@ -176,13 +178,13 @@ const PeriodTracker: React.FC = () => {
         snapToAlignment="center"
         decelerationRate="fast"
         onScroll={handleScroll}
-        scrollEventThrottle={16}
+        // onMomentumScrollEnd={handleMomentumScrollEnd}
+        // scrollEventThrottle={5}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={handleScrollToIndexFailed}
-        removeClippedSubviews={true}
-        windowSize={10}
         initialNumToRender={7}
         initialScrollIndex={initialIndex}
+        removeClippedSubviews={true}
       />
     </View>
   );
