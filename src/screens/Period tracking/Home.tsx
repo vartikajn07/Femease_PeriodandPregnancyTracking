@@ -454,13 +454,13 @@ export default PeriodTrackingHome;
 
 const styles = StyleSheet.create({
   container: {
+    height: '100%',
     paddingHorizontal: 20,
     backgroundColor: '#ffff',
     paddingBottom: 30,
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    gap: 5,
+    justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'stretch',
   },

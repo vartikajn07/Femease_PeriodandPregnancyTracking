@@ -21,10 +21,11 @@ import {
 import { COLORS } from '../../constants/themes';
 import { Icon, IconButton } from 'react-native-paper';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import Trackerwidget from './Trackerwidget';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = width / 7;
+const ITEM_WIDTH = (width / 5.8) * 0.72;
+const SPACING = 10;
+const FULLSIZE = ITEM_WIDTH + SPACING * 2;
 
 interface DayItem {
   date: Date;
@@ -151,7 +152,7 @@ const PeriodTracker: React.FC = () => {
         </View>
       </View>
       {/* FlatList scrolling for days */}
-      <FlatList
+      <Animated.FlatList
         style={{ height: 5 }}
         ref={flatListRef}
         horizontal
@@ -174,20 +175,22 @@ const PeriodTracker: React.FC = () => {
             </View>
           );
         }}
+        bounces={false}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.flatListContent}
-        snapToAlignment="center"
-        decelerationRate={0.9}
+        // snapToAlignment="center"
+        snapToOffsets={days.map((_, index) => index * ITEM_WIDTH)}
+        decelerationRate={0.8} //floating point < 0.5
         onScroll={handleScroll}
-        // onMomentumScrollEnd={handleMomentumScrollEnd}
-        // scrollEventThrottle={5}
+        scrollEventThrottle={2}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={handleScrollToIndexFailed}
         initialNumToRender={7}
         initialScrollIndex={initialIndex}
         removeClippedSubviews={true}
-        snapToInterval={150}
-         disableIntervalMomentum={true}
+        snapToInterval={FULLSIZE}
+         disableIntervalMomentum={true} 
+    
       />     
     </View>
   );
@@ -212,10 +215,10 @@ const styles = StyleSheet.create({
   flatListContent: {
     paddingHorizontal: (width - ITEM_WIDTH) / 2,
     backgroundColor: 'beige',
-    paddingVertical: 2,
+    paddingVertical: 2,  
   },
   dayContainer: {
-    width: ITEM_WIDTH,
+    width: ITEM_WIDTH ,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
