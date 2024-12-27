@@ -23,9 +23,11 @@ import { Icon, IconButton } from 'react-native-paper';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = (width / 5.8) * 0.72;
+const ITEM_WIDTH = (width / 5) * 0.6                        ;
 const SPACING = 10;
 const FULLSIZE = ITEM_WIDTH + SPACING * 2;
+
+console.log('ITEM_WIDTH', ITEM_WIDTH);
 
 interface DayItem {
   date: Date;
@@ -52,6 +54,7 @@ const PeriodTracker: React.FC = () => {
   );
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const flatListRef = useRef<FlatList<DayItem>>(null);
+
 
   // Handle month navigation
   const changeMonth = (direction: number) => {
@@ -161,7 +164,7 @@ const PeriodTracker: React.FC = () => {
         renderItem={({ item, index }) => {
           const isCurrent = index === currentIndex;
           return (
-            <View
+            <Animated.View
               style={[
                 styles.dayContainer,
                 isCurrent && styles.currentDayContainer,
@@ -169,10 +172,10 @@ const PeriodTracker: React.FC = () => {
               <AppText weight={MEDIUM} type={ELEVEN}>
                 {item.formattedDay}
               </AppText>
-              <AppText weight={SEMI_BOLD} type={TWELVE}>
+              <AppText  weight={SEMI_BOLD} type={TWELVE}>
                 {item.formattedDate}
               </AppText>
-            </View>
+            </Animated.View>
           );
         }}
         bounces={false}
@@ -190,6 +193,7 @@ const PeriodTracker: React.FC = () => {
         removeClippedSubviews={true}
         snapToInterval={FULLSIZE}
          disableIntervalMomentum={true} 
+         maxToRenderPerBatch={7} //10 is default, for static and non-interactive list
     
       />     
     </View>
@@ -199,7 +203,7 @@ const PeriodTracker: React.FC = () => {
 const styles = StyleSheet.create({
   parentContainer: {
     position: 'relative',
-    maxHeight: 110,
+    maxHeight: 112,
     width: width,
     flex: 1,
     flexDirection: 'column',
@@ -215,7 +219,7 @@ const styles = StyleSheet.create({
   flatListContent: {
     paddingHorizontal: (width - ITEM_WIDTH) / 2,
     backgroundColor: 'beige',
-    paddingVertical: 2,  
+    paddingVertical: 6,  
   },
   dayContainer: {
     width: ITEM_WIDTH ,
@@ -227,9 +231,10 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   currentDayContainer: {
+    width: ITEM_WIDTH,
     backgroundColor: COLORS.alabaster,
-    borderRadius: 8,
-    transform: [{ scale: 1.2 }],
+    borderRadius: 13,
+   transform: [{ scale: 1.2,  }]
   },
 });
 
