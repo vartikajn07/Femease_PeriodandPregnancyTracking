@@ -8,7 +8,9 @@ const Images = {
   PREGNANCY_ONBOARDING1: require('./images/pregnancyonboarding2.gif'),
   PREGNANCY_ONBOARDING2: require('./images/pregnancyonboarding3.gif'),
   HOMESCREEN_NOTATION_HEART: require('./images/icons8-heart-94.png'),
-  HOMESCREEN_NOTATION_OVULATION: require('./images/fertilization.png'),
-  HOMESCREEN_NOTATION_PROTECTEDSEX: require("./images/protectedsex.png")
+  HOMESCREEN_NOTATION_OVULATION: require('./images/ovulationicon.png'),
+  HOMESCREEN_NOTATION_PROTECTEDSEX: require("./images/protectedsex.png"),
+  HOMESCREEN_NOTATION_PERIOD: require('./images/periodicon.png'),
+
 };
 export default Images;

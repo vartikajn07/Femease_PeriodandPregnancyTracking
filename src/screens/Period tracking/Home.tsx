@@ -62,20 +62,20 @@ const PeriodTrackingHome = () => {
     {
       id: 1,
       title: 'Periods',
-      image: Images.HOMESCREEN_NOTATION_HEART,
+      image: Images.HOMESCREEN_NOTATION_PERIOD,
       style: {
-        width: 24,
-        height: 24,
+        width: 28,
+        height: 28,
       },
       tooltipstyle: {backgroundColor: COLORS.red},
     },
     {
       id: 2,
       title: 'Protected sex',
-      image: Images.HOMESCREEN_NOTATION_HEART,
+      image: Images.HOMESCREEN_NOTATION_PROTECTEDSEX,
       style: {
-        width: 24,
-        height: 24,
+        width: 30,
+        height: 30,
       },
       tooltipstyle: {backgroundColor: COLORS.pink},
     },
@@ -84,8 +84,8 @@ const PeriodTrackingHome = () => {
       title: 'Unprotected sex',
       image: Images.HOMESCREEN_NOTATION_HEART,
       style: {
-        width: 24,
-        height: 24,
+        width: 30,
+        height: 30,
       },
       tooltipstyle: {backgroundColor: COLORS.pink},
     },
@@ -94,8 +94,8 @@ const PeriodTrackingHome = () => {
       title: 'Ovulation',
       image: Images.HOMESCREEN_NOTATION_OVULATION,
       style: {
-        width: 24,
-        height: 24,
+        width: 28,
+        height: 28,
       },
       tooltipstyle: {backgroundColor: COLORS.skyblue},
     },
@@ -289,22 +289,12 @@ const PeriodTrackingHome = () => {
           {/* popover notations */}
           {popovers.map(popover => (
             <View key={popover.id}>
-              {/* <FastImage
+              <FastImage
                 source={popover.image}
                 resizeMode="contain"
                 style={popover.style}>
-      */}
-         <Svg width="30" height="30" viewBox="0 0 30 30" fill="none" >
-      <Circle cx="15" cy="15" r="14" fill="white" stroke="#2ACDFE" strokeWidth="2" />
-      <Rect x="7" y="7" width="15" height="15" fill="url(#gradient)" />
-      <Defs>
-        <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-          <Stop offset="0%" stopColor="#2ACDFE" />
-          <Stop offset="100%" stopColor="#FFFFFF" />
-        </LinearGradient>
-      </Defs>
-    </Svg>
      
+       
                 <Tooltip
                   isVisible={visiblePopover === popover.id}
                   content={
@@ -332,7 +322,7 @@ const PeriodTrackingHome = () => {
                     }}
                     style={styles.infoIconContainer}></TouchableOpacity>
                 </Tooltip>
-              {/* </FastImage> */}
+              </FastImage>
             
             </View>
           ))}
