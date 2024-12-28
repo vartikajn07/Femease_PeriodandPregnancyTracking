@@ -2,6 +2,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import AuthScreen from '../screens/Splash screen/AuthScreen';
 import SplashScreen from '../screens/Splash screen/Splashscreen';
 import PeriodTrackingOnboarding from '../screens/Period tracking/Onboarding/index';
 import PeriodTrackingHome from '../screens/Period tracking/Home';
@@ -16,7 +17,8 @@ const AppNavigator = () => (
     ref={navigatorRef => {
       NavigationService.setTopLevelNavigator(navigatorRef);
     }}>
-    <Stack.Navigator initialRouteName="SplashScreen">
+    <Stack.Navigator initialRouteName="AuthScreen">
+      <Stack.Screen name='AuthScreen' component={AuthScreen} options={{headerShown: false}} />
       <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}
