@@ -1,5 +1,5 @@
 export type RootStackParamList = {
-  AuthScreen: undefined;
+  RegisterUser: undefined;
   SplashScreen: undefined;
   PeriodTrackingOnboarding: undefined;
   PeriodTrackingHome: undefined;
