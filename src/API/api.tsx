@@ -58,3 +58,11 @@ export const registerUserApi = async (userData: Record<string, any>) => {
     body: userData,
   });
 };
+
+export const loginApi = async (userData: Record<string, any>) => {
+  return await apiCall({
+    endpoint: endpoints.LOGIN,
+    method: 'POST',
+    body: userData
+  })
+}

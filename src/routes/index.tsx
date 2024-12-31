@@ -9,6 +9,7 @@ import PeriodTrackingHome from '../screens/Period tracking/Home';
 import PregnancyOnboarding from '../screens/Pregnancy tracking/Onboarding';
 import PregnancyHome from '../screens/Pregnancy tracking/Home';
 import NavigationService from './NavigationService';
+import LoginScreen from '../screens/Auth screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,8 +19,17 @@ const AppNavigator = () => (
       NavigationService.setTopLevelNavigator(navigatorRef);
     }}>
     <Stack.Navigator initialRouteName="RegisterUser">
-      <Stack.Screen name='RegisterUser' component={RegisterUser} options={{headerShown: false}} />
       <Stack.Screen
+        name="RegisterUser"
+        component={RegisterUser}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{headerShown: false}}
+        />
+        <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}
         options={{headerShown: false}}
