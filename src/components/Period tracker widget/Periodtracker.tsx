@@ -6,7 +6,6 @@ import {
   Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  Animated,
 } from 'react-native';
 import { eachDayOfInterval, addMonths, format, subDays, addDays, startOfMonth } from 'date-fns';
 import {
@@ -21,9 +20,14 @@ import {
 import { COLORS } from '../../constants/themes';
 import { Icon, IconButton } from 'react-native-paper';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = (width / 5) * 0.6                        ;
+const ITEM_WIDTH = (width / 5) * 0.65;
 const SPACING = 10;
 const FULLSIZE = ITEM_WIDTH + SPACING * 2;
 
@@ -106,7 +110,7 @@ const PeriodTracker: React.FC = () => {
     }
   };
 
-  
+
   return (
     <View style={styles.parentContainer}>
       {/* top content */}
@@ -156,7 +160,7 @@ const PeriodTracker: React.FC = () => {
       </View>
       {/* FlatList scrolling for days */}
       <Animated.FlatList
-        style={{ height: 5 }}
+        style={{ height: 8 }}
         ref={flatListRef}
         horizontal
         data={days}
@@ -172,7 +176,7 @@ const PeriodTracker: React.FC = () => {
               <AppText weight={MEDIUM} type={ELEVEN}>
                 {item.formattedDay}
               </AppText>
-              <AppText  weight={SEMI_BOLD} type={TWELVE}>
+              <AppText weight={SEMI_BOLD} type={TWELVE}>
                 {item.formattedDate}
               </AppText>
             </Animated.View>
@@ -192,10 +196,10 @@ const PeriodTracker: React.FC = () => {
         initialScrollIndex={initialIndex}
         removeClippedSubviews={true}
         snapToInterval={FULLSIZE}
-         disableIntervalMomentum={true} 
-         maxToRenderPerBatch={7} //10 is default, for static and non-interactive list
-    
-      />     
+        disableIntervalMomentum={true}
+        maxToRenderPerBatch={7} //10 is default, for static and non-interactive list
+      />
+      <AppText style={{ textAlign: 'center' }}>Possible period</AppText>
     </View>
   );
 };
@@ -203,7 +207,7 @@ const PeriodTracker: React.FC = () => {
 const styles = StyleSheet.create({
   parentContainer: {
     position: 'relative',
-    maxHeight: 112,
+    maxHeight: 116,
     width: width,
     flex: 1,
     flexDirection: 'column',
@@ -219,10 +223,11 @@ const styles = StyleSheet.create({
   flatListContent: {
     paddingHorizontal: (width - ITEM_WIDTH) / 2,
     backgroundColor: 'beige',
-    paddingVertical: 6,  
+    paddingVertical: 6,
   },
   dayContainer: {
-    width: ITEM_WIDTH ,
+    width: ITEM_WIDTH,
+    height: 40,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -231,10 +236,10 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   currentDayContainer: {
-    width: ITEM_WIDTH,
+    width: 35,
+    marginHorizontal: 8,
     backgroundColor: COLORS.alabaster,
     borderRadius: 13,
-   transform: [{ scale: 1.2,  }]
   },
 });
 

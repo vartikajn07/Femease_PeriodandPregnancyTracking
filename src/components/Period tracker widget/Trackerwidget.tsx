@@ -5,7 +5,7 @@ import { COLORS } from '../../constants/themes'
 
 const Trackerwidget = () => {
   return (
-  
+
     <View style={styles.outerCircle}>
       <View style={styles.innerCircle}>
         <AppText type={FOURTEEN} color={WHITE} weight={SEMI_BOLD}>Day 26</AppText>
@@ -16,18 +16,18 @@ const Trackerwidget = () => {
 
 const styles = StyleSheet.create({
   outerCircle: {
-    width: 150, 
-    height: 150,
-    borderRadius: 80, 
-    borderWidth: 5, 
+    width: 160,
+    height: 160,
+    borderRadius: 90,
+    borderWidth: 5,
     borderColor: COLORS.primary,
     alignItems: 'center',
-    justifyContent: 'center', 
+    justifyContent: 'center',
   },
   innerCircle: {
-    width: 90, 
-    height: 90,
-    borderRadius: 60, 
+    width: 100,
+    height: 100,
+    borderRadius: 70,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
