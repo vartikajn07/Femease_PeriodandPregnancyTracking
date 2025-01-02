@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BackHandler,
   Pressable,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -19,18 +20,17 @@ import {
   TWELVE,
   WHITE,
 } from '../../common/AppText';
-import {BottomDrawer} from '../../components/Drawer';
-import {AppSafeAreaView} from '../../common/AppSafeAreaView';
-import {COLORS} from '../../constants/themes';
-import {RadioButton} from 'react-native-paper';
-import {CalendarList} from 'react-native-calendars';
-import {Header} from '../../components/Header';
+import { BottomDrawer } from '../../components/Drawer';
+import { AppSafeAreaView } from '../../common/AppSafeAreaView';
+import { COLORS } from '../../constants/themes';
+import { RadioButton } from 'react-native-paper';
+import { CalendarList } from 'react-native-calendars';
+import { Header } from '../../components/Header';
 import NavigationService from '../../routes/NavigationService';
 import Tooltip from 'react-native-walkthrough-tooltip';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
 import Tracker from '../../components/Period tracker widget/Tracker';
-import { Svg, Circle, Rect, Defs, LinearGradient, Stop } from 'react-native-svg';
 
 type DayObject = {
   dateString: string;
@@ -67,7 +67,7 @@ const PeriodTrackingHome = () => {
         width: 28,
         height: 28,
       },
-      tooltipstyle: {backgroundColor: COLORS.red},
+      tooltipstyle: { backgroundColor: COLORS.red },
     },
     {
       id: 2,
@@ -77,7 +77,7 @@ const PeriodTrackingHome = () => {
         width: 30,
         height: 30,
       },
-      tooltipstyle: {backgroundColor: COLORS.pink},
+      tooltipstyle: { backgroundColor: COLORS.pink },
     },
     {
       id: 3,
@@ -87,7 +87,7 @@ const PeriodTrackingHome = () => {
         width: 30,
         height: 30,
       },
-      tooltipstyle: {backgroundColor: COLORS.pink},
+      tooltipstyle: { backgroundColor: COLORS.pink },
     },
     {
       id: 4,
@@ -97,7 +97,7 @@ const PeriodTrackingHome = () => {
         width: 28,
         height: 28,
       },
-      tooltipstyle: {backgroundColor: COLORS.skyblue},
+      tooltipstyle: { backgroundColor: COLORS.skyblue },
     },
   ];
 
@@ -117,7 +117,7 @@ const PeriodTrackingHome = () => {
     onCheckToggle,
   }) => {
     return (
-      <View style={{minHeight: 500}}>
+      <View style={{ minHeight: 500 }}>
         <View style={styles.drawercontainer}>
           <View
             style={{
@@ -170,7 +170,7 @@ const PeriodTrackingHome = () => {
             </View>
           </View>
           <TouchableOpacity onPress={closeDrawer} style={styles.Nextbtn}>
-            <AppText type={SIXTEEN} color={WHITE} style={{textAlign: 'center'}}>
+            <AppText type={SIXTEEN} color={WHITE} style={{ textAlign: 'center' }}>
               Done
             </AppText>
           </TouchableOpacity>
@@ -185,7 +185,7 @@ const PeriodTrackingHome = () => {
   //bottom drawer-> add periods
   const handlePressPeriods = () => {
     setDrawerContent(
-      <View style={{minHeight: 700}}>
+      <View style={{ minHeight: 700 }}>
         <View style={styles.drawercontainer}>
           <View
             style={{
@@ -267,188 +267,194 @@ const PeriodTrackingHome = () => {
 
   return (
     <AppSafeAreaView>
-      <Header
-        onBackPress={() => NavigationService.navigate('SplashScreen')}
-        title="Period Tracking"
-      />
-      <View style={styles.container}>
-        <View style={{marginBottom: 5}}>
-          <Tracker />
-        </View>
-        {/* notations */}
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            gap: 50,
-            alignContent: 'center',
-            alignSelf: 'stretch',
-            maxHeight: 30,   
-          }}>
-          {/* popover notations */}
-          {popovers.map(popover => (
-            <View key={popover.id}>
-              <FastImage
-                source={popover.image}
-                resizeMode="contain"
-                style={popover.style}>
-     
-       
-                <Tooltip
-                  isVisible={visiblePopover === popover.id}
-                  content={
-                    <View>
-                      <AppText weight="SEMI_BOLD" type="TEN" color={WHITE}>
-                        {popover.title}
-                      </AppText>
-                    </View>
-                  }
-                  placement="bottom"
-                  onClose={() => {
-                    setVisiblePopover(null);
-                  }}
-                  backgroundColor={COLORS.transparent}
-                  contentStyle={{
-                    ...popover.tooltipstyle,
-                    elevation: 2,
-                    shadowOpacity: 0.1,
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setVisiblePopover(prev =>
-                        prev === popover.id ? null : popover.id,
-                      );
-                    }}
-                    style={styles.infoIconContainer}></TouchableOpacity>
-                </Tooltip>
-              </FastImage>
-            
-            </View>
-          ))}
-        </View>
-
-        {/* cycle log */}
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            alignSelf: 'stretch',
-            gap: 10,
-            maxHeight: 60,
-          }}>
-          <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
-            Cycle Log
-          </AppText>
+      <View style={{
+        backgroundColor: COLORS.white,
+        flex: 1,
+      }}>
+        <Header
+          onBackPress={() => NavigationService.navigate('SplashScreen')}
+          title="Period Tracking"
+        />
+        <View style={styles.container}>
+          <View style={{ marginBottom: 5 }}>
+            <Tracker />
+          </View>
+          {/* notations */}
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 10,
+              justifyContent: 'center',
+              gap: 50,
+              alignContent: 'center',
+              alignSelf: 'stretch',
+              maxHeight: 30,
             }}>
-            <Pressable>
-              <AppText>Add symptoms</AppText>
-            </Pressable>
-            <Pressable>
-              <AppText onPress={handlePressPeriods}>Add Periods</AppText>
-            </Pressable>
-            <Pressable onPress={handlePressActivity}>
-              <AppText>Add sexual activity</AppText>
-            </Pressable>
+            {/* popover notations */}
+            {popovers.map(popover => (
+              <View key={popover.id}>
+                <FastImage
+                  source={popover.image}
+                  resizeMode="contain"
+                  style={popover.style}>
+
+
+                  <Tooltip
+                    isVisible={visiblePopover === popover.id}
+                    content={
+                      <View>
+                        <AppText weight="SEMI_BOLD" type="TEN" color={WHITE}>
+                          {popover.title}
+                        </AppText>
+                      </View>
+                    }
+                    placement="bottom"
+                    onClose={() => {
+                      setVisiblePopover(null);
+                    }}
+                    backgroundColor={COLORS.transparent}
+                    contentStyle={{
+                      ...popover.tooltipstyle,
+                      elevation: 2,
+                      shadowOpacity: 0.1,
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setVisiblePopover(prev =>
+                          prev === popover.id ? null : popover.id,
+                        );
+                      }}
+                      style={styles.infoIconContainer}></TouchableOpacity>
+                  </Tooltip>
+                </FastImage>
+
+              </View>
+            ))}
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            alignSelf: 'stretch',
-            backgroundColor: COLORS.alabaster,
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            maxHeight: 230,
-          }}>
+
+          {/* cycle log */}
           <View
             style={{
               flex: 1,
               flexDirection: 'column',
-              justifyContent: 'flex-start',
               alignSelf: 'stretch',
-              gap: 5,
-              maxHeight: 50,
-            
+              gap: 10,
+              maxHeight: 60,
             }}>
-            <AppText type={SIXTEEN} weight={SEMI_BOLD} color={PRIMARY}>
-              Summary
+            <AppText type={EIGHTEEN} weight={SEMI_BOLD}>
+              Cycle Log
             </AppText>
-            <AppText type={FOURTEEN} weight={SEMI_BOLD}>
-              Last Menstrual Period
-            </AppText>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: 10,
+              }}>
+              <Pressable>
+                <AppText>Add symptoms</AppText>
+              </Pressable>
+              <Pressable>
+                <AppText onPress={handlePressPeriods}>Add Periods</AppText>
+              </Pressable>
+              <Pressable onPress={handlePressActivity}>
+                <AppText>Add sexual activity</AppText>
+              </Pressable>
+            </View>
           </View>
+
           <View
             style={{
               flex: 1,
               flexDirection: 'column',
-              gap: 2,
-              justifyContent: 'flex-start',
+              // justifyContent: 'flex-start',
+              // alignItems: 'center',
               alignSelf: 'stretch',
-              maxHeight: 150,
-              marginTop: 3,
-         
+              backgroundColor: COLORS.alabaster,
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              maxHeight: 230,
             }}>
             <View
               style={{
                 flex: 1,
                 flexDirection: 'column',
-                gap: 4,
-                paddingVertical: 4,
+                justifyContent: 'flex-start',
+                alignSelf: 'stretch',
+                gap: 5,
+                maxHeight: 50,
+
               }}>
-              <AppText type={FOURTEEN} weight={MEDIUM}>
-                Started 20 October
+              <AppText type={SIXTEEN} weight={SEMI_BOLD} color={PRIMARY}>
+                Summary
               </AppText>
-              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
-                26 Days
+              <AppText type={FOURTEEN} weight={SEMI_BOLD}>
+                Last Menstrual Period
               </AppText>
             </View>
             <View
               style={{
                 flex: 1,
                 flexDirection: 'column',
-                gap: 4,
-                paddingVertical: 4,
-                borderTopWidth: 0.5,
-                borderTopColor: COLORS.black,
+                gap: 2,
+                justifyContent: 'flex-start',
+                alignSelf: 'stretch',
+                maxHeight: 150,
+                marginTop: 3,
+
               }}>
-              <AppText type={FOURTEEN} weight={MEDIUM}>
-                Typical Period Length
-              </AppText>
-              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
-                5 Days
-              </AppText>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                gap: 4,
-                paddingVertical: 4,
-                borderTopWidth: 0.5,
-                borderTopColor: COLORS.black,
-              }}>
-              <AppText type={FOURTEEN} weight={MEDIUM}>
-                Typical Cycle Length
-              </AppText>
-              <AppText type={THIRTEEN} weight={SEMI_BOLD}>
-                28 Days
-              </AppText>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  gap: 4,
+                  paddingVertical: 4,
+                }}>
+                <AppText type={FOURTEEN} weight={MEDIUM}>
+                  Started 20 October
+                </AppText>
+                <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                  26 Days
+                </AppText>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  gap: 4,
+                  paddingVertical: 4,
+                  borderTopWidth: 0.5,
+                  borderTopColor: COLORS.black,
+                }}>
+                <AppText type={FOURTEEN} weight={MEDIUM}>
+                  Typical Period Length
+                </AppText>
+                <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                  5 Days
+                </AppText>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  gap: 4,
+                  paddingVertical: 4,
+                  borderTopWidth: 0.5,
+                  borderTopColor: COLORS.black,
+                }}>
+                <AppText type={FOURTEEN} weight={MEDIUM}>
+                  Typical Cycle Length
+                </AppText>
+                <AppText type={THIRTEEN} weight={SEMI_BOLD}>
+                  28 Days
+                </AppText>
+              </View>
             </View>
           </View>
+          <BottomDrawer isVisible={isDrawerOpen} onClose={closeDrawer}>
+            {drawerContent}
+          </BottomDrawer>
         </View>
-        <BottomDrawer isVisible={isDrawerOpen} onClose={closeDrawer}>
-          {drawerContent}
-        </BottomDrawer>
       </View>
     </AppSafeAreaView>
   );
@@ -460,13 +466,13 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     paddingHorizontal: 20,
-    backgroundColor: '#ffff',
-    paddingBottom: 30,
+    // backgroundColor: '#ffff',
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'stretch',
+    paddingBottom: 30,
   },
   //bottom drawer styles
   drawercontainer: {

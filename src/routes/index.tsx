@@ -1,7 +1,7 @@
 //App / Root Navigator
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import RegisterUser from '../screens/Auth screens/RegisterUser';
 import SplashScreen from '../screens/Splash screen/Splashscreen';
 import PeriodTrackingOnboarding from '../screens/Period tracking/Onboarding/index';
@@ -18,41 +18,41 @@ const AppNavigator = () => (
     ref={navigatorRef => {
       NavigationService.setTopLevelNavigator(navigatorRef);
     }}>
-    <Stack.Navigator initialRouteName="RegisterUser">
+    <Stack.Navigator initialRouteName="SplashScreen">
       <Stack.Screen
         name="RegisterUser"
         component={RegisterUser}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{headerShown: false}}
-        />
-        <Stack.Screen
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="SplashScreen"
         component={SplashScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PeriodTrackingOnboarding"
         component={PeriodTrackingOnboarding}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PeriodTrackingHome"
         component={PeriodTrackingHome}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PregnancyOnboarding"
         component={PregnancyOnboarding}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PregnancyHome"
         component={PregnancyHome}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   </NavigationContainer>

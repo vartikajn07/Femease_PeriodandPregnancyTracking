@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FONTS} from '../../constants/themes';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../routes/RootNavigator';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FONTS } from '../../constants/themes';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../routes/RootNavigator';
+import { StackNavigationProp } from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
-import {AppSafeAreaView} from '../../common/AppSafeAreaView';
+import { AppSafeAreaView } from '../../common/AppSafeAreaView';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
 

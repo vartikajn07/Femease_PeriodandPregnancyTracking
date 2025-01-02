@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Keyboard, StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
-import {AppText, MEDIUM, SIXTEEN, WHITE} from '../../common/AppText';
-import {AppSafeAreaView} from '../../common/AppSafeAreaView';
-import {COLORS, FONTS} from '../../constants/themes';
-import {RootStackParamList} from '../../routes/RootNavigator';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
-import {useAppDispatch, useAppSelector} from '../../redux/hooks';
+import React, { useEffect, useState } from 'react';
+import { Keyboard, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { AppText, MEDIUM, SIXTEEN, WHITE } from '../../common/AppText';
+import { AppSafeAreaView } from '../../common/AppSafeAreaView';
+import { COLORS, FONTS } from '../../constants/themes';
+import { RootStackParamList } from '../../routes/RootNavigator';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { loginUser } from '../../redux/slices/LoginSlice';
 
 
@@ -19,14 +19,13 @@ function LoginScreen(): React.JSX.Element {
   const [password, setPassword] = useState('');
   const [isDisabled, setisDisabled] = useState(false);
 
-  const {loading, error, user} = useAppSelector(state => state.auth);
+  const { loading, error, user } = useAppSelector(state => state.auth);
 
   //login function
-    const handleLogin = async () => {
+  const handleLogin = async () => {
     try {
       await dispatch(loginUser({ email, password })).unwrap();
       console.log('Login successful');
-     
       navigation.navigate('SplashScreen');
     } catch (err) {
       console.error('Login failed:', err);
@@ -34,7 +33,7 @@ function LoginScreen(): React.JSX.Element {
   };
 
   useEffect(() => {
-    if (email && password ) {
+    if (email && password) {
       setisDisabled(false);
     } else {
       setisDisabled(true);
@@ -43,55 +42,59 @@ function LoginScreen(): React.JSX.Element {
 
   return (
     <AppSafeAreaView>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          backgroundColor: '#fff',
-          height: '100%',
-          paddingVertical: 20,
-        }}>
-        <AppText>Auth screen - Login screen</AppText>
-        <View style={styles.innercontainer}>
-          {/* email */}
-          <TextInput
-            placeholder="Enter your email address"
-            keyboardType="email-address"
-            value={email}
-            style={styles.txtInput}
-            onChangeText={setEmail}
-          />
-          {/* password */}
-          <TextInput
-            placeholder="Enter your password"
-            keyboardType="default"
-            value={password}
-            style={styles.txtInput}
-            onChangeText={setPassword}
-            secureTextEntry
-                 />
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false} >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            backgroundColor: '#fff',
+            height: '100%',
+            paddingVertical: 20,
+          }}>
+          <AppText>Auth screen - Login screen</AppText>
+          <View style={styles.innercontainer}>
+            {/* email */}
+            <TextInput
+              placeholder="Enter your email address"
+              keyboardType="email-address"
+              value={email}
+              style={styles.txtInput}
+              onChangeText={setEmail}
+            />
+            {/* password */}
+            <TextInput
+              placeholder="Enter your password"
+              keyboardType="default"
+              value={password}
+              style={styles.txtInput}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
+          <TouchableOpacity
+            onPress={handleLogin}
+            disabled={isDisabled || loading}
+            style={[
+              styles.Nextbtn,
+              isDisabled || loading ? { backgroundColor: '#ccc' } : {},
+            ]}>
+            <AppText
+              weight={MEDIUM}
+              type={SIXTEEN}
+              color={WHITE}
+              style={{ textAlign: 'center' }}>
+
+              {loading ? 'Loading...' : 'Next'}
+            </AppText>
+          </TouchableOpacity>
+          {/* Error  */}
+          {error && <AppText style={{ color: 'red' }}>{error}</AppText>}
         </View>
-        <TouchableOpacity
-          onPress={handleLogin}
-          disabled={isDisabled || loading}
-          style={[
-            styles.Nextbtn,
-            isDisabled || loading ? {backgroundColor: '#ccc'} : {},
-          ]}>
-          <AppText
-            weight={MEDIUM}
-            type={SIXTEEN}
-            color={WHITE}
-            style={{textAlign: 'center'}}>
-             
-            {loading ? 'Loading...' : 'Next'}
-          </AppText>
-        </TouchableOpacity>
-        {/* Error  */}
-        {error && <AppText style={{color: 'red'}}>{error}</AppText>}
-      </View>
+      </ScrollView>
     </AppSafeAreaView>
   );
 }
