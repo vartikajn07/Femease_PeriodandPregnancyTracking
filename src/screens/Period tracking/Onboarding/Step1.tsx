@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Calendar from '../../../common/Calendar';
 import {
   AppText,
@@ -14,7 +14,7 @@ interface StepProps {
   onNext: () => void;
 }
 
-const Step1: React.FC<StepProps> = ({onNext}) => {
+const Step1: React.FC<StepProps> = ({ onNext }) => {
   const [selectedDate, setSelectedDate] = useState<string>('');
 
   const handleDateSelect = (date: string | string[]) => {
@@ -38,7 +38,7 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
           <AppText
             type={TWENTY}
             weight={SEMI_BOLD}
-            style={{textAlign: 'center'}}>
+            style={{ textAlign: 'center' }}>
             When did your last period start?
           </AppText>
         </View>
@@ -51,17 +51,20 @@ const Step1: React.FC<StepProps> = ({onNext}) => {
           todayTextColor="#E392A1"
           numOfRows={5}
         />
+
       </View>
+
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
         <AppText
           weight={MEDIUM}
           type={SIXTEEN}
           color={WHITE}
-          style={{textAlign: 'center'}}>
+          style={{ textAlign: 'center' }}>
           Next
         </AppText>
       </TouchableOpacity>
     </View>
+
   );
 };
 

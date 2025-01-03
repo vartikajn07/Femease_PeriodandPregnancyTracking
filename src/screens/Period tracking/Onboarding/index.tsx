@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {COLORS, FONTS} from '../../../constants/themes';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -14,7 +13,7 @@ import {
   TWENTY,
   WHITE,
 } from '../../../common/AppText';
-import {AppSafeAreaView} from '../../../common/AppSafeAreaView';
+import { AppSafeAreaView } from '../../../common/AppSafeAreaView';
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -70,7 +69,7 @@ const Onboarding = () => {
             weight={MEDIUM}
             type={SIXTEEN}
             color={WHITE}
-            style={{textAlign: 'center'}}>
+            style={{ textAlign: 'center' }}>
             Next
           </AppText>
         </TouchableOpacity>
