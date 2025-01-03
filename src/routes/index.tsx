@@ -18,7 +18,7 @@ const AppNavigator = () => (
     ref={navigatorRef => {
       NavigationService.setTopLevelNavigator(navigatorRef);
     }}>
-    <Stack.Navigator initialRouteName="SplashScreen">
+    <Stack.Navigator initialRouteName="RegisterUser">
       <Stack.Screen
         name="RegisterUser"
         component={RegisterUser}

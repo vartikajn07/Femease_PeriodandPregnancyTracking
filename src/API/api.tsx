@@ -30,7 +30,7 @@ const apiCall = async ({ endpoint, method, body, headers }: ApiParams) => {
     const response = await instance.request(config);
     return response.data;
   } catch (error: any) {
-    console.log('error',error)
+    console.log('error', error)
     if (error.response) {
       // Server responded with a status other than 200 range
       console.error('API response error:', error.response.data);
@@ -64,5 +64,18 @@ export const loginApi = async (userData: Record<string, any>) => {
     endpoint: endpoints.LOGIN,
     method: 'POST',
     body: userData
+  })
+}
+//adding user to period tracker db -> creates userId
+export const periodOnboardingApi = async (token: string) => {
+  if (!token) {
+    throw new Error('Authentication token is required.');
+  }
+  return await apiCall({
+    endpoint: endpoints.PERIODONBOARDING,
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
 }
