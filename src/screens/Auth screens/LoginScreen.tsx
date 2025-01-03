@@ -42,59 +42,55 @@ function LoginScreen(): React.JSX.Element {
 
   return (
     <AppSafeAreaView>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false} >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            backgroundColor: '#fff',
-            height: '100%',
-            paddingVertical: 20,
-          }}>
-          <AppText>Auth screen - Login screen</AppText>
-          <View style={styles.innercontainer}>
-            {/* email */}
-            <TextInput
-              placeholder="Enter your email address"
-              keyboardType="email-address"
-              value={email}
-              style={styles.txtInput}
-              onChangeText={setEmail}
-            />
-            {/* password */}
-            <TextInput
-              placeholder="Enter your password"
-              keyboardType="default"
-              value={password}
-              style={styles.txtInput}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-          </View>
-          <TouchableOpacity
-            onPress={handleLogin}
-            disabled={isDisabled || loading}
-            style={[
-              styles.Nextbtn,
-              isDisabled || loading ? { backgroundColor: '#ccc' } : {},
-            ]}>
-            <AppText
-              weight={MEDIUM}
-              type={SIXTEEN}
-              color={WHITE}
-              style={{ textAlign: 'center' }}>
-
-              {loading ? 'Loading...' : 'Next'}
-            </AppText>
-          </TouchableOpacity>
-          {/* Error  */}
-          {error && <AppText style={{ color: 'red' }}>{error}</AppText>}
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          backgroundColor: '#fff',
+          height: '100%',
+          paddingVertical: 20,
+        }}>
+        <AppText>Auth screen - Login screen</AppText>
+        <View style={styles.innercontainer}>
+          {/* email */}
+          <TextInput
+            placeholder="Enter your email address"
+            keyboardType="email-address"
+            value={email}
+            style={styles.txtInput}
+            onChangeText={setEmail}
+          />
+          {/* password */}
+          <TextInput
+            placeholder="Enter your password"
+            keyboardType="default"
+            value={password}
+            style={styles.txtInput}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
         </View>
-      </ScrollView>
+        <TouchableOpacity
+          onPress={handleLogin}
+          disabled={isDisabled || loading}
+          style={[
+            styles.Nextbtn,
+            isDisabled || loading ? { backgroundColor: '#ccc' } : {},
+          ]}>
+          <AppText
+            weight={MEDIUM}
+            type={SIXTEEN}
+            color={WHITE}
+            style={{ textAlign: 'center' }}>
+
+            {loading ? 'Loading...' : 'Next'}
+          </AppText>
+        </TouchableOpacity>
+        {/* Error  */}
+        {error && <AppText style={{ color: 'red' }}>{error}</AppText>}
+      </View>
     </AppSafeAreaView>
   );
 }

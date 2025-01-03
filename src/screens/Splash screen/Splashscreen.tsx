@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FONTS } from '../../constants/themes';
@@ -8,11 +8,38 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
 import { AppSafeAreaView } from '../../common/AppSafeAreaView';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { onboardUser } from '../../redux/slices/OnboardingSlice';
+
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
 
 function SplashScreen(): React.JSX.Element {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp>();
+
+  const { userId, loading, error, success } = useAppSelector(state => state.onboardingtoPeriod);
+
+  const handleOnboarding = async () => {
+    try {
+      const resultAction = await dispatch(onboardUser());
+      if (onboardUser.fulfilled.match(resultAction)) {
+        console.log('Onboarding Successful! User ID:', resultAction.payload);
+      } else if (onboardUser.rejected.match(resultAction)) {
+        console.error('Onboarding Failed:', resultAction.error);
+      }
+    } catch (error) {
+      console.error('Onboarding Failed:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      navigation.navigate('PeriodTrackingOnboarding');
+    }
+  }, [success, navigation]);
+
+
   return (
     <AppSafeAreaView>
       <View style={styles.container}>
@@ -21,7 +48,9 @@ function SplashScreen(): React.JSX.Element {
         </View>
         <View style={styles.content}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('PeriodTrackingOnboarding')}
+            onPress={async () => {
+              await handleOnboarding();
+            }}
             style={styles.contentbtn}>
             <FastImage
               style={styles.image}
