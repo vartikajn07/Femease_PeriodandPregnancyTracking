@@ -79,3 +79,20 @@ export const periodOnboardingApi = async (token: string) => {
     },
   })
 }
+
+//logging last period date
+export const periodstartApi = async (token: string, data: { date: string }) => {
+  if (!token) {
+    throw new Error('Authentication token is required.')
+  }
+  return await apiCall({
+    endpoint: endpoints.PERIODSTARTDATE,
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+
+  })
+}

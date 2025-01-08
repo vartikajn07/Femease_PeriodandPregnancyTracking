@@ -5,8 +5,8 @@ export const endpoints = {
   // Auth endpoints
   REGISTER: `${BASE_URL}api/auth/register`,
   LOGIN: `${BASE_URL}api/auth/login`,
-  PERIODONBOARDING: `${BASE_URL}api/userOption/periodTracker/` //adding user to period tracker db -> creates a tracker Id
-
+  PERIODONBOARDING: `${BASE_URL}api/userOption/periodTracker/`, //adding user to period tracker db -> creates a tracker Id
+  PERIODSTARTDATE: `${BASE_URL}api/period/start` //period start date
 
 
   // Add more endpoints here

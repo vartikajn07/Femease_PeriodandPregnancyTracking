@@ -1,6 +1,6 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
-export const {width, height} = Dimensions.get('window');
+export const { width, height } = Dimensions.get('window');
 
 export const COLORS = {
   primary: '#E392A1',
@@ -55,6 +55,6 @@ export const FONTS = {
   Satisfy: 'Satisfy-Regular',
 };
 
-const appTheme = {FONTS, COLORS};
+const appTheme = { FONTS, COLORS };
 
 export default appTheme;
