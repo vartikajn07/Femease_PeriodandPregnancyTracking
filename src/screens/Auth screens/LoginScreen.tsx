@@ -84,7 +84,6 @@ function LoginScreen(): React.JSX.Element {
             type={SIXTEEN}
             color={WHITE}
             style={{ textAlign: 'center' }}>
-
             {loading ? 'Loading...' : 'Next'}
           </AppText>
         </TouchableOpacity>

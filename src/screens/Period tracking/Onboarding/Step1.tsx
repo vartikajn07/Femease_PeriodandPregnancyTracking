@@ -3,12 +3,16 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Calendar from '../../../common/Calendar';
 import {
   AppText,
+  GREY,
   MEDIUM,
+  RED,
   SEMI_BOLD,
   SIXTEEN,
   TWENTY,
   WHITE,
 } from '../../../common/AppText';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { logPeriodStartDate } from '../../../redux/slices/PeriodStartSlice';
 
 interface StepProps {
   onNext: () => void;
@@ -16,14 +20,28 @@ interface StepProps {
 
 const Step1: React.FC<StepProps> = ({ onNext }) => {
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const { date, loading, success, error } = useAppSelector(
+    (state) => state.periodStart
+  );
 
-  const handleDateSelect = (date: string | string[]) => {
-    if (Array.isArray(date)) {
-      setSelectedDate(date[0]);
-    } else {
-      setSelectedDate(date);
+
+  //logging period start date function
+  const handleDateSelect = async (date: string | string[]) => {
+    const formattedDate = Array.isArray(date) ? date[0] : date;
+    setSelectedDate(formattedDate);
+    try {
+      const resultAction = await dispatch(logPeriodStartDate({ selectedDate: formattedDate }));
+      if (logPeriodStartDate.fulfilled.match(resultAction)) {
+        console.log('Period start date logged successfully:', resultAction.payload);
+      } else if (logPeriodStartDate.rejected.match(resultAction)) {
+        console.error('Failed to log period start date:', resultAction.payload);
+      }
+    } catch (err) {
+      console.error('Error logging period start date:', err);
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -51,9 +69,7 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
           todayTextColor="#E392A1"
           numOfRows={5}
         />
-
       </View>
-
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
         <AppText
           weight={MEDIUM}
@@ -63,8 +79,10 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
           Next
         </AppText>
       </TouchableOpacity>
+      {loading && <AppText color={GREY}>Please wait</AppText>}
+      {success && <AppText>We have logged your last period!</AppText>}
+      {error && <AppText color={RED}>Error: {error}</AppText>}
     </View>
-
   );
 };
 
