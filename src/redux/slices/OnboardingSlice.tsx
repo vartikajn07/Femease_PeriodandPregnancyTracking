@@ -55,7 +55,7 @@ const periodOnboardingSlice = createSlice({
             .addCase(onboardUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.userId = action.payload;
+                state.userId = action.payload; //storing tracker id
 
             })
             .addCase(onboardUser.rejected, (state, action) => {
