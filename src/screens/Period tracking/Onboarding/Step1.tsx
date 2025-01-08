@@ -17,6 +17,7 @@ import { logPeriodStartDate } from '../../../redux/slices/PeriodStartSlice';
 interface StepProps {
   onNext: () => void;
 }
+const today = new Date();
 
 const Step1: React.FC<StepProps> = ({ onNext }) => {
   const [selectedDate, setSelectedDate] = useState<string>('');
@@ -24,8 +25,6 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
   const { date, loading, success, error } = useAppSelector(
     (state) => state.periodStart
   );
-
-
   //logging period start date function
   const handleDateSelect = async (date: string | string[]) => {
     const formattedDate = Array.isArray(date) ? date[0] : date;
@@ -40,6 +39,11 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
     } catch (err) {
       console.error('Error logging period start date:', err);
     }
+  };
+  // Disable dates after today
+  const isDateDisabled = (date: string) => {
+    const selectedDate = new Date(date);
+    return selectedDate > today;
   };
 
 
@@ -68,6 +72,7 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
           selectedDateTextColor="#FFFFFF"
           todayTextColor="#E392A1"
           numOfRows={5}
+
         />
       </View>
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>

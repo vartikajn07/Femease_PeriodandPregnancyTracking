@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import {COLORS, FONTS} from '../constants/themes';
-import {Icon, IconButton} from 'react-native-paper';
-import {AppText, FIFTEEN, SEMI_BOLD, SIXTEEN, THIRTEEN} from './AppText';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { COLORS, FONTS } from '../constants/themes';
+import { Icon, IconButton } from 'react-native-paper';
+import { AppText, FIFTEEN, SEMI_BOLD, SIXTEEN, THIRTEEN } from './AppText';
 
 interface CalendarProps {
   selectedDate: string | string[];
@@ -11,6 +11,7 @@ interface CalendarProps {
   selectedDateTextColor: string;
   todayTextColor: string;
   numOfRows: number;
+  disableDays?: (date: Date) => boolean
 }
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -20,6 +21,7 @@ const Calendar: React.FC<CalendarProps> = ({
   selectedDateTextColor,
   todayTextColor,
   numOfRows,
+  disableDays
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const daysInMonth = (month: number, year: number) => {
@@ -40,33 +42,38 @@ const Calendar: React.FC<CalendarProps> = ({
       day: number | string;
       isCurrentMonth: boolean;
       isToday: boolean;
+      isDisabled: boolean
     }[] = [];
     for (let i = 0; i < numRows * 7; i++) {
       if (i >= firstDayOfMonth && i < firstDayOfMonth + daysInCurrentMonth) {
         const day = i - firstDayOfMonth + 1;
+        const currentDateObj = new Date(year, month, day);
         const isToday =
           today.getDate() === day &&
           today.getMonth() === month &&
           today.getFullYear() === year;
 
+        const isDisabled = disableDays ? disableDays(currentDateObj) : false;
+
         days.push({
           day,
           isCurrentMonth: true,
           isToday: isToday,
+          isDisabled
         });
       } else {
         days.push({
           day: '',
           isCurrentMonth: false,
           isToday: false,
+          isDisabled: true
         });
       }
     }
-
     return days;
   };
-  const handleDatePress = (day: number, isCurrentMonth: boolean) => {
-    if (isCurrentMonth) {
+  const handleDatePress = (day: number, isCurrentMonth: boolean, isDisabled: boolean) => {
+    if (isCurrentMonth && !isDisabled) {
       const selectedDateStr = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth(),
@@ -109,10 +116,10 @@ const Calendar: React.FC<CalendarProps> = ({
             size={30}
             iconColor={COLORS.primary}
             onPress={() => changeMonth(-1)}
-            style={{padding: 0}}
+            style={{ padding: 0 }}
           />
           <AppText type={SIXTEEN} weight={SEMI_BOLD}>
-            {currentDate.toLocaleString('default', {month: 'long'})}{' '}
+            {currentDate.toLocaleString('default', { month: 'long' })}{' '}
             {currentDate.getFullYear()}
           </AppText>
           <IconButton
@@ -120,7 +127,7 @@ const Calendar: React.FC<CalendarProps> = ({
             iconColor={COLORS.primary}
             size={30}
             onPress={() => changeMonth(1)}
-            style={{padding: 0}}
+            style={{ padding: 0 }}
           />
         </View>
       </View>
@@ -137,21 +144,21 @@ const Calendar: React.FC<CalendarProps> = ({
         data={days}
         numColumns={7}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             style={[
               styles.day,
               item.isCurrentMonth &&
-              new Date(
-                currentDate.getFullYear(),
-                currentDate.getMonth(),
-                Number(item.day),
-              )
-                .toISOString()
-                .split('T')[0] === selectedDate
+                new Date(
+                  currentDate.getFullYear(),
+                  currentDate.getMonth(),
+                  Number(item.day),
+                )
+                  .toISOString()
+                  .split('T')[0] === selectedDate
                 ? {
-                    backgroundColor: selectedDateColor,
-                  }
+                  backgroundColor: selectedDateColor,
+                }
                 : item.isCurrentMonth &&
                   Array.isArray(selectedDate) &&
                   selectedDate.includes(
@@ -163,28 +170,30 @@ const Calendar: React.FC<CalendarProps> = ({
                       .toISOString()
                       .split('T')[0],
                   )
-                ? {
+                  ? {
                     backgroundColor: selectedDateColor,
                   }
-                : null,
+                  : null,
             ]}
             onPress={() =>
-              handleDatePress(item.day as number, item.isCurrentMonth)
-            }>
+              handleDatePress(item.day as number, item.isCurrentMonth, item.isDisabled)
+            }
+            disabled={item.isDisabled}>
             <Text
               style={[
                 styles.dayText,
-                item.isToday ? {color: todayTextColor} : null,
+                item.isToday ? { color: todayTextColor } : null,
                 item.isCurrentMonth &&
-                new Date(
-                  currentDate.getFullYear(),
-                  currentDate.getMonth(),
-                  Number(item.day),
-                )
-                  .toISOString()
-                  .split('T')[0] === selectedDate
-                  ? {color: selectedDateTextColor}
+                  new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    Number(item.day),
+                  )
+                    .toISOString()
+                    .split('T')[0] === selectedDate
+                  ? { color: selectedDateTextColor }
                   : null,
+                item.isDisabled ? { color: '#d3d3d3' } : null
               ]}>
               {item.day}
             </Text>
