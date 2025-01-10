@@ -40,12 +40,12 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
       console.error('Error logging period start date:', err);
     }
   };
-  // Disable dates after today
-  const isDateDisabled = (date: string) => {
-    const selectedDate = new Date(date);
-    return selectedDate > today;
-  };
 
+  //disable future dates 
+  const disableDays = (date: Date) => {
+    const today = new Date();
+    return date > today;
+  }
 
   return (
     <View style={styles.container}>
@@ -72,7 +72,7 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
           selectedDateTextColor="#FFFFFF"
           todayTextColor="#E392A1"
           numOfRows={5}
-
+          disableDays={disableDays}
         />
       </View>
       <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
