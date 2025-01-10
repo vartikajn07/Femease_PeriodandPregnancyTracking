@@ -96,3 +96,22 @@ export const periodstartApi = async (token: string, data: { date: string }) => {
 
   })
 }
+
+//logging period length 
+export const periodLengthApi = async (
+  token: string,
+  data: { periodtrackerId: string; lengthInDays: number }
+) => {
+  if (!token) {
+    throw new Error('Authentication token is required')
+  }
+  return await apiCall({
+    endpoint: endpoints.PERIODLENGTHDAYS,
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: (data)
+  })
+}
