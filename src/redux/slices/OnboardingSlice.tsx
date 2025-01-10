@@ -4,6 +4,7 @@ import { periodOnboardingApi } from '../../API/api';
 
 const initialState = {
     userId: null as string | null,
+    periodtrackerId: null as string | null,
     loading: false,
     error: null as string | null,
     success: false,
@@ -24,8 +25,10 @@ export const onboardUser = createAsyncThunk<
         try {
             const response = await periodOnboardingApi(token);
             const userId = response.userId;
+            const periodtrackerId = response.id
             console.log('Onboarding Successful! User ID:', userId);
-            return userId;
+            console.log('tracker id: ', periodtrackerId)
+            return periodtrackerId;
         } catch (error: any) {
             console.error('Onboarding Failed:', error.message || error);
             return rejectWithValue(error.response?.data?.message || error.message);
@@ -41,7 +44,7 @@ const periodOnboardingSlice = createSlice({
             state.error = null;
         },
         resetOnboarding: (state) => {
-            state.userId = null;
+            state.periodtrackerId = null;
             state.success = false;
             state.error = null;
         },
@@ -55,8 +58,7 @@ const periodOnboardingSlice = createSlice({
             .addCase(onboardUser.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.userId = action.payload; //storing tracker id
-
+                state.periodtrackerId = action.payload; //storing tracker id
             })
             .addCase(onboardUser.rejected, (state, action) => {
                 state.loading = false;
