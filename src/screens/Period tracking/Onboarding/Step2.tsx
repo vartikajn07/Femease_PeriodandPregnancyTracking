@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
-import {FONTS, COLORS} from '../../../constants/themes';
-import {Dropdown} from '../../../common/Dropdown';
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { FONTS, COLORS } from '../../../constants/themes';
+import { Dropdown } from '../../../common/Dropdown';
 import FastImage from 'react-native-fast-image';
 import {
   AppText,
@@ -14,18 +14,45 @@ import {
   WHITE,
 } from '../../../common/AppText';
 import Images from '../../../assets';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { AppDispatch, RootState } from '../../../redux/store';
+import { updatePeriodLength } from '../../../redux/slices/PeriodLengthSlice';
+import { useDispatch } from 'react-redux';
 
 interface StepProps {
   onNext: () => void;
 }
 
-const Step2: React.FC<StepProps> = ({onNext}) => {
+const Step2: React.FC<StepProps> = ({ onNext }) => {
   const [value, setValue] = useState('');
+  const dispatch = useAppDispatch();
+  const { loading, success, error } = useAppSelector(
+    (state: RootState) => state.periodLength
+  );
+  const trackerId = useAppSelector((state: RootState) => state.onboardingtoPeriod.periodtrackerId)
 
-  const data = Array.from({length: 20}, (_, i) => ({
+  const data = Array.from({ length: 20 }, (_, i) => ({
     label: `${i + 1} day${i + 1 > 1 ? 's' : ''}`,
     value: `${i + 1}`,
   }));
+
+  const handleDropdownChange = async (item: { label: string; value: string }) => {
+    setValue(item.value);
+
+    if (!trackerId) {
+      console.error('Tracker ID is missing.');
+      return;
+    }
+    try {
+      const result = await dispatch(
+        updatePeriodLength({ days: parseInt(item.value, 10), periodtrackerId: trackerId })
+      ).unwrap() as string;
+
+      console.log('Period length updated successfully:', result);
+    } catch (error) {
+      console.error('Failed to update period length:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -34,7 +61,7 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
           <AppText
             type={TWENTY}
             weight={SEMI_BOLD}
-            style={{textAlign: 'center'}}>
+            style={{ textAlign: 'center' }}>
             How long does your period usually last?
           </AppText>
         </View>
@@ -43,7 +70,7 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
             title=""
             data={data}
             value={value}
-            onChange={item => setValue(item.value)}
+            onChange={handleDropdownChange}
             placeholder=""
             container={styles.dropcontainer}
             dropdown={styles.dropdown}
@@ -53,11 +80,11 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
               <FastImage
                 source={Images.DROPDOWN_ICON}
                 resizeMode="contain"
-                style={{height: 15, width: 15}}
+                style={{ height: 15, width: 15 }}
               />
             )}
           />
-          <AppText type={TWELVE} weight={LIGHT} style={{paddingHorizontal: 5}}>
+          <AppText type={TWELVE} weight={LIGHT} style={{ paddingHorizontal: 5 }}>
             Period length is measured from the first to the last day of
             bleeding.
           </AppText>
@@ -68,7 +95,7 @@ const Step2: React.FC<StepProps> = ({onNext}) => {
           weight={MEDIUM}
           type={SIXTEEN}
           color={WHITE}
-          style={{textAlign: 'center'}}>
+          style={{ textAlign: 'center' }}>
           Next
         </AppText>
       </TouchableOpacity>

@@ -3,13 +3,15 @@ import authReducer from "./slices/authSlice"
 import loginReducer from "./slices/LoginSlice"
 import OnboardingtoPeriodReducer from "./slices/OnboardingSlice"
 import periodStartDateReducer from "./slices/PeriodStartSlice"
+import periodLengthReducer from "./slices/PeriodLengthSlice"
 
 export const store = configureStore({
   reducer: {
     auth: authReducer, //register user
     login: loginReducer,
     onboardingtoPeriod: OnboardingtoPeriodReducer,
-    periodStart: periodStartDateReducer
+    periodStart: periodStartDateReducer,
+    periodLength: periodLengthReducer
   },
 });
 
