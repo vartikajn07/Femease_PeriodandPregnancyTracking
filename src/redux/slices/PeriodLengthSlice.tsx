@@ -14,27 +14,29 @@ const initialState: PeriodLengthState = {
 };
 
 export const updatePeriodLength = createAsyncThunk<
-    string,
-    { days: number; periodtrackerId: string },
-    { rejectValue: string; state: { login: { token: string | null }; onboardingtoPeriod: { periodtrackerId: string | null } } }
+    any,
+    { days: number; periodTrackerId: string },
+    { rejectValue: string; state: { login: { token: string | null }; onboardingtoPeriod: { periodTrackerId: string | null } } }
 >(
     'periodLength/update',
-    async ({ days, periodtrackerId }, { getState, rejectWithValue }) => {
+    async ({ periodTrackerId, days }, { getState, rejectWithValue }) => {
         const token = getState().login.token;
+        const trackerId = getState().onboardingtoPeriod.periodTrackerId
 
         if (!token) {
             console.error('Failed: Authentication token is missing.');
             return rejectWithValue('Authentication token is missing.');
         }
-        if (!periodtrackerId) {
+        if (!trackerId) {
             console.error('Failed: Tracker ID is missing.');
             return rejectWithValue('Tracker ID is missing.');
         }
         try {
             const response = await periodLengthApi(token, {
-                periodtrackerId,
+                periodTrackerId: trackerId,
                 lengthInDays: days,
             });
+            console.log('Request Payload:', { periodTrackerId, lengthInDays: days });
             console.log('Period length updated successfully:', response);
             return response.data;
         } catch (error: any) {

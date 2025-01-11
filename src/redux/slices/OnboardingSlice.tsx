@@ -25,10 +25,10 @@ export const onboardUser = createAsyncThunk<
         try {
             const response = await periodOnboardingApi(token);
             const userId = response.userId;
-            const periodtrackerId = response.id
+            const periodTrackerId = response.id
             console.log('Onboarding Successful! User ID:', userId);
-            console.log('tracker id: ', periodtrackerId)
-            return periodtrackerId;
+            console.log('tracker id: ', periodTrackerId)
+            return periodTrackerId;
         } catch (error: any) {
             console.error('Onboarding Failed:', error.message || error);
             return rejectWithValue(error.response?.data?.message || error.message);

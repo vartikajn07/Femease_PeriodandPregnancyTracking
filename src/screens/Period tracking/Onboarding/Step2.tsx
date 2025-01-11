@@ -15,6 +15,7 @@ import {
 } from '../../../common/AppText';
 import Images from '../../../assets';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { updatePeriodLength } from '../../../redux/slices/PeriodLengthSlice';
 import { useDispatch } from 'react-redux';
@@ -24,10 +25,10 @@ interface StepProps {
 }
 
 const Step2: React.FC<StepProps> = ({ onNext }) => {
-  const [value, setValue] = useState('');
-  const dispatch = useAppDispatch();
+  const [value, setValue] = useState('')
+  const dispatch: AppDispatch = useAppDispatch();
   const { loading, success, error } = useAppSelector(
-    (state: RootState) => state.periodLength
+    (state) => state.periodLength
   );
   const trackerId = useAppSelector((state: RootState) => state.onboardingtoPeriod.periodtrackerId)
 
@@ -38,17 +39,18 @@ const Step2: React.FC<StepProps> = ({ onNext }) => {
 
   const handleDropdownChange = async (item: { label: string; value: string }) => {
     setValue(item.value);
-
+    console.log('Selected value:', item.value);
+    console.log('Tracker ID:', trackerId);
     if (!trackerId) {
       console.error('Tracker ID is missing.');
       return;
     }
     try {
-      const result = await dispatch(
-        updatePeriodLength({ days: parseInt(item.value, 10), periodtrackerId: trackerId })
+      const resultAction = await dispatch(
+        updatePeriodLength({ periodTrackerId: trackerId, days: parseInt(item.value, 10) }) as any
       ).unwrap() as string;
 
-      console.log('Period length updated successfully:', result);
+      console.log('Period length updated successfully:', resultAction);
     } catch (error) {
       console.error('Failed to update period length:', error);
     }
