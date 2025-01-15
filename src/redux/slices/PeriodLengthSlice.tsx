@@ -1,46 +1,54 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { periodLengthApi } from '../../API/api';
 
+interface Period {
+    id: string;
+    startDate: string;
+    endDate: string;
+    cycleLength: number | null;
+    periodTrackerId: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 interface PeriodLengthState {
-    loading: boolean;
     success: boolean;
+    loading: boolean;
     error: string | null;
+    message: string | null;
+    period: Period | null;
 }
 
 const initialState: PeriodLengthState = {
-    loading: false,
     success: false,
+    loading: false,
     error: null,
+    message: null,
+    period: null,
 };
 
-export const updatePeriodLength = createAsyncThunk<
-    any,
-    { days: number; periodTrackerId: string },
-    { rejectValue: string; state: { login: { token: string | null }; onboardingtoPeriod: { periodTrackerId: string | null } } }
->(
-    'periodLength/update',
-    async ({ periodTrackerId, days }, { getState, rejectWithValue }) => {
-        const token = getState().login.token;
-        const trackerId = getState().onboardingtoPeriod.periodTrackerId
 
+export const updatePeriodLength = createAsyncThunk<
+    { message: string; period: Period },
+    { periodTrackerId: string; lengthInDays: number },
+    { rejectValue: string; state: { login: { token: string | null } } }
+>(
+    'periodLength/updatePeriodLength',
+    async (data, { getState, rejectWithValue }) => {
+        const token = getState().login.token;
         if (!token) {
-            console.error('Failed: Authentication token is missing.');
+            console.error('Update Failed: Authentication token is missing.');
             return rejectWithValue('Authentication token is missing.');
         }
-        if (!trackerId) {
-            console.error('Failed: Tracker ID is missing.');
-            return rejectWithValue('Tracker ID is missing.');
-        }
         try {
-            const response = await periodLengthApi(token, {
-                periodTrackerId: trackerId,
-                lengthInDays: days,
-            });
-            console.log('Request Payload:', { periodTrackerId, lengthInDays: days });
+            const response = await periodLengthApi(token, data);
             console.log('Period length updated successfully:', response);
-            return response.data;
+            return {
+                message: response.data.message,
+                period: response.data.period,
+            };
         } catch (error: any) {
-            console.error('Failed to update period length:', error.message || error);
+            console.error('Update Failed:', error.message || error);
             return rejectWithValue(error.response?.data?.message || error.message);
         }
     }
@@ -56,6 +64,8 @@ const periodLengthSlice = createSlice({
         resetPeriodLengthState: (state) => {
             state.success = false;
             state.error = null;
+            state.message = null;
+            state.period = null;
         },
     },
     extraReducers: (builder) => {
@@ -63,18 +73,17 @@ const periodLengthSlice = createSlice({
             .addCase(updatePeriodLength.pending, (state) => {
                 state.loading = true;
                 state.error = null;
-                state.success = false;
             })
             .addCase(updatePeriodLength.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.error = null;
-                console.log('Success Message:', action.payload);
+                state.message = action.payload.message;
+                state.period = action.payload.period;
+                console.log('Server response:', action.payload);
             })
             .addCase(updatePeriodLength.rejected, (state, action) => {
                 state.loading = false;
-                state.success = false;
-                state.error = action.payload || 'Failed to update period length.';
+                state.error = action.payload as string;
             });
     },
 });
