@@ -66,7 +66,7 @@ export const loginApi = async (userData: Record<string, any>) => {
     body: userData
   })
 }
-//adding user to period tracker db -> creates userId
+//adding user to period tracker db -> creates userId & trackerid
 export const periodOnboardingApi = async (token: string) => {
   if (!token) {
     throw new Error('Authentication token is required.');
@@ -114,6 +114,6 @@ export const periodLengthApi = async (
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: data
+    body: JSON.stringify(data)
   })
 }
