@@ -5,8 +5,10 @@ import { Dropdown } from '../../../common/Dropdown';
 import FastImage from 'react-native-fast-image';
 import {
   AppText,
+  GREY,
   LIGHT,
   MEDIUM,
+  RED,
   SEMI_BOLD,
   SIXTEEN,
   TWELVE,
@@ -20,41 +22,30 @@ import { AppDispatch, RootState } from '../../../redux/store';
 import { updatePeriodLength } from '../../../redux/slices/PeriodLengthSlice';
 import { useDispatch } from 'react-redux';
 
+
 interface StepProps {
   onNext: () => void;
 }
 
 const Step2: React.FC<StepProps> = ({ onNext }) => {
-  const [value, setValue] = useState('')
-  const dispatch: AppDispatch = useAppDispatch();
-  const { loading, success, error } = useAppSelector(
-    (state) => state.periodLength
-  );
-  const trackerId = useAppSelector((state: RootState) => state.onboardingtoPeriod.periodtrackerId)
+  const [value, setValue] = useState<string>('')
+  const dispatch = useAppDispatch();
+  const { loading, error, success } = useAppSelector((state) => state.periodLength);
+  const [isDisabled, setisDisabled] = useState(false);
 
+  const periodTrackerId = useAppSelector((state: RootState) => state.onboardingtoPeriod.periodtrackerId) as string;
   const data = Array.from({ length: 20 }, (_, i) => ({
     label: `${i + 1} day${i + 1 > 1 ? 's' : ''}`,
     value: `${i + 1}`,
   }));
 
-  const handleDropdownChange = async (item: { label: string; value: string }) => {
-    setValue(item.value);
-    console.log('Selected value:', item.value);
-    console.log('Tracker ID:', trackerId);
-    if (!trackerId) {
-      console.error('Tracker ID is missing.');
-      return;
-    }
-    try {
-      const resultAction = await dispatch(
-        updatePeriodLength({ periodTrackerId: trackerId, days: parseInt(item.value, 10) }) as any
-      ).unwrap() as string;
-
-      console.log('Period length updated successfully:', resultAction);
-    } catch (error) {
-      console.error('Failed to update period length:', error);
-    }
+  const handleDropdownChange = (selectedValue: string) => {
+    setValue(selectedValue)
+    dispatch(updatePeriodLength({ periodTrackerId, lengthInDays: Number(selectedValue) }));
   };
+
+
+
 
   return (
     <View style={styles.container}>
@@ -72,7 +63,7 @@ const Step2: React.FC<StepProps> = ({ onNext }) => {
             title=""
             data={data}
             value={value}
-            onChange={handleDropdownChange}
+            onChange={(item) => handleDropdownChange(item.value)}
             placeholder=""
             container={styles.dropcontainer}
             dropdown={styles.dropdown}
@@ -92,15 +83,20 @@ const Step2: React.FC<StepProps> = ({ onNext }) => {
           </AppText>
         </View>
       </View>
-      <TouchableOpacity onPress={onNext} style={styles.Nextbtn}>
+      <TouchableOpacity onPress={onNext} style={styles.Nextbtn}
+        disabled={isDisabled || loading}>
         <AppText
           weight={MEDIUM}
           type={SIXTEEN}
           color={WHITE}
-          style={{ textAlign: 'center' }}>
+          style={{ textAlign: 'center' }
+          }>
           Next
         </AppText>
       </TouchableOpacity>
+      {loading && <AppText color={GREY}>Please wait</AppText>}
+      {success && <AppText>We have logged your period length!</AppText>}
+      {error && <AppText color={RED}>Error: {error}</AppText>}
     </View>
   );
 };

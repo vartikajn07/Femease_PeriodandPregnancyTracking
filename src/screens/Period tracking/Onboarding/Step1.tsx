@@ -13,6 +13,7 @@ import {
 } from '../../../common/AppText';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { logPeriodStartDate } from '../../../redux/slices/PeriodStartSlice';
+import { RootState } from '../../../redux/store';
 
 interface StepProps {
   onNext: () => void;
@@ -25,6 +26,8 @@ const Step1: React.FC<StepProps> = ({ onNext }) => {
   const { date, loading, success, error } = useAppSelector(
     (state) => state.periodStart
   );
+  const trackerId = useAppSelector((state: RootState) => state.onboardingtoPeriod.periodtrackerId);
+  console.log('Tracker ID in Component:', trackerId);
   //logging period start date function
   const handleDateSelect = async (date: string | string[]) => {
     const formattedDate = Array.isArray(date) ? date[0] : date;
