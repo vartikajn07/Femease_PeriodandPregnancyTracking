@@ -117,3 +117,23 @@ export const periodLengthApi = async (
     body: JSON.stringify(data)
   })
 }
+
+
+//cycle insights-> period homepage
+export const cycleInsightsApi = async (token: string, data: { periodTrackerId: string, lengthInDays: number }) => {
+  if (!token) {
+    throw new Error('Authentication token is required')
+  }
+  console.log('Api request payload:', data);
+  console.log("Request data:", JSON.stringify(data));
+
+  return await apiCall({
+    endpoint: endpoints.CYCLEINSIGHTS,
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+}

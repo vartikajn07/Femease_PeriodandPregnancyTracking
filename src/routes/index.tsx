@@ -10,6 +10,7 @@ import PregnancyOnboarding from '../screens/Pregnancy tracking/Onboarding';
 import PregnancyHome from '../screens/Pregnancy tracking/Home';
 import NavigationService from './NavigationService';
 import LoginScreen from '../screens/Auth screens/LoginScreen';
+import Welcome from "../screens/Welcome screen/Welcome"
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,8 @@ const AppNavigator = () => (
     ref={navigatorRef => {
       NavigationService.setTopLevelNavigator(navigatorRef);
     }}>
-    <Stack.Navigator initialRouteName="RegisterUser">
+    <Stack.Navigator initialRouteName="WelcomeScreen">
+      <Stack.Screen name='WelcomeScreen' component={Welcome} options={{ headerShown: false }} />
       <Stack.Screen
         name="RegisterUser"
         component={RegisterUser}

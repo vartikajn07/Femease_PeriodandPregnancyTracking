@@ -1,0 +1,16 @@
+{
+    "Welcome" : "Welcome",
+    "changelanguage": "change language",
+    "Next": "Next",
+    "Loading": "Loading..",
+    "auth-screen": "Auth screen - Register user",
+    "email address": "Enter your email address",
+    "password": "Enter your password",
+    "Name": "What do we call you",
+    "Age": "Age?",
+    "Bmi": "Bmi",
+    "Loginscreen": "Auth screen - Login screen",
+    "What do you want to track?": "What do you want to track?",
+    "Period Tracking": "Period Tracking",
+    "Pregnancy Tracking": "Pregnancy Tracking"
+}

@@ -8,11 +8,13 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { loginUser } from '../../redux/slices/LoginSlice';
+import { useTranslation } from 'react-i18next';
 
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
 
 function LoginScreen(): React.JSX.Element {
+  const { t } = useTranslation()
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp>();
   const [email, setEmail] = useState('');
@@ -52,11 +54,11 @@ function LoginScreen(): React.JSX.Element {
           height: '100%',
           paddingVertical: 20,
         }}>
-        <AppText>Auth screen - Login screen</AppText>
+        <AppText>{t('Loginscreen')}</AppText>
         <View style={styles.innercontainer}>
           {/* email */}
           <TextInput
-            placeholder="Enter your email address"
+            placeholder={t("email address")}
             keyboardType="email-address"
             value={email}
             style={styles.txtInput}
@@ -64,7 +66,7 @@ function LoginScreen(): React.JSX.Element {
           />
           {/* password */}
           <TextInput
-            placeholder="Enter your password"
+            placeholder={t('password')}
             keyboardType="default"
             value={password}
             style={styles.txtInput}
@@ -84,7 +86,7 @@ function LoginScreen(): React.JSX.Element {
             type={SIXTEEN}
             color={WHITE}
             style={{ textAlign: 'center' }}>
-            {loading ? 'Loading...' : 'Next'}
+            {loading ? t("Loading") : t("Next")}
           </AppText>
         </TouchableOpacity>
         {/* Error  */}

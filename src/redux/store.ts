@@ -4,6 +4,7 @@ import loginReducer from "./slices/LoginSlice"
 import OnboardingtoPeriodReducer from "./slices/OnboardingSlice"
 import periodStartDateReducer from "./slices/PeriodStartSlice"
 import periodLengthReducer from "./slices/PeriodLengthSlice"
+import cycleInsightsReducer from "./slices/cycleInsightSlice"
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     login: loginReducer,
     onboardingtoPeriod: OnboardingtoPeriodReducer,
     periodStart: periodStartDateReducer,
-    periodLength: periodLengthReducer
+    periodLength: periodLengthReducer,
+    cycleInsights: cycleInsightsReducer
   },
 });
 

@@ -38,14 +38,16 @@ const Step2: React.FC<StepProps> = ({ onNext }) => {
     label: `${i + 1} day${i + 1 > 1 ? 's' : ''}`,
     value: `${i + 1}`,
   }));
+  const periodlength = useAppSelector((state: RootState) => state.periodLength.lengthInDays);
+  const token = useAppSelector((state: RootState) => state.login.token)
+  console.log('Length in days from Redux store:', periodlength);
+  console.log('periodtrackerid: ', periodTrackerId)
+  console.log('token', token)
 
   const handleDropdownChange = (selectedValue: string) => {
     setValue(selectedValue)
     dispatch(updatePeriodLength({ periodTrackerId, lengthInDays: Number(selectedValue) }));
   };
-
-
-
 
   return (
     <View style={styles.container}>
@@ -94,9 +96,9 @@ const Step2: React.FC<StepProps> = ({ onNext }) => {
           Next
         </AppText>
       </TouchableOpacity>
-      {loading && <AppText color={GREY}>Please wait</AppText>}
-      {success && <AppText>We have logged your period length!</AppText>}
-      {error && <AppText color={RED}>Error: {error}</AppText>}
+      {loading && <AppText style={{ marginTop: 20 }} color={GREY}>Please wait</AppText>}
+      {success && <AppText style={{ marginTop: 20 }}>We have logged your period length!</AppText>}
+      {error && <AppText style={{ marginTop: 20 }} color={RED}>Error: {error}</AppText>}
     </View>
   );
 };
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
   },
   dropdown: {
+
     borderRadius: 8,
     borderWidth: 1,
     flexDirection: 'row',
@@ -143,7 +146,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E392A1',
     color: '#ffff',
     width: '90%',
-    textAlign: 'center',
+    textAlign:
+      'center',
     marginHorizontal: 'auto',
     paddingVertical: 10,
     borderRadius: 8,

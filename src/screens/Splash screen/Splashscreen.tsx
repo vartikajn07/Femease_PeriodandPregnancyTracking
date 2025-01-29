@@ -10,6 +10,7 @@ import Images from '../../assets';
 import { AppSafeAreaView } from '../../common/AppSafeAreaView';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { onboardUser } from '../../redux/slices/OnboardingSlice';
+import { useTranslation } from 'react-i18next';
 
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
@@ -17,6 +18,7 @@ type NavigationProp = StackNavigationProp<RootStackParamList, 'SplashScreen'>;
 function SplashScreen(): React.JSX.Element {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp>();
+  const { t } = useTranslation();
 
   const { userId, loading, error, success } = useAppSelector(state => state.onboardingtoPeriod);
 
@@ -44,7 +46,7 @@ function SplashScreen(): React.JSX.Element {
     <AppSafeAreaView>
       <View style={styles.container}>
         <View style={styles.containerheading}>
-          <Text style={styles.headingText}>What do you want to track?</Text>
+          <Text style={styles.headingText}>{t("What do you want to track?")}</Text>
         </View>
         <View style={styles.content}>
           <TouchableOpacity
@@ -56,7 +58,7 @@ function SplashScreen(): React.JSX.Element {
               style={styles.image}
               source={Images.SPLASH_SCREEN_PERIOD}
             />
-            <Text style={styles.contenttext}>Period Tracking</Text>
+            <Text style={styles.contenttext}>{t("Period Tracking")}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('PregnancyOnboarding')}
@@ -66,7 +68,7 @@ function SplashScreen(): React.JSX.Element {
               source={Images.SPLASH_SCREEN_PREGNANCY}
               resizeMode="contain"
             />
-            <Text style={styles.contenttext}>Pregnancy Tracking</Text>
+            <Text style={styles.contenttext}>{t("Pregnancy Tracking")}</Text>
           </TouchableOpacity>
         </View>
       </View>

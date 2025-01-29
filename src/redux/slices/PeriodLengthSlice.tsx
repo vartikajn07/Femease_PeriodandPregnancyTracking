@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { periodLengthApi } from '../../API/api';
 
 interface Period {
@@ -17,6 +17,7 @@ interface PeriodLengthState {
     error: string | null;
     message: string | null;
     period: Period | null;
+    lengthInDays: number | null;
 }
 
 const initialState: PeriodLengthState = {
@@ -25,11 +26,12 @@ const initialState: PeriodLengthState = {
     error: null,
     message: null,
     period: null,
+    lengthInDays: null,
 };
 
 
 export const updatePeriodLength = createAsyncThunk<
-    { message: string; period: Period },
+    { message: string; period: Period; lengthInDays: number; },
     { periodTrackerId: string; lengthInDays: number },
     { rejectValue: string; state: { login: { token: string | null } } }
 >(
@@ -46,6 +48,7 @@ export const updatePeriodLength = createAsyncThunk<
             return {
                 message: response.data.message,
                 period: response.data.period,
+                lengthInDays: data.lengthInDays
             };
         } catch (error: any) {
             console.error('Update Failed:', error.message || error);
@@ -66,6 +69,7 @@ const periodLengthSlice = createSlice({
             state.error = null;
             state.message = null;
             state.period = null;
+            state.lengthInDays = null
         },
     },
     extraReducers: (builder) => {
@@ -79,7 +83,10 @@ const periodLengthSlice = createSlice({
                 state.success = true;
                 state.message = action.payload.message;
                 state.period = action.payload.period;
+                state.lengthInDays = action.payload.lengthInDays;
+
                 console.log('Server response:', action.payload);
+                console.log('Length in days:', state.lengthInDays)
             })
             .addCase(updatePeriodLength.rejected, (state, action) => {
                 state.loading = false;

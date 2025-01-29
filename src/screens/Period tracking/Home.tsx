@@ -31,6 +31,8 @@ import Tooltip from 'react-native-walkthrough-tooltip';
 import FastImage from 'react-native-fast-image';
 import Images from '../../assets';
 import Tracker from '../../components/Period tracker widget/Tracker';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { fetchCycleInsights } from '../../redux/slices/cycleInsightSlice';
 
 type DayObject = {
   dateString: string;
@@ -100,6 +102,25 @@ const PeriodTrackingHome = () => {
       tooltipstyle: { backgroundColor: COLORS.skyblue },
     },
   ];
+
+  const {
+    currentDay,
+    phase,
+    phaseDetails,
+    loading,
+    error,
+  } = useAppSelector((state) => state.cycleInsights);
+  const trackerId = useAppSelector((state) => state.onboardingtoPeriod.periodtrackerId);
+  const lengthInDays = useAppSelector((state) => state.periodLength.lengthInDays);
+  const token = useAppSelector((state) => state.login.token);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (token && trackerId && lengthInDays) {
+      dispatch(fetchCycleInsights());
+    }
+  }, [dispatch, token, trackerId, lengthInDays]);
 
   //bottom drawer -> add sexual activity
   const handlePressActivity = () => {

@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {Keyboard, StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
-import {AppText, MEDIUM, SIXTEEN, WHITE} from '../../common/AppText';
-import {AppSafeAreaView} from '../../common/AppSafeAreaView';
-import {COLORS, FONTS} from '../../constants/themes';
-import {RootStackParamList} from '../../routes/RootNavigator';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
-import {useAppDispatch, useAppSelector} from '../../redux/hooks';
-import {registerUser} from '../../redux/slices/authSlice';
+import React, { useEffect, useState } from 'react';
+import { Keyboard, Modal, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { AppText, MEDIUM, SIXTEEN, WHITE } from '../../common/AppText';
+import { AppSafeAreaView } from '../../common/AppSafeAreaView';
+import { COLORS, FONTS } from '../../constants/themes';
+import { RootStackParamList } from '../../routes/RootNavigator';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { registerUser } from '../../redux/slices/authSlice';
+import { useTranslation } from 'react-i18next';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'LoginScreen'>;
 
 function RegisterUser(): React.JSX.Element {
+  const { t } = useTranslation()
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp>();
   const [email, setEmail] = useState('');
@@ -21,7 +23,7 @@ function RegisterUser(): React.JSX.Element {
   const [bmi, setBmi] = useState('');
   const [isDisabled, setisDisabled] = useState(false);
 
-  const {loading, error, user} = useAppSelector(state => state.auth);
+  const { loading, error, user } = useAppSelector(state => state.auth);
 
   const handleRegister = async () => {
     Keyboard.dismiss()
@@ -61,11 +63,11 @@ function RegisterUser(): React.JSX.Element {
           height: '100%',
           paddingVertical: 20,
         }}>
-        <AppText>Auth screen - Register user</AppText>
+        <AppText>{t("auth-screen")}</AppText>
         <View style={styles.innercontainer}>
           {/* email */}
           <TextInput
-            placeholder="Enter your email address"
+            placeholder={t("email address")}
             keyboardType="email-address"
             value={email}
             style={styles.txtInput}
@@ -73,7 +75,7 @@ function RegisterUser(): React.JSX.Element {
           />
           {/* password */}
           <TextInput
-            placeholder="Enter your password"
+            placeholder={t('password')}
             keyboardType="default"
             value={password}
             style={styles.txtInput}
@@ -82,7 +84,7 @@ function RegisterUser(): React.JSX.Element {
           />
           {/* name */}
           <TextInput
-            placeholder="What do we call you?"
+            placeholder={t('Name')}
             keyboardType="default"
             style={styles.txtInput}
             value={name}
@@ -90,7 +92,7 @@ function RegisterUser(): React.JSX.Element {
           />
           {/* age */}
           <TextInput
-            placeholder="Age?"
+            placeholder={t('Age')}
             keyboardType="numeric"
             style={styles.txtInput}
             value={Age}
@@ -98,7 +100,7 @@ function RegisterUser(): React.JSX.Element {
           />
           {/* bmi */}
           <TextInput
-            placeholder="Bmi?"
+            placeholder={t('Bmi')}
             keyboardType="numeric"
             style={styles.txtInput}
             value={bmi}
@@ -110,18 +112,18 @@ function RegisterUser(): React.JSX.Element {
           disabled={isDisabled || loading}
           style={[
             styles.Nextbtn,
-            isDisabled || loading ? {backgroundColor: '#ccc'} : {},
+            isDisabled || loading ? { backgroundColor: '#ccc' } : {},
           ]}>
           <AppText
             weight={MEDIUM}
             type={SIXTEEN}
             color={WHITE}
-            style={{textAlign: 'center'}}>
-            {loading ? 'Loading...' : 'Next'}
+            style={{ textAlign: 'center' }}>
+            {loading ? t("Loading") : t("Next")}
           </AppText>
         </TouchableOpacity>
         {/* Error  */}
-        {error && <AppText style={{color: 'red'}}>{error}</AppText>}
+        {error && <AppText style={{ color: 'red' }}>{error}</AppText>}
       </View>
     </AppSafeAreaView>
   );
